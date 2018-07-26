@@ -15,8 +15,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dbtest', 'SampleController@dbtest');
+Route::get('/employeetest', 'SampleController@employeetest');
 
 Route::get('/roletest', 'SampleController@roletest');
 
-    Route::get('/employeeroletest', 'SampleController@employeeroletest');
+Route::get('/employeeroletest', 'SampleController@employeeroletest');
+
+Route::get('/languagetest', 'SampleController@languagetest');

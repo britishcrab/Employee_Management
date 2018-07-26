@@ -34,10 +34,10 @@ class SampleController extends Controller
     }
 
     public function employeeroletest(){
-//
-//        \DB::table('employee_role')->insert(
-//            ['employee_id' => 1, 'role_id' => '3']
-//        );
+
+        \DB::table('employee_roles')->insert(
+            ['employee_id' => 2, 'role_id' => '3']
+        );
 
         $sample = \App\Models\Employee::find(1);
         foreach($sample->roles as $role){
@@ -45,10 +45,30 @@ class SampleController extends Controller
             $role_name = $role->role_name;
             echo $role_name. '<br>';
         }
+    }
 
-//        $roles = \App\Models\Employee::find(1)->roles()->get();
+    public function languagetest(){
 
-//        var_dump($role_name);
+        $this->employeetest();
+
+//        \DB::table('languages')->insert([
+//            ['language' => 'php'],
+//            ['language' => 'c++'],
+//            ['language' => 'C#'],
+//            ['language' => 'scala'],
+//            ['language' => 'Phython']
+//        ]);
+        $a = rand(1, 5);
+        \DB::table('employee_languages')->insert(
+            ['employee_id' => 1, 'language_id' => $a]
+        );
+
+        $sample = \App\Models\Employee::find(1);
+
+        foreach($sample->languages as $language){
+            $language = $language->language;
+            echo $language. '<br>';
+        }
     }
     //
 }
