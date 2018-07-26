@@ -14,7 +14,7 @@ class CreateEmployeeTypeTable extends Migration
     public function up()
     {
         Schema::create('employee_type', function (Blueprint $table) {
-            $table->increments('employee_type_code');
+            $table->increments('id');
             $table->string('employee_type');
         });
     }

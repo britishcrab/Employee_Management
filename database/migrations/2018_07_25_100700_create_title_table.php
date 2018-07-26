@@ -14,7 +14,7 @@ class CreateTitleTable extends Migration
     public function up()
     {
         Schema::create('title', function (Blueprint $table) {
-            $table->increments('title_code');
+            $table->increments('id');
             $table->string('title');
         });
     }

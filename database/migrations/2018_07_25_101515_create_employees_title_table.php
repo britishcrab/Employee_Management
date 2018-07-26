@@ -15,7 +15,8 @@ class CreateEmployeesTitleTable extends Migration
     {
         Schema::create('employees_title', function (Blueprint $table) {
             $table->increments('id');
-            $table->timestamps();
+            $table->integer('employee_id');
+            $table->integer('title_id');
         });
     }
 
