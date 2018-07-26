@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateEmployeeTypeTable extends Migration
+class CreateLanguagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateEmployeeTypeTable extends Migration
      */
     public function up()
     {
-        Schema::create('employee_type', function (Blueprint $table) {
+        Schema::create('languages', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('employee_type');
+            $table->string('language');
         });
     }
 
@@ -26,6 +26,6 @@ class CreateEmployeeTypeTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('employee_type');
+        Schema::dropIfExists('languages');
     }
 }

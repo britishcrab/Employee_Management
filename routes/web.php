@@ -13,4 +13,12 @@
 
 Route::get('/', function () {
     return view('welcome');
-});
+
+Route::get('/employeetest', 'SampleController@employeetest');
+
+Route::get('/roletest', 'SampleController@roletest');
+
+Route::get('/employeeroletest', 'SampleController@employeeroletest');
+
+Route::get('/languagetest', 'SampleController@languagetest');
+>>>>>>> migration
