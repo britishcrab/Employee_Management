@@ -16,3 +16,7 @@ Route::get('/', function () {
 });
 
 Route::get('/dbtest', 'SampleController@dbtest');
+
+Route::get('/roletest', 'SampleController@roletest');
+
+    Route::get('/employeeroletest', 'SampleController@employeeroletest');

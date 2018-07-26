@@ -13,7 +13,7 @@ class CreateEmployeeLanguageTable extends Migration
      */
     public function up()
     {
-        Schema::create('employee_language', function (Blueprint $table) {
+        Schema::create('employee_languages', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('employee_id');
             $table->integer('language_id');

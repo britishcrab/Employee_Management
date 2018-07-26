@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Role extends Model
 {
-    public function Employee()
+    public function employees()
     {
-        return $this->belongsToMany('App\Models\Employee');
+        return $this->belongsToMany('\App\Models\Employee');
     }
     //
 }
