@@ -35,8 +35,10 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        $Register = new \App\Services\Register;
-        $Register->resister
+        $regist = new \App\Services\RegisterService;
+        $regist->register($request);
+
+        var_dump($request->get);
         //
     }
 
