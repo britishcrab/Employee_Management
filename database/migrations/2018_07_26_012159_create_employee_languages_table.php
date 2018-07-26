@@ -13,7 +13,7 @@ class CreateEmployeeLanguagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('employee_languages', function (Blueprint $table) {
+        Schema::create('employee_language', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('employee_id');
             $table->integer('language_id');
@@ -27,6 +27,6 @@ class CreateEmployeeLanguagesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('employee_languages');
+        Schema::dropIfExists('employee_language');
     }
 }

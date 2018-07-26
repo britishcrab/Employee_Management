@@ -14,19 +14,19 @@ class SampleController extends Controller
             ['employee_number' => $id, 'name' => 'sample tarou', 'birthday' => '1000-01-01']
         );
 
-        $employees = \DB::table('employees')->get();
+//        $employees = \DB::table('employees')->get();
 
-        var_dump($employees);
+//        var_dump($employees);
     }
 
     public function roletest(){
-        \DB::table('roles')->insert([
-            ['role_name' => '社長'],
-            ['role_name' => '部長'],
-            ['role_name' => '課長'],
-            ['role_name' => '会長'],
-            ['role_name' => '係長']
-        ]);
+//        \DB::table('roles')->insert([
+//            ['role_name' => '社長'],
+//            ['role_name' => '部長'],
+//            ['role_name' => '課長'],
+//            ['role_name' => '会長'],
+//            ['role_name' => '係長']
+//        ]);
 
         $role = \DB::table('roles')->get();
 
@@ -35,11 +35,12 @@ class SampleController extends Controller
 
     public function employeeroletest(){
 
-        \DB::table('employee_roles')->insert(
-            ['employee_id' => 2, 'role_id' => '3']
+        \DB::table('employee_role')->insert(
+            ['employee_id' => 1, 'role_id' => '3']
         );
 
         $sample = \App\Models\Employee::find(1);
+
         foreach($sample->roles as $role){
 //            var_dump($role);
             $role_name = $role->role_name;
@@ -51,23 +52,24 @@ class SampleController extends Controller
 
         $this->employeetest();
 
-//        \DB::table('languages')->insert([
-//            ['language' => 'php'],
-//            ['language' => 'c++'],
-//            ['language' => 'C#'],
-//            ['language' => 'scala'],
-//            ['language' => 'Phython']
-//        ]);
-        $a = rand(1, 5);
-        \DB::table('employee_languages')->insert(
+        \DB::table('languages')->insert([
+            ['language' => 'php'],
+            ['language' => 'c++'],
+            ['language' => 'C#'],
+            ['language' => 'scala'],
+            ['language' => 'Phython']
+        ]);
+        $a = rand(1, 3);
+        \DB::table('employee_language')->insert(
             ['employee_id' => 1, 'language_id' => $a]
         );
 
         $sample = \App\Models\Employee::find(1);
+        var_dump($sample->languages);
 
         foreach($sample->languages as $language){
-            $language = $language->language;
-            echo $language. '<br>';
+            $a = $language->language;
+            echo $a. '<br>';
         }
     }
     //
