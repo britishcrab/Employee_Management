@@ -11,8 +11,12 @@
 |
 */
 
-Route::get('/', function () {
+Route::get('laravel', function () {
     return view('welcome');
+});
+
+Route::get('/', function () {
+    return view('employee.top');
 });
 
 Route::get('/employeetest', 'SampleController@employeetest');
@@ -24,3 +28,7 @@ Route::get('/employeeroletest', 'SampleController@employeeroletest');
 Route::get('/languagetest', 'SampleController@languagetest');
 
 Route::resource('/Employee', 'EmployeeController');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
