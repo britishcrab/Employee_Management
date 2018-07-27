@@ -15,9 +15,8 @@ Route::get('laravel', function () {
     return view('welcome');
 });
 
-Route::get('/', function () {
-    return view('employee.top');
-});
+Route::get('/', 'AppController@index');
+Route::get('/employeeadmin', 'AppController@employee_admin');
 
 Route::get('/employeetest', 'SampleController@employeetest');
 
