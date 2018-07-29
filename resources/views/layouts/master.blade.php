@@ -20,7 +20,7 @@
 
                 <!-- Branding Image -->
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+                    {{ config('app.name') }} - @yield('title')
                 </a>
             </div>
         </div>
