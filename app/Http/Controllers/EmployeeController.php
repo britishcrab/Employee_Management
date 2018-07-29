@@ -22,4 +22,8 @@ class EmployeeController extends Controller
 
 		return view('employee.employee_list', compact('samples'));
 	}
+
+	public function admin(){
+		return view('employee.admin');
+	}
 }
