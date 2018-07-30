@@ -9,8 +9,6 @@
 @section('content')
     <h1>従業員一覧<h1>
 
-<form action="employee_edit" method="POST">
- {{ csrf_field() }}
 <table class="table table-striped table-bordered">
  <tr>
  <th>id</th>
@@ -20,7 +18,8 @@
  </tr>
 @foreach($samples as $row)
   <form action="employee_edit" method="POST">
-<input type="hidden" name="employee_id" value="{{$row['employee_id']}}">
+   {{ csrf_field() }}
+   <input type="hidden" name="employee_id" value="{{$row['employee_id']}}">
 <input type="hidden" name="last_name" value="{{$row['last_name']}}">
 <input type="hidden" name="first_name" value="{{$row['first_name']}}">
 <input type="hidden" name="role" value="{{$row['role']}}">

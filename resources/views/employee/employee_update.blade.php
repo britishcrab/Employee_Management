@@ -8,11 +8,13 @@
 
 @section('content')
     <h1>従業員情報更新<h1>
-    <form class="form-horizontal">
+    <form action="employee_update" class="form-horizontal" method="post">
+        {{ csrf_field() }}
         <div class="form-group">
             <label class="col-sm-2 control-label" for="employee_id">ＩＤ：</label>
             <div class="col-sm-10" id="employee_id">
                 {{$_POST['employee_id']}}
+                <input type="hidden" name="employee_id" value="{{$_POST['employee_id']}}">
             </div>
         </div>
         <div class="form-group">
@@ -32,7 +34,7 @@
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-primary col-xs-5" onclick="location.href='list'">実行</button>
+                <button type="submit" class="btn btn-primary col-xs-5" onclick="location.href='employee_update'">実行</button>
                 <button type="button" class="btn btn-default col-xs-5" onclick="location.href='list'">取り消し</button>
             </div>
         </div>

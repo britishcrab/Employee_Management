@@ -16,24 +16,45 @@ Route::get('laravel', function () {
 });
 
 
-Route::get('/', function () {
-    return view('top');
-});
-
-Route::get('/admin', 'EmployeeController@admin');
-Route::get('/list', 'EmployeeController@employee_list');
-Route::get('/employee_delete', 'EmployeeController@employee_delete');
-Route::get('/employee_update', 'EmployeeController@employee_update');
-
-Route::post('/employee_edit', function(){
-    if(isset($_POST['update'])){
-        return view('employee.employee_update');
-    }
-    else{
+Route::prefix('admin')->group(function () {
+    Route::get('/', 'EmployeeController@index');
+    Route::get('admin', 'EmployeeController@admin');
+    Route::get('list', 'EmployeeController@employee_list');
+    Route::get('delete', function(){
         return view('employee.employee_delete');
-    }
-});
+    });
+    Route::post('update', 'EmployeeController@employee_update');
 
+    Route::post('edit', function(){
+        if(isset($_POST['update'])){
+            return view('employee.employee_update');
+        }
+        else{
+            return view('employee.employee_delete');
+        }
+    });
+});
+//
+//Route::get('/', function () {
+//    return view('top');
+//});
+//
+//Route::get('/admin', 'EmployeeController@admin');
+//Route::get('/list', 'EmployeeController@employee_list');
+//Route::get('/employee_delete', function(){
+//    return view('employee.employee_delete');
+//});
+//Route::post('/employee_update', 'EmployeeController@employee_update');
+//
+//Route::post('/employee_edit', function(){
+//    if(isset($_POST['update'])){
+//        return view('employee.employee_update');
+//    }
+//    else{
+//        return view('employee.employee_delete');
+//    }
+//});
+//
 
 
 // Route::get('/', 'AppController@index');

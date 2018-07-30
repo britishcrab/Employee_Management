@@ -17,6 +17,10 @@ class EmployeeController extends Controller
         'role'  => '役員'],
     ];
 
+    public function index(){
+        return view('top');
+    }
+
 	public function admin(){
 		return view('employee.admin');
 	}
@@ -31,7 +35,7 @@ class EmployeeController extends Controller
 	    return view('employee.employee_delete');
     }
 
-    public function employee_update(Request $employee_data){
+    public function employee_update(){
         return view('employee.employee_update');
     }
 }
