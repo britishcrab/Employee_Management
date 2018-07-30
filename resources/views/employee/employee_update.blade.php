@@ -1,3 +1,4 @@
+{{use Illuminate\Http\Request}}
 @extends('layouts.admin_master')
 
 @section('title', 'Employee list')
