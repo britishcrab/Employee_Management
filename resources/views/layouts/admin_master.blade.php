@@ -13,24 +13,23 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
 </head>
 <body>
-@section('sidebar')
-    <nav class="navbar navbar-default navbar-static-top">
-        <div class="container">
-            <div class="navbar-header">
+<nav class="navbar navbar-default navbar-static-top">
+    <div class="container">
+        <div class="navbar-header">
 
-                <!-- Branding Image -->
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name') }} - @yield('title')
-                </a>
-            </div>
+            <!-- Branding Image -->
+            <a class="navbar-brand" href="{{ url('/') }}">
+                {{ config('app.name') }} - @yield('title')
+            </a>
         </div>
-    </nav>
+    </div>
+</nav>
+@section('sidebar')
+
     <div class="col-xs-2">
         <ul class="nav nav-pills nav-stacked">
-            <li class="active"><a href="#">ダッシュボード</a></li>
-            <li><a href="#">サーバー１</a></li>
-            <li><a href="#">サーバー２</a></li>
-            <li><a href="#">サーバー３</a></li>
+            <li><a href="/">トップ</a></li>
+            <li><a href="admin">管理</a></li>
         </ul>
     </div>
 @show

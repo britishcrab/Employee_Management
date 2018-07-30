@@ -22,6 +22,18 @@ Route::get('/', function () {
 
 Route::get('/admin', 'EmployeeController@admin');
 Route::get('/list', 'EmployeeController@employee_list');
+Route::get('/employee_delete', 'EmployeeController@employee_delete');
+Route::get('/employee_update', 'EmployeeController@employee_update');
+
+Route::post('/employee_edit', function(){
+    if(isset($_POST['update'])){
+        return view('employee.employee_update');
+    }
+    else{
+        return view('employee.employee_delete');
+    }
+});
+
 
 
 // Route::get('/', 'AppController@index');

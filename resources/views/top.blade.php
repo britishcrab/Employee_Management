@@ -1,21 +1,8 @@
-@extends('layouts.master')
+@extends('layouts.admin_master')
 
 @section('title', 'トップページ')
 
 @section('sidebar')
-
-    <nav class="navbar navbar-default navbar-static-top">
-        <div class="container">
-            <div class="navbar-header">
-
-                <!-- Branding Image -->
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
-            </div>
-        </div>
-    </nav>
-
 @endsection
 
 @section('content')
