@@ -15,15 +15,17 @@ Route::get('laravel', function () {
     return view('welcome');
 });
 
+Route::get('/', function(){
+	return view('top');
+});
 
 Route::prefix('admin')->group(function () {
-    Route::get('/', 'EmployeeController@index');
-    Route::get('admin', 'EmployeeController@admin');
-    Route::get('list', 'EmployeeController@employee_list');
+    Route::get('admin', 'EmployeeController@admin')->name('admin.home');
+    Route::get('list', 'EmployeeController@employee_list')->name('admin.list');
     Route::get('delete', function(){
         return view('employee.employee_delete');
-    });
-    Route::post('update', 'EmployeeController@employee_update');
+    })->name('admin.delete');
+    Route::post('update', 'EmployeeController@employee_update')->name('admin.update');
 
     Route::post('edit', function(){
         if(isset($_POST['update'])){
@@ -32,7 +34,7 @@ Route::prefix('admin')->group(function () {
         else{
             return view('employee.employee_delete');
         }
-    });
+    })->name('admin.edit');
 });
 //
 //Route::get('/', function () {

@@ -17,7 +17,7 @@
  <th>変更・削除</th>
  </tr>
 @foreach($samples as $row)
-  <form action="employee_edit" method="POST">
+  <form action="{{route('admin.edit')}}" method="POST">
    {{ csrf_field() }}
    <input type="hidden" name="employee_id" value="{{$row['employee_id']}}">
 <input type="hidden" name="last_name" value="{{$row['last_name']}}">
@@ -36,18 +36,4 @@
 @endforeach
 </table>
 </form>
-
-
-{{--
-<ul>
-{{ var_dump($samples) }}
-@foreach($samples as $row)
-
-{{ var_dump($row) }}
-
-<li>{{ $row['employee_id']. $row['name'].  $row['role'] }}</td>
-<button type="button" class="btn btn-secondary">Secondary</button><button type="button" class="btn btn-secondary">Secondary</button>
-@endforeach
-<ul>
---}}
 @endsection

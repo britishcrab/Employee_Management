@@ -25,7 +25,7 @@
         </div>
         <div class="form-group">
             <label class="col-sm-2 control-label" for="role">役職：</label>
-            <select id="role" name="role">
+            <select id="role" name="role" value="{{$_POST['role']}}">
                 <option value="">-</option>
                 <option value="1">管理</option>
                 <option value="2">役員</option>

@@ -14,8 +14,8 @@
             <br>
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                    <button type="submit" class="btn btn-primary col-xs-5" onclick="location.href='employee_update'">削除</button>
-                    <button type="button" class="btn btn-default col-xs-5" onclick="location.href='list'">キャンセル</button>
+                    <button type="submit" class="btn btn-primary col-xs-5" onclick="location.href='{{route('admin.delete')}}'">削除</button>
+                    <button type="button" class="btn btn-default col-xs-5" onclick="location.href='{{route('admin.list')}}'">キャンセル</button>
                 </div>
             </div>
 @endsection
