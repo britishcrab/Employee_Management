@@ -24,7 +24,8 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-2 control-label" for="role">役職：{{$_POST['role']}}</label>
+            <label class="col-sm-2 control-label" for="role">役職：</label>
+            {{$_POST['role']}}
             <select id="role" name="role" value="{{$_POST['role']}}">
                 <option value="">変更</option>
                 <option value="1">管理</option>
@@ -34,8 +35,8 @@
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <button type="button" class="btn btn-default col-xs-5" onclick="location.href='{{route('admin.get.update')}}'">じっこう</button>
-                <button type="button" class="btn btn-default col-xs-5" onclick="location.href='{{route('admin.get.update')}}'">取り消し</button>
+                <button type="button" class="btn btn-default col-xs-5" onclick="location.href='{{route('admin.post.update')}}'">じっこう</button>
+                <button type="button" class="btn btn-default col-xs-5" onclick="location.href='{{route('admin.get.list')}}'">取り消し</button>
             </div>
         </div>
     </form>

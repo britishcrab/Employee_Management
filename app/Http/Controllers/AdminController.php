@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+ use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
@@ -24,19 +24,28 @@ class AdminController extends Controller
 	public function get_list(){
 		$samples = $this->samples;
 
-		return view('employee.employee_list', compact('samples'));
+		return view('employee.list', compact('samples'));
 	}
 
 	public function get_delete(Request $request){
-	    return view('employee.employee_delete');
+	    return view('employee.delete');
     }
 
     public function get_update(Request $request){
         if(isset($_POST['update'])){
-            return view('employee.employee_update');
+            return view('employee.update');
         }
         else{
-            return view('employee.employee_delete');
+            return view('employee.delete');
         }
+    }
+
+    public function post_update(Request $request){
+        return redirect()->route('admin.get.update.confirm', compact('request'));
+    }
+
+    public function get_update_confirm(Request $request){
+        $isrequest = $request;
+        return view('employee.update_comfirm', compact('isrequest'));
     }
 }

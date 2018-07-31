@@ -20,19 +20,12 @@ Route::get('/', function(){
 });
 
 Route::prefix('admin')->group(function () {
-    Route::get('admin', 'AdminController@get_admin')->name('admin.get.home');
-    Route::get('list', 'AdminController@get_list')->name('admin.get.list');
-    Route::get('delete', 'AdminController@get_delete')->name('admin.get.delete');
-    Route::post('update', 'AdminController@get_update')->name('admin.get.update');
-
-    Route::post('edit', function(){
-        if(isset($_POST['update'])){
-            return view('employee.employee_update');
-        }
-        else{
-            return view('employee.employee_delete');
-        }
-    })->name('admin.edit');
+    Route::get('get/admin', 'AdminController@get_admin')->name('admin.get.home');
+    Route::get('get/list', 'AdminController@get_list')->name('admin.get.list');
+    Route::get('get/delete', 'AdminController@get_delete')->name('admin.get.delete');
+    Route::post('get/update', 'AdminController@get_update')->name('admin.get.update');
+    Route::get('post/update', 'AdminController@post_update')->name('admin.post.update');
+    Route::get('get/update/confirm', 'AdminController@get_update_confirm')->name('admin.get.update.confirm');
 });
 //
 //Route::get('/', function () {
