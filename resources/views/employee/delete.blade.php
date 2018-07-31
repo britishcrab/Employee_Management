@@ -1,6 +1,6 @@
 @extends('layouts.admin_master')
 
-@section('title', 'Employee list')
+@section('title', 'Employee delete')
 
 @section('sidebar')
     @parent
@@ -14,7 +14,7 @@
             <br>
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                    <button type="submit" class="btn btn-primary col-xs-5" onclick="location.href='{{route('admin.get.delete')}}'">削除</button>
+                    <button type="submit" class="btn btn-primary col-xs-5" onclick="location.href='{{route('admin.post.delete')}}'">削除</button>
                     <button type="button" class="btn btn-default col-xs-5" onclick="location.href='{{route('admin.get.list')}}'">キャンセル</button>
                 </div>
             </div>

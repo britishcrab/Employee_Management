@@ -1,6 +1,6 @@
 @extends('layouts.admin_master')
 
-@section('title', 'Employee list')
+@section('title', 'Employee update-comfirm')
 
 @section('sidebar')
     @parent

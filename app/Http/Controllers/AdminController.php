@@ -17,8 +17,8 @@ class AdminController extends Controller
         'role'  => '役員'],
     ];
 
-	public function get_admin(Request $request){
-		return view('employee.admin', $request);
+	public function get_home(Request $request){
+		return view('employee.home', $request);
 	}
 
 	public function get_list(){
@@ -26,9 +26,13 @@ class AdminController extends Controller
 
 		return view('employee.list', compact('samples'));
 	}
+//
+//	public function get_delete(Request $request){
+//	    return view('employee.delete');
+//    }
 
-	public function get_delete(Request $request){
-	    return view('employee.delete');
+    public function post_delete(){
+        return redirect()->route('admin.get.list');
     }
 
     public function get_update(Request $request){
