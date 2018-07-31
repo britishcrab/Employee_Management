@@ -35,7 +35,7 @@
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <button type="button" class="btn btn-default col-xs-5" onclick="location.href='{{route('admin.post.update')}}'">じっこう</button>
+                <button type="button" class="btn btn-primary col-xs-5" onclick="location.href='{{route('admin.post.update')}}'">実行</button>
                 <button type="button" class="btn btn-default col-xs-5" onclick="location.href='{{route('admin.get.list')}}'">取り消し</button>
             </div>
         </div>

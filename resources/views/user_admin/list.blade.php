@@ -14,7 +14,7 @@
         <th>id</th>
         <th>名前</th>
         <th>役職</th>
-        <th>変更・削除</th>
+        <th>情報更新・削除</th>
        </tr>
        @foreach($samples as $row)
         <form action='{{route('admin.get.update')}}' method="POST">

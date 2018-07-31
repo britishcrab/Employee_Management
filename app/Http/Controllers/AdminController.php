@@ -18,13 +18,13 @@ class AdminController extends Controller
     ];
 
 	public function get_home(Request $request){
-		return view('employee.home', $request);
+		return view('user_admin.home', $request);
 	}
 
 	public function get_list(){
 		$samples = $this->samples;
 
-		return view('employee.list', compact('samples'));
+		return view('user_admin.list', compact('samples'));
 	}
 //
 //	public function get_delete(Request $request){
@@ -37,10 +37,10 @@ class AdminController extends Controller
 
     public function get_update(Request $request){
         if(isset($_POST['update'])){
-            return view('employee.update');
+            return view('user_admin.update');
         }
         else{
-            return view('employee.delete');
+            return view('user_admin.delete');
         }
     }
 
@@ -50,6 +50,6 @@ class AdminController extends Controller
 
     public function get_update_confirm(Request $request){
         $isrequest = $request;
-        return view('employee.update_comfirm', compact('isrequest'));
+        return view('user_admin.update_comfirm', compact('isrequest'));
     }
 }

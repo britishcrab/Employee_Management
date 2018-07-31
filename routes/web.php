@@ -31,4 +31,8 @@ Route::prefix('admin')->group(function () {
 
 Route::prefix('report')->group(function () {
     Route::get('get/home', 'ReportController@get_home')->name('report.get.home');
+    Route::get('get/create', 'ReportController@get_create')->name('report.get.create');
+    Route::post('post/create', 'ReportController@post_create')->name('report.post.create');
+    Route::get('get/create/confirm', 'ReportController@get_create_confirm')->name('report.get.create.confirm');
+
 });

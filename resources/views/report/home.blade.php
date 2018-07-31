@@ -1,44 +1,14 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.report_master')
 
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+@section('title', 'report')
 
-    <title>EmployeesManagement - @yield('title')</title>
-    <link rel="stylesheet" href="style.css">
-
-    <!-- Bootstrap読み込み（スタイリングのため） -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
-</head>
-<body>
-<nav class="navbar navbar-default navbar-static-top">
-    <div class="container">
-        <div class="navbar-header">
-
-            <!-- Branding Image -->
-            <a class="navbar-brand" href='{{ route('top') }}'>
-                {{ config('app.name') }} - @yield('title')
-            </a>
-        </div>
-    </div>
-</nav>
 @section('sidebar')
+    @parent
+@endsection
 
-    <div class="col-xs-2">
-        <ul class="nav nav-pills nav-stacked">
-            <li><a href='{{route('top')}}'>トップ</a></li>
-            <li><a href='{{route('admin.get.home')}}'>管理</a></li>
-        </ul>
-    </div>
-@show
+@section('content')
+    <h1>日報<h1>
+            <input class="btn btn-success btn-block" type="button" onclick="location.href='{{route('report.get.create')}}'" value="日報作成">
+            <input class="btn btn-info btn-block" type="button" onclick="location.href='{{route('report.get.home')}}'" value="過去の日報一覧">
 
-<div class="container">
-    @yield('content')
-</div>
-<!-- Scripts -->
-<script src="{{ asset('js/app.js') }}"></script>
-</body>
-</html>
+@endsection
