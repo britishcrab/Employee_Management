@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class EmployeeController extends Controller
+class AdminController extends Controller
 {
     protected $samples = [
         ['employee_id' => '0001',
@@ -17,25 +17,26 @@ class EmployeeController extends Controller
         'role'  => '役員'],
     ];
 
-    public function index(){
-        return view('top');
-    }
-
-	public function admin(){
-		return view('employee.admin');
+	public function get_admin(Request $request){
+		return view('employee.admin', $request);
 	}
 
-	public function employee_list(){
+	public function get_list(){
 		$samples = $this->samples;
 
 		return view('employee.employee_list', compact('samples'));
 	}
 
-	public function employee_delete(){
+	public function get_delete(Request $request){
 	    return view('employee.employee_delete');
     }
 
-    public function employee_update(){
-        return view('employee.employee_update');
+    public function get_update(Request $request){
+        if(isset($_POST['update'])){
+            return view('employee.employee_update');
+        }
+        else{
+            return view('employee.employee_delete');
+        }
     }
 }

@@ -1,4 +1,3 @@
-{{use Illuminate\Http\Request}}
 @extends('layouts.admin_master')
 
 @section('title', 'Employee list')
@@ -25,9 +24,9 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-2 control-label" for="role">役職：</label>
+            <label class="col-sm-2 control-label" for="role">役職：{{$_POST['role']}}</label>
             <select id="role" name="role" value="{{$_POST['role']}}">
-                <option value="">-</option>
+                <option value="">変更</option>
                 <option value="1">管理</option>
                 <option value="2">役員</option>
                 <option value="3">社員</option>
@@ -35,8 +34,8 @@
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-primary col-xs-5" onclick="location.href='employee_update'">実行</button>
-                <button type="button" class="btn btn-default col-xs-5" onclick="location.href='list'">取り消し</button>
+                <button type="button" class="btn btn-default col-xs-5" onclick="location.href='{{route('admin.get.update')}}'">じっこう</button>
+                <button type="button" class="btn btn-default col-xs-5" onclick="location.href='{{route('admin.get.update')}}'">取り消し</button>
             </div>
         </div>
     </form>

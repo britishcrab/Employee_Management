@@ -20,12 +20,10 @@ Route::get('/', function(){
 });
 
 Route::prefix('admin')->group(function () {
-    Route::get('admin', 'EmployeeController@admin')->name('admin.home');
-    Route::get('list', 'EmployeeController@employee_list')->name('admin.list');
-    Route::get('delete', function(){
-        return view('employee.employee_delete');
-    })->name('admin.delete');
-    Route::post('update', 'EmployeeController@employee_update')->name('admin.update');
+    Route::get('admin', 'AdminController@get_admin')->name('admin.get.home');
+    Route::get('list', 'AdminController@get_list')->name('admin.get.list');
+    Route::get('delete', 'AdminController@get_delete')->name('admin.get.delete');
+    Route::post('update', 'AdminController@get_update')->name('admin.get.update');
 
     Route::post('edit', function(){
         if(isset($_POST['update'])){
@@ -41,12 +39,12 @@ Route::prefix('admin')->group(function () {
 //    return view('top');
 //});
 //
-//Route::get('/admin', 'EmployeeController@admin');
-//Route::get('/list', 'EmployeeController@employee_list');
+//Route::get('/admin', 'AdminController@admin');
+//Route::get('/list', 'AdminController@employee_list');
 //Route::get('/employee_delete', function(){
 //    return view('employee.employee_delete');
 //});
-//Route::post('/employee_update', 'EmployeeController@employee_update');
+//Route::post('/employee_update', 'AdminController@employee_update');
 //
 //Route::post('/employee_edit', function(){
 //    if(isset($_POST['update'])){
@@ -70,7 +68,7 @@ Route::prefix('admin')->group(function () {
 //
 // Route::get('/languagetest', 'SampleController@languagetest');
 //
-// Route::resource('/Employee', 'EmployeeController');
+// Route::resource('/Employee', 'AdminController');
 //
 // Auth::routes();
 //

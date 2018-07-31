@@ -17,7 +17,7 @@
  <th>変更・削除</th>
  </tr>
 @foreach($samples as $row)
-  <form action="{{route('admin.edit')}}" method="POST">
+  <form action='{{route('admin.get.update')}}' method="POST">
    {{ csrf_field() }}
    <input type="hidden" name="employee_id" value="{{$row['employee_id']}}">
 <input type="hidden" name="last_name" value="{{$row['last_name']}}">
@@ -28,7 +28,7 @@
  <td>{{ $row['last_name'] }}　{{ $row['first_name'] }}</td>
  <td>{{ $row['role'] }}</td>
   <td>
-   <button type="submit" class="btn btn-secondary" name="update">更新</button>
+   <button type="submit" class="btn btn-secondary" name="update" >更新</button>
    <button type="submit" class="btn btn-secondary" name="delete">削除</button>
   </td>
   </form>
