@@ -49,7 +49,7 @@ class AdminController extends Controller
     }
 
     public function get_update_confirm(Request $request){
-        $isrequest = $request;
-        return view('user_admin.update_comfirm', compact('isrequest'));
+        $request_data = $request;
+        return view('user_admin.update_comfirm', compact('request_data'));
     }
 }
