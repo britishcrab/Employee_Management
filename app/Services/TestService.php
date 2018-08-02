@@ -7,10 +7,14 @@
             ['employee_id' => '0001',
                 'last_name' => '田中',
                 'first_name' => '幸也',
+                'mail' => 'aaa@gmail.com',
+                'password' => 'password',
                 'role'  => '社員'],
             ['employee_id' => '0002',
                 'last_name' => '山田',
                 'first_name' => '義明',
+                'mail' => 'bbb@gmail.com',
+                'password' => 'PASSWORD',
                 'role'  => '役員'],
         ];
         protected $reports = [

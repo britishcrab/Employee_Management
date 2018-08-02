@@ -6,24 +6,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class Employee extends Model
 {
-    public function projects()
+    public function report()
     {
-        return $this->belongsToMany('App\Models\Project');
+        return $this->hasMany('App\Models\Report');
     }
 
-    public function languages()
+    public function comment()
     {
-        return $this->belongsToMany('App\Models\Language');
+        return $this->hasMany('App\Models\Report');
     }
 
-    public function employee_types()
+    public function role()
     {
-        return $this->belongsToMany('App\Models\EmployeeType');
-    }
-
-    public function roles()
-    {
-        return $this->belongsToMany('App\Models\Role');
+        return $this->belongsTo('\App\Models\Role');
     }
     //
 }
