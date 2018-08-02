@@ -22,22 +22,31 @@ class AdminController extends Controller
 		return view('admin_employee.list', compact('employees'));
 	}
 
-//	public function get_delete(Request $request){
-//	    return view('employee.delete');
-//    }
+	public function get_delete($id){
+		$employee = $this->service->fetch($id);
 
-    public function post_delete(){
+	    return view('admin_employee.delete', compact('employee'));
+   }
+
+    public function post_delete(Request $request){
+		$employee = $this->service->delete($request->id);
+
         return redirect()->route('admin.get.list');
     }
 
-    public function get_update(Request $request){
-        if(isset($_POST['update'])){
-            return view('admin_employee.update');
-        }
-        else{
-            return view('admin_employee.delete');
-        }
+    public function get_update($id){
+		$employee = $this->service->fetch($id);
+
+		return view('admin_employee.update', compact('employee'));
     }
+    // public function get_update(Request $request){
+    //     if(isset($_POST['update'])){
+    //         return view('admin_employee.update');
+    //     }
+    //     else{
+    //         return view('admin_employee.delete');
+    //     }
+    // }
 
     public function post_update(Request $request){
         return redirect()->route('admin.get.update.confirm', compact('request'));

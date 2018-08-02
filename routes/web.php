@@ -22,9 +22,9 @@ Route::get('/', function(){
 Route::prefix('admin')->group(function () {
     Route::get('get/home', 'AdminController@get_home')->name('admin.get.home');
     Route::get('get/list', 'AdminController@get_list')->name('admin.get.list');
-//    Route::get('get/delete', 'AdminController@get_delete')->name('admin.get.delete');
-    Route::get('post/delete', 'AdminController@post_delete')->name('admin.post.delete');
-    Route::post('get/update', 'AdminController@get_update')->name('admin.get.update');
+    Route::post('/delete', 'AdminController@post_delete')->name('admin.delete.post');
+    Route::get('{id}/delete', 'AdminController@get_delete')->name('admin.get.delete');
+    Route::get('{id}/update', 'AdminController@get_update')->name('admin.get.update');
     Route::get('post/update', 'AdminController@post_update')->name('admin.post.update');
     Route::get('get/update/confirm', 'AdminController@get_update_confirm')->name('admin.get.update.confirm');
 });
