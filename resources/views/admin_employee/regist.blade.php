@@ -14,14 +14,13 @@
             <label class="col-sm-3 control-label" for="employee_id">ＩＤ：</label>
             <div class="col-sm-9" id="employee_id">
 				{{ str_pad($employee['id'], 4, 0, STR_PAD_LEFT) }}
-                {{Form::hidden('id', $employee['id'])}}
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-3 control-label" for="name">氏名：</label>
             <div class="form-inline col-sm-9">
-                姓{!! Form::input('text', 'last_name', $employee['last_name'], ['required', 'class' => 'form-control', 'id' => 'name']) !!}
-                名{!! Form::input('text', 'first_name', $employee['first_name'], ['required', 'class' => 'form-control', 'id' => 'name']) !!}
+                姓{!! Form::input('text', 'last_name', '', ['required', 'class' => 'form-control', 'id' => 'name']) !!}
+                名{!! Form::input('text', 'first_name', '', ['required', 'class' => 'form-control', 'id' => 'name']) !!}
             </div>
         </div>
         <div class="form-group">

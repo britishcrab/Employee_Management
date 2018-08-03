@@ -1,6 +1,8 @@
 <?php
     namespace App\Services;
-//    use App\Models\Employee;
+
+    use App\Models\Employee;
+
     class EmployeeService
     {
         public function fetch_all(){
@@ -16,5 +18,18 @@
 			$employee->delete();
 
 			return;
+        }
+
+        public function update($data){
+            $employee = $this->fetch($data['id']);
+            $employee->fill($data);
+            $employee->save();
+
+            $employee = $this->fetch($data['id']);
+            return;
+        }
+
+        public function lastInsertId(){
+            return \DB::getPdo()->lastInsertId();
         }
     }
