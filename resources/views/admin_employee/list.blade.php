@@ -30,6 +30,6 @@
     </table>
    </div>
  <div class="conttainer">
-  <input class="btn btn-secondary" type="button" onclick="location.href='{{route('admin.get.update')}}'" value="新規登録">
+  <input class="btn btn-secondary" type="button" onclick="location.href='{{route('admin.register.get')}}'" value="新規登録">
  </div>
 @endsection

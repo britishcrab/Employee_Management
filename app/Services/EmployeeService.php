@@ -20,6 +20,9 @@
 			return;
         }
 
+        /**
+         * @param $data
+         */
         public function update($data){
             $employee = $this->fetch($data['id']);
             $employee->fill($data);

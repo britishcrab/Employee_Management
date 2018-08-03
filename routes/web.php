@@ -27,6 +27,7 @@ Route::prefix('admin')->group(function () {
     Route::post('update', 'AdminController@post_update')->name('admin.post.update');
     Route::get('update/{id?}', 'AdminController@get_update')->name('admin.get.update');
     Route::get('update.confirm', 'AdminController@get_update_confirm')->name('admin.get.update.confirm');
+    Route::get('register', 'AdminController@get_register')->name('admin.register.get');
 });
 
 Route::prefix('admin/report')->group(function () {

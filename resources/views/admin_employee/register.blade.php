@@ -9,11 +9,11 @@
 @section('content')
     <h1>従業員情報更新</h1>
     <div class="form-group lead">
-	{!! Form::open(['url' => route('admin.post.update'), 'class' =>"form-horizontal"])!!}
+	{!! Form::open(['url' => route('admin.register.get'), 'class' =>"form-horizontal"])!!}
         <div class="form-group">
             <label class="col-sm-3 control-label" for="employee_id">ＩＤ：</label>
             <div class="col-sm-9" id="employee_id">
-				{{ str_pad($employee['id'], 4, 0, STR_PAD_LEFT) }}
+				{{ $next_id }}
             </div>
         </div>
         <div class="form-group">
@@ -27,23 +27,22 @@
             <label class="col-sm-3 control-label" for="birthday">生年月日：</label>
             <div class="dateArea">
             <div class="col-sm-9" id="birthday">
-                {{-- Form::text('birthday', str_replace ('-', '/', $employee['birthday']), array('id' => 'datepicker')) --}}
-                {{str_replace ('-', '/', $employee['birthday'])}}
+                 {{Form::text('birthday', '', array('id' => 'datepicker'))}}
             </div>
             </div>
-            {{--<script type="text/javascript">--}}
-                {{--$(function () {--}}
-                    {{--var dateFormat = 'yy-mm-dd';--}}
-                    {{--$('.datepicker').datepicker({--}}
-                        {{--dateFormat: dateFormat--}}
-                    {{--});--}}
-                {{--});--}}
-            {{--</script>--}}
+            <script type="text/javascript">
+                $(function () {
+                    var dateFormat = 'yy-mm-dd';
+                    $('.datepicker').datepicker({
+                        dateFormat: dateFormat
+                    });
+                });
+            </script>
         </div>
         <div class="form-group">
             <label class="col-sm-3 control-label" for="mail">メールアドレス：</label>
             <div class="col-sm-9" id="mail">
-                {!! Form::input('text', 'mail', $employee['mail'], ['required', 'class' => 'form-control', 'id' => 'mail']) !!}
+                {!! Form::input('text', 'mail', '', ['required', 'class' => 'form-control', 'id' => 'mail']) !!}
             </div>
         </div>
         <div class="form-group">
@@ -60,9 +59,9 @@
         </div>
         <div class="form-group" >
             <label class="col-sm-3 control-label" for="role_id">役職：</label>
-            {{$employee->role->role_name}}
+            --
             <select  id="role_id" name="role_id">
-                <option value="{{$employee['role_id']}}">変更</option>
+                <option value="">変更</option>
                 <option value="1">管理</option>
                 <option value="2">役員</option>
                 <option value="3">社員</option>
