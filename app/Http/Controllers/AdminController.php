@@ -51,7 +51,12 @@ class AdminController extends Controller
     public function post_delete(Request $request)
     {
 		$this->service->delete($request->id);
-        return redirect()->route('admin.get.list');
+        return redirect()->route('admin.delete.completion');
+    }
+
+    public function get_delete_completion()
+    {
+        return view('admin_employee.delete_completion');
     }
 
     /**
@@ -86,6 +91,10 @@ class AdminController extends Controller
         return view('admin_employee.update_comfirm', compact('employee'));
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * 従業員削除完了画面表示
+     */
     public function get_update_completion()
     {
         return view('admin_employee.update_completion');
