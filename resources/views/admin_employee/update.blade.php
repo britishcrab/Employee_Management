@@ -9,7 +9,7 @@
 @section('content')
     <h1>従業員情報更新</h1>
     <div class="form-group lead">
-	{!! Form::open(['url' => route('admin.post.update'), 'class' =>"form-horizontal"])!!}
+	{!! Form::open(['url' => route('admin.update.post'), 'class' =>"form-horizontal"])!!}
         <div class="form-group">
             <label class="col-sm-3 control-label" for="employee_id">ＩＤ：</label>
             <div class="col-sm-9" id="employee_id">
@@ -24,24 +24,6 @@
                 名{!! Form::input('text', 'first_name', $employee['first_name'], ['required', 'class' => 'form-control', 'id' => 'name']) !!}
             </div>
         </div>
-        {{--<div class="form-group">--}}
-            {{--<label class="col-sm-3 control-label" for="birthday">生年月日：</label>--}}
-            {{--<div class="dateArea">--}}
-            {{--<div class="col-sm-9" id="birthday">--}}
-                 {{--{!! Form::text('birthday', str_replace ('-', '/', $employee['birthday']), array('id' => 'datepicker')) !!}--}}
-                {{--{{str_replace ('-', '/', $employee['birthday'])}}--}}
-            {{--</div>--}}
-            {{--</div>--}}
-            {{--<script type="text/javascript">--}}
-                {{--$(function () {--}}
-                    {{--var dateFormat = 'yy-mm-dd';--}}
-                    {{--$('.datepicker').datepicker({--}}
-                        {{--dateFormat: dateFormat--}}
-                    {{--});--}}
-                {{--});--}}
-            {{--</script>--}}
-        {{--</div>--}}
-
         <div class="form-group">
             <label class="col-sm-3 control-label" for="birthday">生年月日：</label>
             <div class="dateArea">
@@ -50,11 +32,6 @@
                 </div>
             </div>
         </div>
-
-
-
-
-
         <div class="form-group">
             <label class="col-sm-3 control-label" for="mail">メールアドレス：</label>
             <div class="col-sm-9" id="mail">

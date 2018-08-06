@@ -24,9 +24,10 @@ Route::prefix('admin')->group(function () {
     Route::get('list', 'AdminController@get_list')->name('admin.get.list');
     Route::post('delete', 'AdminController@post_delete')->name('admin.delete.post');
     Route::get('delete/{id}', 'AdminController@get_delete')->name('admin.get.delete');
-    Route::post('update', 'AdminController@post_update')->name('admin.post.update');
+    Route::post('update', 'AdminController@post_update')->name('admin.update.post');
     Route::get('update/{id?}', 'AdminController@get_update')->name('admin.get.update');
-    Route::get('update.confirm', 'AdminController@get_update_confirm')->name('admin.get.update.confirm');
+    Route::get('update.confirm/{id}', 'AdminController@get_update_confirm')->name('admin.update.confirm.get');
+    Route::get('update.completion', 'AdminController@get_update_completion')->name('admin.update.completion.get');
     Route::get('register', 'AdminController@get_register')->name('admin.register.get');
     Route::post('register.post', 'AdminController@post_register')->name('admin.register.post');
     Route::get('register/confirm', 'AdminController@get_register_confirm')->name('admin.register.confirm.get');

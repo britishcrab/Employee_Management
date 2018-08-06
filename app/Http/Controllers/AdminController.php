@@ -71,26 +71,25 @@ class AdminController extends Controller
     public function post_update(Request $request)
     {
         $data = $request->all();
-        $update = $this->service->update($data);
-        return redirect()->route('admin.get.update.confirm', compact('update'));
+        $this->service->update($data);
+        $id = $data['id'];
+        return redirect()->route('admin.update.confirm.get', compact('id'));
     }
-//    public function post_update(Request $request){
-//        return redirect()->route('admin.get.update.confirm', compact('request'));
-//    }
+
      /**
       * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
       */
-    public function get_update_confirm()
+    public function get_update_confirm($id)
     {
-        $employees = $this->service->fetch_all();
+        $employee = $this->service->fetch($id);
 
-        return view('admin_employee.list', compact('employees'));
+        return view('admin_employee.update_comfirm', compact('employee'));
     }
 
-//     public function get_update_confirm(Request $request){
-//         $request_data = $request;
-//         return view('admin_employee.update_comfirm', compact('request_data'));
-//     }
+    public function get_update_completion()
+    {
+        return view('admin_employee.update_completion');
+    }
      /**
       * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
       * 新規登録画面取得
