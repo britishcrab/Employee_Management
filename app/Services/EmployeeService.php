@@ -5,16 +5,32 @@
 
     class EmployeeService
     {
-        public function fetch_all(){
-            return \App\Models\Employee::all();
+        /**
+         * @return Employee[]|\Illuminate\Database\Eloquent\Collection
+         * 従業員の全件取得
+         */
+        public function fetch_all()
+        {
+            return Employee::all();
         }
 
-        public function fetch($id){
-            return \App\Models\Employee::find($id);
+        /**
+         * @param $id
+         * @return mixed
+         * 特定の従業員の取得
+         */
+        public function fetch($id)
+        {
+            return Employee::find($id);
         }
 
-        public function delete($id){
-            $employee = \App\Models\Employee::find($id);
+        /**
+         * @param $id
+         * 従業員の削除
+         */
+        public function delete($id)
+        {
+            $employee = $this->fetch($id);
 			$employee->delete();
 
 			return;
@@ -22,17 +38,28 @@
 
         /**
          * @param $data
+         * employeesの更新
          */
-        public function update($data){
+        public function update($data)
+        {
             $employee = $this->fetch($data['id']);
             $employee->fill($data);
             $employee->save();
 
-            $employee = $this->fetch($data['id']);
             return;
         }
 
-        public function lastInsertId(){
-            return \DB::getPdo()->lastInsertId();
+        /**
+         * @param $data
+         * @return mixed
+         * employeesに新規登録
+         */
+        public function create($data)
+        {
+            $create = new Employee;
+            $create->fill($data);
+            $create->save();
+
+            return $create->id;
         }
     }

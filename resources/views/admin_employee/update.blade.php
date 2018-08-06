@@ -24,24 +24,6 @@
                 名{!! Form::input('text', 'first_name', $employee['first_name'], ['required', 'class' => 'form-control', 'id' => 'name']) !!}
             </div>
         </div>
-        {{--<div class="form-group">--}}
-            {{--<label class="col-sm-3 control-label" for="birthday">生年月日：</label>--}}
-            {{--<div class="dateArea">--}}
-            {{--<div class="col-sm-9" id="birthday">--}}
-                 {{--{!! Form::text('birthday', str_replace ('-', '/', $employee['birthday']), array('id' => 'datepicker')) !!}--}}
-                {{--{{str_replace ('-', '/', $employee['birthday'])}}--}}
-            {{--</div>--}}
-            {{--</div>--}}
-            {{--<script type="text/javascript">--}}
-                {{--$(function () {--}}
-                    {{--var dateFormat = 'yy-mm-dd';--}}
-                    {{--$('.datepicker').datepicker({--}}
-                        {{--dateFormat: dateFormat--}}
-                    {{--});--}}
-                {{--});--}}
-            {{--</script>--}}
-        {{--</div>--}}
-
         <div class="form-group">
             <label class="col-sm-3 control-label" for="birthday">生年月日：</label>
             <div class="dateArea">
@@ -50,11 +32,6 @@
                 </div>
             </div>
         </div>
-
-
-
-
-
         <div class="form-group">
             <label class="col-sm-3 control-label" for="mail">メールアドレス：</label>
             <div class="col-sm-9" id="mail">
@@ -85,12 +62,33 @@
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-primary col-xs-5">実行</button>
+                <button type="button" class="btn btn-primary col-xs-5" data-toggle="modal" data-target="#modal-example">実行</button>
+                <div class="modal" id="modal-example" tabindex="-1">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                <h4 class="modal-title" id="modal-label">従業員情報更新</h4>
+                            </div>
+                            <div class="modal-body">
+                                更新が完了しました
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
+                                <button type="submit" class="btn btn-primary">保存</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 	{!! Form::close() !!}
                 <button type="button" class="btn btn-default col-xs-5" onclick="location.href='{{route('admin.get.list')}}'">取り消し</button>
             </div>
         </div>
     </div>
+
+
 
 
 @endsection
