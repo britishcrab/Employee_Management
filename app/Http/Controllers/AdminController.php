@@ -8,43 +8,118 @@ class AdminController extends Controller
 {
     protected $service;
 
-    function __construct(){
+    /**
+     * AdminController constructor.
+     */
+    function __construct()
+    {
         $this->service = new \App\Services\EmployeeService;
     }
 
-	public function get_home(Request $request){
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+	public function get_home(Request $request)
+    {
 		return view('admin_employee.home', $request);
 	}
 
-	public function get_list(){
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+	public function get_list()
+    {
 		$employees = $this->service->fetch_all();
-
 		return view('admin_employee.list', compact('employees'));
 	}
 
-//	public function get_delete(Request $request){
-//	    return view('employee.delete');
-//    }
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+	public function get_delete($id)
+    {
+		$employee = $this->service->fetch($id);
+	    return view('admin_employee.delete', compact('employee'));
+    }
 
-    public function post_delete(){
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function post_delete(Request $request)
+    {
+		$this->service->delete($request->id);
         return redirect()->route('admin.get.list');
     }
 
-    public function get_update(Request $request){
-        if(isset($_POST['update'])){
-            return view('admin_employee.update');
-        }
-        else{
-            return view('admin_employee.delete');
-        }
+    /**
+     * @param null $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function get_update($id=null)
+    {
+		$employee = $this->service->fetch($id);
+		return view('admin_employee.update', compact('employee'));
     }
 
-    public function post_update(Request $request){
-        return redirect()->route('admin.get.update.confirm', compact('request'));
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function post_update(Request $request)
+    {
+        $data = $request->all();
+        $update = $this->service->update($data);
+        return redirect()->route('admin.get.update.confirm', compact('update'));
+    }
+//    public function post_update(Request $request){
+//        return redirect()->route('admin.get.update.confirm', compact('request'));
+//    }
+     /**
+      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+      */
+    public function get_update_confirm()
+    {
+        $employees = $this->service->fetch_all();
+
+        return view('admin_employee.list', compact('employees'));
     }
 
-    public function get_update_confirm(Request $request){
-        $request_data = $request;
-        return view('admin_employee.update_comfirm', compact('request_data'));
+//     public function get_update_confirm(Request $request){
+//         $request_data = $request;
+//         return view('admin_employee.update_comfirm', compact('request_data'));
+//     }
+     /**
+      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+      * 新規登録画面取得
+      */
+     public function get_register ()
+     {
+        return view('admin_employee.register');
     }
+
+     /**
+      * @param Request $request
+      * @return \Illuminate\Http\RedirectResponse
+      * 新規登録して確認画面へリダイレクト
+      */
+     public function post_register (Request $request)
+     {
+         $data = $request->all();
+         $create = $this->service->create($data);
+         $id = $create;
+         return redirect()->route('admin.register.confirm.get', compact('id'));
+     }
+
+     /**
+      * @param $employee
+      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+      * 確認画面の表示
+      */
+     public function get_register_confirm (){
+        $employee = $this->service->fetch($_GET['id']);
+         return view('admin_employee.register_confirm', compact('employee'));
+     }
 }
