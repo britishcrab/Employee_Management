@@ -51,8 +51,8 @@
     {!! Form::close() !!}
     <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
-            <input class="btn btn-primary col-xs-5" type="button" onclick="location.href='{{route('admin.get.update', ['id' => $employee['id']])}}'" value="修正">
-            <button type="button" class="btn btn-default col-xs-5" onclick="location.href='{{route('admin.get.list')}}'">取り消し</button>
+            <input class="btn btn-primary col-xs-5" type="button" onclick="location.href='{{route('admin.register.completion')}}'" value="実行">
+            <input class="btn btn-default col-xs-5" type="button" onclick="location.href='{{route('admin.get.update', ['id' => $employee['id']])}}'" value="修正">
         </div>
     </div>
 </div>

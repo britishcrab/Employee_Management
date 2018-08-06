@@ -18,6 +18,9 @@ Route::get('laravel', function () {
 Route::get('/', function(){
 	return view('top');
 })->name('top');
+Route::get('/login', function(){
+    return view('login');
+})->name('login');
 
 Route::prefix('admin')->group(function () {
     Route::get('get/home', 'AdminController@get_home')->name('admin.get.home');
@@ -32,6 +35,7 @@ Route::prefix('admin')->group(function () {
     Route::get('register', 'AdminController@get_register')->name('admin.register.get');
     Route::post('register.post', 'AdminController@post_register')->name('admin.register.post');
     Route::get('register/confirm', 'AdminController@get_register_confirm')->name('admin.register.confirm.get');
+    Route::get('register.completion', 'AdminController@get_register_completion')->name('admin.register.completion');
 });
 
 Route::prefix('admin/report')->group(function () {
@@ -42,10 +46,10 @@ Route::prefix('admin/report')->group(function () {
 });
 
 Route::prefix('report/')->group(function () {
-    Route::get('home/get', 'ReportController@get_home')->name('report.home.get');
-    Route::get('create/get', 'ReportController@get_create')->name('report.create.get');
+    Route::get('home', 'ReportController@get_home')->name('report.home.get');
+    Route::get('create', 'ReportController@get_create')->name('report.create.get');
     Route::post('create/post', 'ReportController@post_create')->name('report.create.post');
-    Route::get('create/confirm/get', 'ReportController@get_create_confirm')->name('report.create.confirm.get');
+    Route::get('create/confirm/{report_id}', 'ReportController@get_create_confirm')->name('report.create.confirm.get');
     Route::post('create/send/post', 'ReportController@post_create_send')->name('report.create.send.post');
     Route::get('create/done/get', 'ReportController@get_create_done')->name('report.create.done.get');
     Route::get('list/get', 'ReportController@get_list')->name('report.list.get');

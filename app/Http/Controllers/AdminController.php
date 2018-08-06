@@ -130,4 +130,9 @@ class AdminController extends Controller
         $employee = $this->service->fetch($_GET['id']);
          return view('admin_employee.register_confirm', compact('employee'));
      }
+
+    public function get_register_completion()
+    {
+        return view('admin_employee.register_completion');
+    }
 }

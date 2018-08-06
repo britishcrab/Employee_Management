@@ -13,6 +13,18 @@
     <!-- Bootstrap読み込み（スタイリングのため） -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
 
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js" type="text/javascript" language="javascript"></script>
+    <script type="text/javascript">
+        //// datapirckerのフォーマット変更
+        $(function() {
+            $("#datepicker").datepicker();
+            $('#datepicker').datepicker("option", "dateFormat", 'yy/mm/dd' );
+            $('#datepicker .date').datepicker({
+                language: 'ja'
+            });
+        });
+    </script>
 </head>
 <body>
 <nav class="navbar navbar-default navbar-static-top">
@@ -41,6 +53,22 @@
 </div>
 <!-- Scripts -->
 <script src="{{ asset('js/app.js') }}"></script>
-
 </body>
+<script>
+    $(function(){
+        //Default
+        $('#datepicker-default .date').datepicker({
+            format: "yyyy年mm月dd日",
+            language: 'ja'
+        });
+
+    });
+</script>
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+<script>
+    $(function() {
+        $( "#datepicker" ).datepicker();
+    });
+</script>
 </html>

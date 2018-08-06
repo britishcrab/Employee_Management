@@ -6,56 +6,59 @@ use Illuminate\Http\Request;
 
 class ReportController extends Controller
 {
-    protected $employee_list = [
-        ['employee_id' => '0001',
-            'last_name' => '田中',
-            'first_name' => '幸也',
-            'role'  => '社員'],
-        ['employee_id' => '0002',
-            'last_name' => '山田',
-            'first_name' => '義明',
-            'role'  => '役員'],
-    ];
-    protected $reports = [
-        ['report_id' => '0001',
-            'title' => '2018/06/28日報',
-            'text' => '2018/06/28の日報を提出します。',
-            'comment'  => '',
-            'created_at' => '2018/06/28',
-            'deleted_at'  => 'null'],
-        ['report_id' => '0002',
-            'title' => '2018/06/15日報',
-            'text' => '2018/06/15の日報を提出します。',
-            'comment'  => 'コメントコメントこめんと',
-            'created_at' => '2018/06/15',
-            'deleted_at'  => 'null'],
-    ];
+    protected $service;
 
-    public function get_home(){
+    function __construct()
+    {
+        $this->service = new \App\Services\ReportService;
+    }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * レポートトップ画面表示
+     */
+    public function get_home()
+    {
         return view('report.home');
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * レポート新規作成画面表示
+     */
     public function get_create(){
         return view('report.create');
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     * dbに登録　-> 確認画面表示
+     */
     public function post_create(Request $request){
-        $request_data = $request->all();
+        $report = $request->all();
+        $report_id = $this->service->create($report);
 
-        return redirect()->route('report.create.confirm.get', $request_data);
+        return redirect()->route('report.create.confirm.get', compact('report_id'));
     }
 
     public function get_create_confirm(){
-        $report_data = $_GET;
-        if(!isset($report_data['title'])){
-            $report_data['title'] ="default";
-        }
-        if(!isset($report_data['text'])){
-            $report_data['text'] ="default";
-        }
+        var_dump($id);
+        exit;
 
         return view('report.create_confirm', compact('report_data'));
     }
+//    public function get_create_confirm(){
+//        $report_data = $_GET;
+//        if(!isset($report_data['title'])){
+//            $report_data['title'] ="default";
+//        }
+//        if(!isset($report_data['text'])){
+//            $report_data['text'] ="default";
+//        }
+//
+//        return view('report.create_confirm', compact('report_data'));
+//    }
 
     public function post_create_send(Request $request){
         $create_data = $request->all();

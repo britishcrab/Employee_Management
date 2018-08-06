@@ -13,15 +13,25 @@
         <div class="col-sm-12">
             <label class="col-sm-2 control-label" for="date">日付</label>
             <div class="col-sm-10" id="date">
-                {{ Form::date('date', \Carbon\Carbon::now()) }}
+                {{Form::text('birthday', '', ['id' => 'datepicker'])}}
             </div>
         </div>
+        <script type="text/javascript">
+            //// datapirckerのフォーマット変更
+            $(function() {
+                $("#datepicker").datepicker();
+                $('#datepicker').datepicker("option", "dateFormat", 'yy-mm-dd' );
+                $('#datepicker .date').datepicker({
+                    language: 'ja'
+                });
+            });
+        </script>
 
         <div class="col-sm-12">
             <label class="col-sm-2 control-label" for="title">タイトル</label>
             <div class="col-sm-10" id="title">
                 @if(isset($create_data))
-                    {{Form::text('title', $value = "old('text')")}}
+                    {{Form::text('title', $value = $create_data['title'])}}
                 @else
                     {{Form::text('title')}}
                 @endif
@@ -34,7 +44,7 @@
                 @if(isset($create_data))
                     <textarea  name="text" rows="10" class="form-control" id="textarea"> {{ $create_data['text'] }} </textarea>
                 @else
-                    <textarea  name="text" placeholder="複数行に渡るテキストを入力できる。" rows="10" class="form-control" id="textarea"></textarea>
+                    <textarea  name="text" rows="10" class="form-control" id="textarea"></textarea>
                 @endif
             </div>
         </div>

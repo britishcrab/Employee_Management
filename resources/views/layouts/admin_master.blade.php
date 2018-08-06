@@ -22,8 +22,6 @@
             $('#datepicker').datepicker("option", "dateFormat", 'yy/mm/dd' );
         });
     </script>
-
-
 </head>
 <body>
 <nav class="navbar navbar-default navbar-static-top">
