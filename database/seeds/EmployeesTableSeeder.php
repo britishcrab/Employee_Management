@@ -22,7 +22,7 @@ class EmployeesTableSeeder extends Seeder
                 'last_name' =>$faker->lastName() ,
                 'first_name' => $faker->firstName(),
                 'mail' => $faker->email(),
-                'password' => "password.$i",
+                'password' => Hash::make( "password.$i"),
                 'birthday' => $faker->date($format='Y-m-d',$max='now'),
                 'role_id' => $faker->randomElement($role_id)
             ]);

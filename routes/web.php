@@ -18,9 +18,6 @@ Route::get('laravel', function () {
 Route::get('/', function(){
 	return view('top');
 })->name('top');
-Route::get('/login', function(){
-    return view('login');
-})->name('login');
 
 Route::prefix('admin')->group(function () {
     Route::get('get/home', 'AdminController@get_home')->name('admin.get.home');
@@ -33,7 +30,7 @@ Route::prefix('admin')->group(function () {
     Route::get('update.confirm/{id}', 'AdminController@get_update_confirm')->name('admin.update.confirm.get');
     Route::get('update.completion', 'AdminController@get_update_completion')->name('admin.update.completion.get');
     Route::get('register', 'AdminController@get_register')->name('admin.register.get');
-    Route::post('register.post', 'AdminController@post_register')->name('admin.register.post');
+    Route::post('register', 'AdminController@post_register')->name('admin.register.post');
     Route::get('register/confirm', 'AdminController@get_register_confirm')->name('admin.register.confirm.get');
     Route::get('register.completion', 'AdminController@get_register_completion')->name('admin.register.completion');
 });
@@ -45,7 +42,7 @@ Route::prefix('admin/report')->group(function () {
     Route::post('content/comment/post', 'AdminReportController@post_comment')->name('admin_report.comment.post');
 });
 
-Route::prefix('report/')->group(function () {
+Route::prefix('report')->group(function () {
     Route::get('home', 'ReportController@get_home')->name('report.home.get');
     Route::get('create', 'ReportController@get_create')->name('report.create.get');
     Route::post('create/post', 'ReportController@post_create')->name('report.create.post');
@@ -56,4 +53,9 @@ Route::prefix('report/')->group(function () {
     Route::post('content/post', 'ReportController@post_content')->name('report.content.post');
     Route::post('delete/post', 'ReportController@post_delete')->name('report.delete.post');
     Route::get('delete/done/get', 'ReportController@get_delete_done')->name('report.delete.done.get');
+});
+
+Route::prefix('auth')->group(function () {
+    Route::get('signin', 'AuthenticationController@getSignin')->name('signin');
+    Route::post('signin', 'AuthenticationController@postSignin')->name('signin.post');
 });

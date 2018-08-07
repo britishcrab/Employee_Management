@@ -8,6 +8,10 @@ class ReportController extends Controller
 {
     protected $service;
 
+    /**
+     * ReportController constructor.
+     * EmployeeServiceのインスタンス化
+     */
     function __construct()
     {
         $this->service = new \App\Services\ReportService;

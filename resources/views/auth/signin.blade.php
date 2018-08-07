@@ -8,7 +8,7 @@
                     <h2 class="panel-heading">ログイン</h2>
 
                     <div class="panel-body">
-                        {!! Form::open(['url' => route('login'), 'class' =>"form-horizontal"]) !!}
+                        {!! Form::open(['url' => route('signin.post'), 'class' =>"form-horizontal"]) !!}
 
                         <div class="form-group{{ $errors->has('mail') ? ' has-error' : '' }}">
                             <label for="mail" class="col-md-4 control-label">メールアドレス</label>
@@ -43,9 +43,9 @@
                                 <button type="submit" class="btn btn-primary">
                                     ログイン
                                 </button>
-                                <a class="btn btn-link" href="{{ route('login') }}">
-                                    新規登録
-                                </a>
+                                {{--<a class="btn btn-link" href="{{ route('login') }}">--}}
+                                    {{--新規登録--}}
+                                {{--</a>--}}
                             </div>
                         </div>
                         {!! Form::close() !!}

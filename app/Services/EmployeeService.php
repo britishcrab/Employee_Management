@@ -2,6 +2,7 @@
     namespace App\Services;
 
     use App\Models\Employee;
+    use Illuminate\Support\Facades\Hash;
 
     class EmployeeService
     {
@@ -43,7 +44,7 @@
         public function update($data)
         {
             $employee = $this->fetch($data['id']);
-            $employee->fill($data);
+            $employee->fill(['password' => Hash::make($data['password'])]);
             $employee->save();
 
             return;
@@ -57,7 +58,7 @@
         public function create($data)
         {
             $create = new Employee;
-            $create->fill($data);
+            $create->fill(['password' => Hash::make($data['password'])]);
             $create->save();
 
             return $create->id;

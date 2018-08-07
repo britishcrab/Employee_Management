@@ -17,7 +17,7 @@ class CreateEmployeesTable extends Migration
             $table->increments('id');
             $table->string('last_name', 10);
             $table->string('first_name', 10);
-            $table->string('mail');
+            $table->string('mail')->unique();
             $table->string('password');
             $table->date('birthday');
             $table->tinyInteger('role_id');
