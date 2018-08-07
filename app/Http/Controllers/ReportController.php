@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Services\EmployeeService;
 use App\Services\ReportService;
+use App\Http\Requests\ReportPost;
 
 class ReportController extends Controller
 {
@@ -34,7 +35,15 @@ class ReportController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * レポート新規作成画面表示
      */
-    public function get_create(){
+    public function get_create($status = null){
+        if(isset($status))
+        {
+            $rerurn_data['employee_id'] = $value = session('employee_id');
+            $rerurn_data['title'] = $value = session('title');
+            $rerurn_data['content'] = $value = session('content');
+            $rerurn_data['created_at'] = $value = session('created_at');
+            return view('report.create', compact('rerurn_data'));
+        }
         return view('report.create');
     }
 
@@ -53,8 +62,7 @@ class ReportController extends Controller
 //
 //        return redirect()->route('report.create.confirm.get', compact('report_id'));
 //    }
-    public function post_create(Request $request){
-        $id = $request->session()->get('employee_id');
+    public function post_create(ReportPost $request){
         $report = $request->all();
         session(['title' => $report['title'], 'content' => $report['content'], 'created_at' => $report['created_at']]);
         return redirect()->route('report.create.confirm.get');
@@ -65,13 +73,16 @@ class ReportController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * 確認画面表示
      */
-//    public function get_create_confirm($report){
-//        $report_id = $this->report_service->create($report);
-//        $report = $this->report_service->fetch($report_id);
+//    public function get_create_confirm(){
+//        $report = session()->all();
 //        return view('report.create_confirm', compact('report'));
 //    }
     public function get_create_confirm(){
-        $report = session()->all();
+        $report['employee_id'] = $value = session('employee_id');
+        $report['title'] = $value = session('title');
+        $report['content'] = $value = session('content');
+        $report['created_at'] = $value = session('created_at');
+
         return view('report.create_confirm', compact('report'));
     }
 

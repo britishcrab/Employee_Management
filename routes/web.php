@@ -44,13 +44,13 @@ Route::prefix('admin/report')->group(function () {
 
 Route::prefix('report')->group(function () {
     Route::get('home', 'ReportController@get_home')->name('report.home.get');
-    Route::get('create', 'ReportController@get_create')->name('report.create.get');
+    Route::get('create/{status?}', 'ReportController@get_create')->name('report.create.get');
     Route::post('create', 'ReportController@post_create')->name('report.create.post');
-    Route::get('create/confirm', 'ReportController@get_create_confirm')->name('report.create.confirm.get');
-    Route::post('create/confirm', 'ReportController@post_create_confirm')->name('report.create.confirm.post');
-    Route::get('create/completion', 'ReportController@get_create_completion')->name('report.create.completion.get');
-    Route::get('list/get', 'ReportController@get_list')->name('report.list.get');
-    Route::post('content/post', 'ReportController@post_content')->name('report.content.post');
+    Route::get('create.confirm', 'ReportController@get_create_confirm')->name('report.create.confirm.get');
+    Route::post('create.confirm', 'ReportController@post_create_confirm')->name('report.create.confirm.post');
+    Route::get('create.completion', 'ReportController@get_create_completion')->name('report.create.completion.get');
+    Route::get('list.get', 'ReportController@get_list')->name('report.list.get');
+    Route::post('content.post', 'ReportController@post_content')->name('report.content.post');
     Route::post('delete/post', 'ReportController@post_delete')->name('report.delete.post');
     Route::get('delete/done/get', 'ReportController@get_delete_done')->name('report.delete.done.get');
 });

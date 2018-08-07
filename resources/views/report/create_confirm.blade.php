@@ -37,7 +37,7 @@
             {!! Form::close() !!}
         </div>
         <div class="btn-group col-sm-6">
-            <input class="btn btn-primary btn-group-lg col-sm-8" type="submit" onclick="location.href='{{route('top')}}'" value="編集に戻る">
+            <input class="btn btn-primary btn-group-lg col-sm-8" type="submit" onclick="location.href='{{route('report.create.get')}}'" name="status" value="編集に戻る">
         </div>
     </div>
 @endsection
