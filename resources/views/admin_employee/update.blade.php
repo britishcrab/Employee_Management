@@ -41,13 +41,15 @@
         <div class="form-group">
             <label class="col-sm-3 control-label" for="password">パスワード：</label>
             <div class="form-inline col-sm-9">
-                <input type="password" class="form-control" id="password" name="password" value="{{$employee['password']}}">
+                {{--<input type="password" class="form-control" id="password" name="password" value="{{$employee['password']}}">--}}
+                <input type="password" class="form-control" id="password" name="password">
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-3 control-label" for="password_comfirm">パスワード(確認)：</label>
             <div class="form-inline col-sm-9">
-                <input type="password" class="form-control" id="password_comfirm" name="password_confirmation" value="{{$employee['password']}}">
+                {{--<input type="password" class="form-control" id="password_comfirm" name="password_confirmation" value="{{$employee['password']}}">--}}
+                <input type="password" class="form-control" id="password_comfirm" name="password_confirmation">
             </div>
         </div>
         <div class="form-group" >
