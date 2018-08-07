@@ -15,6 +15,11 @@
             $create->fill($data);
             $create->save();
 
-            return $create->id;
+            return;
+        }
+
+        public function fetch($id)
+        {
+            return Report::find($id);
         }
     }

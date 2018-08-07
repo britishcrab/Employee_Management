@@ -58,8 +58,9 @@
          */
         public function create($data)
         {
+            $data['password'] = Hash::make($data['password']);
             $create = new Employee;
-            $create->fill(['password' => Hash::make($data['password'])]);
+            $create->fill($data);
             $create->save();
 
             return $create->id;

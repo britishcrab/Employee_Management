@@ -1,5 +1,10 @@
 @extends('layouts.admin_master')
 
+@section('title', 'signin')
+
+@section('sidebar')
+@endsection
+
 @section('content')
     @if(isset($status))
         <div class="col-md-8 col-md-offset-4"><h2>ログインに失敗しました</h2></div>

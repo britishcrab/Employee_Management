@@ -13,7 +13,7 @@
         <div class="col-sm-12">
             <label class="col-sm-2 control-label" for="date">日付</label>
             <div class="col-sm-10" id="date">
-                {{Form::text('birthday', '', ['id' => 'datepicker'])}}
+                {{Form::text('created_at', '', ['id' => 'datepicker'])}}
             </div>
         </div>
         <script type="text/javascript">
@@ -42,9 +42,9 @@
             <label class="col-sm-2 control-label" for="textarea">本文</label>
             <div class="col-sm-10">
                 @if(isset($create_data))
-                    <textarea  name="text" rows="10" class="form-control" id="textarea"> {{ $create_data['text'] }} </textarea>
+                    <textarea  name="content" rows="10" class="form-control" id="textarea"> {{ $create_data['text'] }} </textarea>
                 @else
-                    <textarea  name="text" rows="10" class="form-control" id="textarea"></textarea>
+                    <textarea  name="content" rows="10" class="form-control" id="textarea"></textarea>
                 @endif
             </div>
         </div>

@@ -1,5 +1,4 @@
 @extends('layouts.admin_master')
-
 @section('title', 'Employee update')
 
 @section('sidebar')

@@ -20,10 +20,11 @@ class AuthenticationService
         if($this->employee->where('mail', $mail)->exists())
         {
             $employee = Employee::where('mail', $mail)->first();
+            $id = $employee->id;
             $hashedPassword = $employee->password;
             if (Hash::check($password, $hashedPassword))
             {
-                return true;
+                return $id;
             }else
             {
                 return false;

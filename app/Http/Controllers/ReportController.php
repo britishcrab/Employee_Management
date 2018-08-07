@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Services\EmployeeService;
+use App\Services\ReportService;
 
 class ReportController extends Controller
 {
-    protected $service;
+    protected $report_service;
+    protected $employee_service;
 
     /**
      * ReportController constructor.
@@ -14,7 +17,8 @@ class ReportController extends Controller
      */
     function __construct()
     {
-        $this->service = new \App\Services\ReportService;
+        $this->report_service = new ReportService;
+        $this->employee_service = new EmployeeService;
     }
 
     /**
@@ -34,47 +38,71 @@ class ReportController extends Controller
         return view('report.create');
     }
 
+
+
     /**
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
-     * dbに登録　-> 確認画面表示
+     * セッションに格納　-> get_create_confirm()へリダイレクト
      */
-    public function post_create(Request $request){
-        $report = $request->all();
-        $report_id = $this->service->create($report);
-
-        return redirect()->route('report.create.confirm.get', compact('report_id'));
-    }
-
-    public function get_create_confirm(){
-        var_dump($id);
-        exit;
-
-        return view('report.create_confirm', compact('report_data'));
-    }
-//    public function get_create_confirm(){
-//        $report_data = $_GET;
-//        if(!isset($report_data['title'])){
-//            $report_data['title'] ="default";
-//        }
-//        if(!isset($report_data['text'])){
-//            $report_data['text'] ="default";
-//        }
+//    public function post_create(Request $request){
+//        $id = $request->session()->get('employee_id');
+//        $report = $request->all();
+//        $report['employee_id'] = $id;
+//        $report_id = $this->report_service->create($report);
 //
-//        return view('report.create_confirm', compact('report_data'));
+//        return redirect()->route('report.create.confirm.get', compact('report_id'));
 //    }
-
-    public function post_create_send(Request $request){
-        $create_data = $request->all();
-        if(isset($create_data['send'])) {
-            return redirect()->route('report.create.done.get');
-        }else{
-            return view('report.create', compact('create_data'));
-        }
+    public function post_create(Request $request){
+        $id = $request->session()->get('employee_id');
+        $report = $request->all();
+        session(['title' => $report['title'], 'content' => $report['content'], 'created_at' => $report['created_at']]);
+        return redirect()->route('report.create.confirm.get');
     }
 
-    public function get_create_done(){
-        return view('report.create_done');
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * 確認画面表示
+     */
+//    public function get_create_confirm($report){
+//        $report_id = $this->report_service->create($report);
+//        $report = $this->report_service->fetch($report_id);
+//        return view('report.create_confirm', compact('report'));
+//    }
+    public function get_create_confirm(){
+        $report = session()->all();
+        return view('report.create_confirm', compact('report'));
+    }
+
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     * dbに登録して完了画面へ
+     */
+//    public function post_create_send(Request $request){
+//        $create_data = $request->all();
+//        if(isset($create_data['send'])) {
+//            return redirect()->route('report.create.done.get');
+//        }else{
+//            return view('report.create', compact('create_data'));
+//        }
+//    }
+    public function post_create_confirm(Request $request){
+        return redirect()->route('report.create.completion.get');
+    }
+
+
+
+    public function get_create_completion(){
+        $report['employee_id'] = $value = session('employee_id');
+        $report['title'] = $value = session('title');
+        $report['content'] = $value = session('content');
+        $report['created_at'] = $value = session('created_at');
+        $this->report_service->create($report);
+
+        return view('report.create_completion');
     }
 
     public function get_list(){

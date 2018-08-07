@@ -27,12 +27,19 @@ class AuthenticationController extends Controller
         return view('auth.signin');
     }
 
+    /**
+     * @param SigninPost $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * ログイン画面の入力値をAuthenticationServiceに投げて
+     * パスワードとメールアドレスが一致すれば社員IDが帰ってくる
+     */
     public function postSignin(SigninPost $request)
     {
         $input_data = $request->all();
         $check = $this->auth_service->Signin($input_data);
         if($check)
         {
+            session(['employee_id' => $check]);
             return view('top');
         }else
         {
