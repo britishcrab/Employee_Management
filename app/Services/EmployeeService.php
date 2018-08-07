@@ -43,8 +43,9 @@
          */
         public function update($data)
         {
+            $data['password'] = Hash::make($data['password']);
             $employee = $this->fetch($data['id']);
-            $employee->fill(['password' => Hash::make($data['password'])]);
+            $employee->fill($data);
             $employee->save();
 
             return;
