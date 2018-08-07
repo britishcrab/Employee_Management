@@ -17,14 +17,20 @@ class AuthenticationService
     {
         $mail = $input_data['mail'];
         $password = $input_data['password'];
-        $employee = Employee::where('mail', $mail)->first();
-        $hashedPassword = $employee->password;
-        if (Hash::check($password, $hashedPassword))
+        if($this->employee->where('mail', $mail)->exists())
         {
-            return true;
+            $employee = Employee::where('mail', $mail)->first();
+            $hashedPassword = $employee->password;
+            if (Hash::check($password, $hashedPassword))
+            {
+                return true;
+            }else
+            {
+                return false;
+            }
         }else
         {
-            return false;
+            false;
         }
     }
 }

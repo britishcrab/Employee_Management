@@ -13,7 +13,7 @@ class SigninPost extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,9 +24,24 @@ class SigninPost extends FormRequest
     public function rules()
     {
         return [
-            'mail' => 'required|unique|email',
-            'password' => 'required|unique:posts|max:255',
+            'mail' => 'required|email',
+            'password' => 'required|max:16',
             //
+        ];
+    }
+
+    /**
+     * 定義済みバリデーションルールのエラーメッセージ取得
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'mail.required' => 'メールアドレスが入力されていません',
+            'mail.email' => '有効なメールアドレスを入力してください',
+            'password.required'  => 'パスワードが入力されていません',
+            'password.max'  => 'パスワードは16文字以内で入力してください',
         ];
     }
 }

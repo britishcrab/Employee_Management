@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\SigninPost;
 
 class AuthenticationController extends Controller
 {
@@ -26,7 +27,7 @@ class AuthenticationController extends Controller
         return view('auth.signin');
     }
 
-    public function postSignin(Request $request)
+    public function postSignin(SigninPost $request)
     {
         $input_data = $request->all();
         $check = $this->auth_service->Signin($input_data);
@@ -35,7 +36,7 @@ class AuthenticationController extends Controller
             return view('top');
         }else
         {
-            return view('auth.signin');
+            return view('auth.signin', ['status' => '']);
         }
     }
 }

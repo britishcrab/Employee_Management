@@ -1,6 +1,9 @@
 @extends('layouts.admin_master')
 
 @section('content')
+    @if(isset($status))
+        <div class="col-md-8 col-md-offset-4"><h2>ログインに失敗しました</h2></div>
+    @endif
     <div class="container">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
@@ -43,9 +46,6 @@
                                 <button type="submit" class="btn btn-primary">
                                     ログイン
                                 </button>
-                                {{--<a class="btn btn-link" href="{{ route('login') }}">--}}
-                                    {{--新規登録--}}
-                                {{--</a>--}}
                             </div>
                         </div>
                         {!! Form::close() !!}
