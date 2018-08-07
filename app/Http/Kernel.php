@@ -38,6 +38,16 @@ class Kernel extends HttpKernel
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
 
+        'admin' => [
+            \App\Http\Middleware\Verification::class,
+        ],
+        'Officer' => [
+            \App\Http\Middleware\Verification::class,
+        ],
+        'employee' => [
+            \App\Http\Middleware\Verification::class,
+        ],
+
         'api' => [
             'throttle:60,1',
             'bindings',
