@@ -64,3 +64,8 @@ Route::prefix('auth')->group(function () {
     Route::get('signin', 'AuthenticationController@getSignin')->name('signin');
     Route::post('signin', 'AuthenticationController@postSignin')->name('signin.post');
 });
+
+Route::get('mail/preview', function () {
+    return new App\Mail\MailTest;
+});
+Route::get('mail/testsend', 'MailController@testmail');
