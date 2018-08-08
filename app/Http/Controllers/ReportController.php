@@ -35,15 +35,15 @@ class ReportController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * レポート新規作成画面表示
      */
-    public function get_create($status = null){
-        if(isset($status))
-        {
-            $rerurn_data['employee_id'] = $value = session('employee_id');
-            $rerurn_data['title'] = $value = session('title');
-            $rerurn_data['content'] = $value = session('content');
-            $rerurn_data['created_at'] = $value = session('created_at');
-            return view('report.create', compact('rerurn_data'));
-        }
+    public function get_create(){
+//        if(isset($status))
+//        {
+//            $rerurn_data['employee_id'] = $value = session('employee_id');
+//            $rerurn_data['title'] = $value = session('title');
+//            $rerurn_data['content'] = $value = session('content');
+//            $rerurn_data['created_at'] = $value = session('created_at');
+//            return view('report.create', compact('rerurn_data'));
+//        }
         return view('report.create');
     }
 
