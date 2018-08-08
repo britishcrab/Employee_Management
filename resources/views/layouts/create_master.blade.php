@@ -11,22 +11,24 @@
     {{Form::open(['url' => route('report.create.post'), 'class' =>"form-horizontal"])}}
     <div class="form-group">
         <div class="col-sm-12">
-            <div class="form-group{{ $errors->has('created_at') ? ' has-error' : '' }}">
-                <label class="col-sm-2 control-label" for="date">日付</label>
-                <div class="col-sm-10" id="date">
-                    @yield('date_form')
+            <div class="col-sm-12">
+                <div class="form-group{{ $errors->has('created_at') ? ' has-error' : '' }}">
+                    <label class="col-sm-2 control-label" for="date">日付</label>
+                    <div class="col-sm-10" id="date">
+                        @yield('date_form')
+                    </div>
                 </div>
-            </div>
-            <script type="text/javascript">
-                //// datapirckerのフォーマット変更
-                $(function() {
-                    $("#datepicker").datepicker();
-                    $('#datepicker').datepicker("option", "dateFormat", 'yy-mm-dd' );
-                    $('#datepicker .date').datepicker({
-                        language: 'ja'
+                <script type="text/javascript">
+                    //// datapirckerのフォーマット変更
+                    $(function() {
+                        $("#datepicker").datepicker();
+                        $('#datepicker').datepicker("option", "dateFormat", 'yy-mm-dd' );
+                        $('#datepicker .date').datepicker({
+                            language: 'ja'
+                        });
                     });
-                });
-            </script>
+                </script>
+            </div>
 
             <div class="col-sm-12">
                 <div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">
@@ -41,19 +43,22 @@
                         @endif
                     </div>
                 </div>
+            </div>
 
-                <div class="col-sm-12">
-                    <div class="form-group{{ $errors->has('content') ? ' has-error' : '' }}">
-                        <label class="col-sm-2 control-label" for="textarea">本文</label>
-                        <div class="col-sm-10">
-                            @yield('content_form')
+            <div class="col-sm-12">
+                <div class="form-group{{ $errors->has('content') ? ' has-error' : '' }}">
+                    <label class="col-sm-2 control-label" for="textarea">本文</label>
+                    <div class="col-sm-10">
+                        @yield('content_form')
 
-                            @if ($errors->has('content'))
-                                <span class="help-block">
+                        @if ($errors->has('content'))
+                            <span class="help-block">
                                         <strong>{{ $errors->first('content') }}</strong>
                                     </span>
-                            @endif
-                        </div>
+                        @endif
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <div class="btn-group col-sm-12">
