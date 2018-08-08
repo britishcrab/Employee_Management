@@ -31,17 +31,24 @@
                 </div>
 
                 <div class="col-sm-12">
+                    <div class="form-group{{ $errors->has('comment') ? ' has-error' : '' }}">
                     <label class="col-sm-2 control-label" for="textarea">コメント</label>
                 {{Form::open(['url' => route('admin_report.comment.post'), 'class' =>"form-horizontal"])}}
                     {{Form::hidden('report_id', $content['id'])}}
                     <div class="col-sm-10" id="textarea">
                         @yield('comment_form')
+
+                        @if ($errors->has('comment'))
+                            <span class="help-block">
+                                        <strong>{{ $errors->first('comment') }}</strong>
+                                    </span>
+                        @endif
                     </div>
                 </div>
                 <div class="form-inline col-lg-offset-2">
                     <div><input class="btn btn-primary btn-group-lg col-sm-4" type="submit" value="送信"></div>
                     {{Form::close()}}
-                    <div><input class="btn btn-default btn-group-lg col-sm-4" onclick="location.href='{{route('top')}}'" type="submit" value="戻る"></div>
+                    <div><input class="btn btn-default btn-group-lg col-sm-4" onclick="location.href='{{route('admin_report.list.get')}}'" type="submit" value="戻る"></div>
                 </div>
             </div>
 @endsection

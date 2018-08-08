@@ -33,11 +33,16 @@
                 <div class="col-sm-12">
                     <label class="col-sm-2 control-label" for="textarea">コメント</label>
                     <div class="col-sm-10" id="textarea">
-                        @if($content['comment'] != "")
-                            <p class="lead">{{$content['comment']}}</p>
-                        @else
-                            <p class="lead">コメントはありません</p>
-                        @endif
+                        {{var_dump($content)}}
+                        {{--@if(isset($content->comment->comment))--}}
+                            {{--@foreach($content->comment->comment as $comment)--}}
+                            {{--<p class="lead">{{$content->comment->comment}}</p>--}}
+                            {{--@endforeach--}}
+                        {{--@else--}}
+                            {{--@foreach($content->comment->comment as $comment)--}}
+                            {{--<p class="lead">{{$comment}}</p>--}}
+                            {{--@endforeach--}}
+                        {{--@endif--}}
                     </div>
                 </div>
             </div>

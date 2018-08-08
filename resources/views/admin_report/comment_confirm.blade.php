@@ -17,12 +17,12 @@
         </div>
     <div class="btn-group col-sm-12">
         <div class="btn-group col-sm-6">
-            {!! Form::open(['url' => route('report.comment.confirm.post'), 'class' =>"form-horizontal"]) !!}
+            {!! Form::open(['url' => route('admin_report.comment.confirm.post'), 'class' =>"form-horizontal"]) !!}
             <input class="btn btn-primary btn-group-lg col-sm-8" type="submit" name="send" value="送信">
             {!! Form::close() !!}
         </div>
         <div class="btn-group col-sm-6">
-            <input class="btn btn-default btn-group-lg col-sm-8" type="submit" onclick="location.href='{{route('report.modification.get')}}'" name="status" value="編集に戻る">
+            <input class="btn btn-default btn-group-lg col-sm-8" type="submit" onclick="location.href='{{route('admin_report.comment.modification.get')}}'" name="status" value="編集に戻る">
         </div>
     </div>
 @endsection

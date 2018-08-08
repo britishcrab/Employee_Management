@@ -13,7 +13,7 @@ class Report extends Model
         return $this->belongsTo('\App\Models\Employee');
     }
 
-    public function report()
+    public function comment()
     {
         return $this->hasMany('App\Models\Comment');
     }

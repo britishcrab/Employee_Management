@@ -40,7 +40,9 @@ Route::prefix('admin/report')->group(function () {
     Route::get('content/{report_id}', 'AdminReportController@getContent')->name('admin_report.content.get');
     Route::post('comment', 'AdminReportController@postComment')->name('admin_report.comment.post');
     Route::get('comment.confirm', 'AdminReportController@getConfirm')->name('admin_report.comment.confirm.get');
+    Route::get('comment.modification', 'AdminReportController@getModification')->name('admin_report.comment.modification.get');
     Route::post('comment.confirm', 'AdminReportController@postConfirm')->name('admin_report.comment.confirm.post');
+    Route::get('comment.completion', 'AdminReportController@getCompletion')->name('admin_report.comment.completion.get');
 });
 
 Route::prefix('report')->group(function () {
