@@ -8,11 +8,11 @@ use App\Mail\MailTest;
 
 class MailController extends Controller
 {
-    public function testmail()
+    public function ComentMailSend($name, $mail)
     {
-        $name = 'nisida yuya';
-        $text = 'testメールの送信。';
-        $to = 'yuya.nishida@axas-japan.co.jp';
+//        $name = 'nisida yuya';
+        $text = '';
+        $to = $mail;
         Mail::to($to)->send(new MailTest($name, $text));
     }
     //

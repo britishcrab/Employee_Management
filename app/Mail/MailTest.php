@@ -32,8 +32,8 @@ class MailTest extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.sample')
-            ->text('mails.sample')
+        return $this->view('mails.comment_post')
+            ->text('')
             ->subject('$this->title')
             ->with([
                 'text'=>$this->text,

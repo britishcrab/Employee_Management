@@ -91,6 +91,8 @@ class AdminReportController extends Controller
         $comment['report_id'] = session('report_id');
         $comment['comment'] = session('comment');
         $this->admin_report_service->comment($comment);
+        $mail = new \App\Http\Controllers\MailController;
+        $mail->ComentMailSend();
         return view('admin_report.comment_completion');
     }
 }
