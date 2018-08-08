@@ -7,9 +7,9 @@
 @endsection
 
 @section('title_form')
-    {{Form::text('title')}}
+    {{Form::text('title', $value = $rerurn_data['title'])}}
 @endsection
 
 @section('content_form')
-    <textarea  name="content" rows="10" class="form-control" id="textarea"></textarea>
+    <textarea  name="content" rows="10" class="form-control" id="textarea"> {{ $rerurn_data['content'] }} </textarea>
 @endsection

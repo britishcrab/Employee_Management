@@ -26,7 +26,7 @@ class ReportController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * レポートトップ画面表示
      */
-    public function get_home()
+    public function getHome()
     {
         return view('report.home');
     }
@@ -35,15 +35,8 @@ class ReportController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * レポート新規作成画面表示
      */
-    public function get_create(){
-//        if(isset($status))
-//        {
-//            $rerurn_data['employee_id'] = $value = session('employee_id');
-//            $rerurn_data['title'] = $value = session('title');
-//            $rerurn_data['content'] = $value = session('content');
-//            $rerurn_data['created_at'] = $value = session('created_at');
-//            return view('report.create', compact('rerurn_data'));
-//        }
+    public function getCreate()
+    {
         return view('report.create');
     }
 
@@ -54,15 +47,7 @@ class ReportController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      * セッションに格納　-> get_create_confirm()へリダイレクト
      */
-//    public function post_create(Request $request){
-//        $id = $request->session()->get('employee_id');
-//        $report = $request->all();
-//        $report['employee_id'] = $id;
-//        $report_id = $this->report_service->create($report);
-//
-//        return redirect()->route('report.create.confirm.get', compact('report_id'));
-//    }
-    public function post_create(ReportPost $request){
+    public function postCreate(ReportPost $request){
         $report = $request->all();
         session(['title' => $report['title'], 'content' => $report['content'], 'created_at' => $report['created_at']]);
         return redirect()->route('report.create.confirm.get');
@@ -73,11 +58,7 @@ class ReportController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * 確認画面表示
      */
-//    public function get_create_confirm(){
-//        $report = session()->all();
-//        return view('report.create_confirm', compact('report'));
-//    }
-    public function get_create_confirm(){
+    public function getCreateConfirm(){
         $report['employee_id'] = $value = session('employee_id');
         $report['title'] = $value = session('title');
         $report['content'] = $value = session('content');
@@ -90,23 +71,32 @@ class ReportController extends Controller
     /**
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
-     * dbに登録して完了画面へ
+     * get_create_completionへリダイレクト
      */
-//    public function post_create_send(Request $request){
-//        $create_data = $request->all();
-//        if(isset($create_data['send'])) {
-//            return redirect()->route('report.create.done.get');
-//        }else{
-//            return view('report.create', compact('create_data'));
-//        }
-//    }
-    public function post_create_confirm(Request $request){
+    public function postCreateConfirm()
+    {
         return redirect()->route('report.create.completion.get');
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * 日報の修正画面へ遷移
+     */
+    public function getModification()
+    {
+            $rerurn_data['employee_id'] = $value = session('employee_id');
+            $rerurn_data['title'] = $value = session('title');
+            $rerurn_data['content'] = $value = session('content');
+            $rerurn_data['created_at'] = $value = session('created_at');
+            return view('report.modification', compact('rerurn_data'));
+    }
 
-
-    public function get_create_completion(){
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * 日報作成完了画面表示
+     */
+    public function getCreateCompletion()
+    {
         $report['employee_id'] = $value = session('employee_id');
         $report['title'] = $value = session('title');
         $report['content'] = $value = session('content');
@@ -116,25 +106,61 @@ class ReportController extends Controller
         return view('report.create_completion');
     }
 
-    public function get_list(){
-        $reports = $this->reports;
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * 日報一覧画面表示
+     */
+    public function getList()
+    {
+        $employee_id = session('employee_id');
+        $reports = $this->report_service->fetch_all($employee_id);
 
         return view('report.list', compact('reports'));
     }
-    public function post_content(Request $request){
-        $content = $request->all();
-        if(isset($_POST['delete'])){
-            return view('report.delete', compact('content'));
-        }
+
+    /**
+     * @param $report_id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * 日報詳細表示
+     */
+    public function getCcontent($report_id)
+    {
+        $content = $this->report_service->fetch($report_id);
         return view('report.content', compact('content'));
     }
 
-    public function post_delete(){
-        return redirect()->route('report.delete.done.get');
+    /**
+     * @param $report_id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * 日報削除画面表示
+     */
+    public function getDelete($report_id)
+    {
+        $content = $this->report_service->fetch($report_id);
+        return view('report.delete', compact('content'));
     }
 
-    public function get_delete_done(){
-        return view('report.delete_done');
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     * report_idをセッションに格納して
+     * getDeleteCompletionにリダイレクト
+     */
+    public function postDelete(Request $request)
+    {
+        $report_id = $request->report_id;
+        session(['report_id' => $report_id]);
+        return redirect()->route('report.delete.completion.get');
     }
-    //
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * 日報削除完了画面表示
+     */
+    public function getDeleteCompletion()
+    {
+        $report_id = session('report_id');
+        $this->report_service->delete($report_id);
+        return view('report.delete_completion');
+    }
 }

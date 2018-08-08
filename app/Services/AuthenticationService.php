@@ -6,18 +6,18 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthenticationService
 {
-    protected $employee;
+    protected $employees;
 
     function __construct()
     {
-        $this->employee = new Employee;
+        $this->employees = new Employee;
     }
 
     public function Signin($input_data)
     {
         $mail = $input_data['mail'];
         $password = $input_data['password'];
-        if($this->employee->where('mail', $mail)->exists())
+        if($this->employees->where('mail', $mail)->exists())
         {
             $employee = Employee::where('mail', $mail)->first();
             $id = $employee->id;

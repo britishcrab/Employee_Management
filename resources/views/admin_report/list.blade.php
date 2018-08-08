@@ -17,20 +17,14 @@
                     <th></th>
                 </tr>
         @foreach($reports as $row)
-            {{Form::open(['url' => route('admin_report.content.post'), 'class' =>"form-horizontal"])}}
-                    {{Form::hidden('created_at', $row['created_at'])}}
-                    {{Form::hidden('title', $row['title'])}}
-                    {{Form::hidden('text', $row['text'])}}
-                    {{Form::hidden('comment', $row['comment'])}}
                 <tr>
-                    <td height="10">{{ $row['name'] }}</td>
+                    <td height="10">{{ $row->employee->last_name }} {{ $row->employee->first_name }}</td>
                     <td height="10">{{ $row['created_at'] }}</td>
                     <td height="10">{{ $row['title'] }}</td>
                     <td height="10">
-                        <button type="submit" class="btn btn-secondary">詳細</button>
+                        <button type="submit" class="btn btn-secondary" onclick="location.href='{{route('admin_report.content.get', ['report_id' => $row['id']])}}'">詳細</button>
                     </td>
                 </tr>
-            {{Form::close()}}
         @endforeach
             </table>
             </div>

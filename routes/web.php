@@ -36,23 +36,26 @@ Route::prefix('admin')->group(function () {
 });
 
 Route::prefix('admin/report')->group(function () {
-    Route::get('home/get', 'AdminReportController@get_list')->name('admin_report.list.get');
-    Route::post('content/post', 'AdminReportController@post_content')->name('admin_report.content.post');
-    Route::get('content/post', 'AdminReportController@post_content')->name('admin_report.content.get');
-    Route::post('content/comment/post', 'AdminReportController@post_comment')->name('admin_report.comment.post');
+    Route::get('home', 'AdminReportController@getList')->name('admin_report.list.get');
+    Route::get('content/{report_id}', 'AdminReportController@getContent')->name('admin_report.content.get');
+    Route::post('comment', 'AdminReportController@postComment')->name('admin_report.comment.post');
+    Route::get('comment.confirm', 'AdminReportController@getConfirm')->name('admin_report.comment.confirm.get');
+    Route::post('comment.confirm', 'AdminReportController@postConfirm')->name('admin_report.comment.confirm.post');
 });
 
 Route::prefix('report')->group(function () {
-    Route::get('home', 'ReportController@get_home')->name('report.home.get');
-    Route::get('create/{status?}', 'ReportController@get_create')->name('report.create.get');
-    Route::post('create', 'ReportController@post_create')->name('report.create.post');
-    Route::get('create.confirm', 'ReportController@get_create_confirm')->name('report.create.confirm.get');
-    Route::post('create.confirm', 'ReportController@post_create_confirm')->name('report.create.confirm.post');
-    Route::get('create.completion', 'ReportController@get_create_completion')->name('report.create.completion.get');
-    Route::get('list.get', 'ReportController@get_list')->name('report.list.get');
-    Route::post('content.post', 'ReportController@post_content')->name('report.content.post');
-    Route::post('delete/post', 'ReportController@post_delete')->name('report.delete.post');
-    Route::get('delete/done/get', 'ReportController@get_delete_done')->name('report.delete.done.get');
+    Route::get('home', 'ReportController@getHome')->name('report.home.get');
+    Route::get('create/{status?}', 'ReportController@getCreate')->name('report.create.get');
+    Route::post('create', 'ReportController@postCreate')->name('report.create.post');
+    Route::get('create.confirm', 'ReportController@getCreateConfirm')->name('report.create.confirm.get');
+    Route::post('create.confirm', 'ReportController@postCreateConfirm')->name('report.create.confirm.post');
+    Route::get('create.modification', 'ReportController@getModification')->name('report.modification.get');
+    Route::get('create.completion', 'ReportController@getCreateCompletion')->name('report.create.completion.get');
+    Route::get('list', 'ReportController@getList')->name('report.list.get');
+    Route::get('content/{report_id}', 'ReportController@getCcontent')->name('report.content.get');
+    Route::get('content.delete/{report_id}', 'ReportController@getDelete')->name('report.delete.get');
+    Route::post('delete', 'ReportController@postDelete')->name('report.delete.post');
+    Route::get('delete.confirm', 'ReportController@getDeleteCompletion')->name('report.delete.completion.get');
 });
 
 Route::prefix('auth')->group(function () {

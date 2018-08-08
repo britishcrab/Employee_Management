@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Comment extends Model
 {
+    protected $fillable = ['report_id', 'employee_id', 'comment'];
+
     public function report()
     {
         return $this->belongsTo('App\Models\Report');
@@ -15,5 +17,4 @@ class Comment extends Model
     {
         return $this->belongsTo('App\Models\Employee');
     }
-    //
 }

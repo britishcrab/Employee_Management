@@ -8,7 +8,7 @@ class Report extends Model
 {
     protected $fillable = ['employee_id', 'title', 'content', 'created_at'];
 
-    public function employees()
+    public function employee()
     {
         return $this->belongsTo('\App\Models\Employee');
     }
