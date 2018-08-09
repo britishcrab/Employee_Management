@@ -16,7 +16,7 @@ class Verification
      */
     public function handle($request, Closure $next)
     {
-        if(!Auth::check())
+        if(!isset(session('signin')))
         {
             return redirect(route('signin'));
         }

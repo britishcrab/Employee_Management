@@ -21,9 +21,9 @@ class AdminController extends Controller
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-	public function get_home(Request $request)
+	public function get_home()
     {
-		return view('admin_employee.home', $request);
+		return view('admin_employee.home');
 	}
 
     /**

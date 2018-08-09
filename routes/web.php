@@ -36,7 +36,7 @@ Route::prefix('admin')->group(function () {
 });
 
 Route::prefix('admin/report')->group(function () {
-    Route::get('home', 'AdminReportController@getList')->name('admin_report.list.get');
+    Route::get('/', 'AdminReportController@getList')->name('admin_report.list.get');
     Route::get('content/{report_id}', 'AdminReportController@getContent')->name('admin_report.content.get');
     Route::post('comment', 'AdminReportController@postComment')->name('admin_report.comment.post');
     Route::get('comment.confirm', 'AdminReportController@getConfirm')->name('admin_report.comment.confirm.get');
@@ -63,6 +63,8 @@ Route::prefix('report')->group(function () {
 Route::prefix('auth')->group(function () {
     Route::get('signin', 'AuthenticationController@getSignin')->name('signin');
     Route::post('signin', 'AuthenticationController@postSignin')->name('signin.post');
+    Route::get('signout', 'AuthenticationController@getSignout')->name('signout');
+    Route::get('signout.send', 'AuthenticationController@postSignout')->name('signout.post');
 });
 
 Route::get('mail/preview', function () {
