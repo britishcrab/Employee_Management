@@ -10,10 +10,6 @@ class MailController extends Controller
 {
     public function ComentMailSend($name, $mail)
     {
-//        $name = 'nisida yuya';
-        $text = '';
-        $to = $mail;
-        Mail::to($to)->send(new MailTest($name, $text));
+        Mail::to($mail)->send(new MailTest($name));
     }
-    //
 }

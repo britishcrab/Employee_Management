@@ -5,14 +5,17 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Services\AdminReportService;
 use App\Http\Requests\CommentPost;
+use App\Services\EmployeeService;
 
 class AdminReportController extends Controller
 {
     protected $admin_report_service;
+    protected $employee_service;
 
     function __construct()
     {
         $this->admin_report_service = new AdminReportService;
+        $this->employee_service = new EmployeeService;
     }
 
     /**
@@ -87,11 +90,13 @@ class AdminReportController extends Controller
      */
     public function getCompletion()
     {
+        var_dump(session()->all());
+        exit;
         $comment['employee_id'] = session('employee_id');
         $comment['report_id'] = session('report_id');
         $comment['comment'] = session('comment');
         $this->admin_report_service->comment($comment);
-        $a = $this->admin_report_service->test($comment['report_id']);
+        $name = $this->employee_service->fetch($comment['employee_id']);
         $mail = new \App\Http\Controllers\MailController;
         $mail->ComentMailSend();
         return view('admin_report.comment_completion');

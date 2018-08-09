@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
  use Illuminate\Http\Request;
+ use App\Http\Requests\EmployeeRegister;
 
 class AdminController extends Controller
 {
@@ -113,7 +114,7 @@ class AdminController extends Controller
       * @return \Illuminate\Http\RedirectResponse
       * 新規登録して確認画面へリダイレクト
       */
-     public function post_register (Request $request)
+     public function post_register (EmployeeRegister $request)
      {
          $data = $request->all();
          $create = $this->service->create($data);

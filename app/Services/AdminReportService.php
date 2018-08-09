@@ -36,13 +36,4 @@ class AdminReportService
         $create->save();
         return;
     }
-
-
-    public function test($report_id)
-    {
-
-        $report = new Report;
-        var_dump($report);
-        exit;
-    }
 }

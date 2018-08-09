@@ -11,17 +11,18 @@ class MailTest extends Mailable
 {
     use Queueable, SerializesModels;
 
+    protected $name;
     protected $title;
-    protected $text;
+
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($name = 'test', $text = 'testtest')
+    public function __construct($name = 'test')
     {
-        $this->title = sprintf('%sさんがコメントしました。', $name);
-        $this->text = $text;
+        $this->name = $name;
+        $this->title = sprintf('%sさんがコメントしました。', $name);;
         //
     }
 
@@ -32,11 +33,10 @@ class MailTest extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.comment_post')
-            ->text('')
+        return $this->view('mails.comment_post_plain')
             ->subject('$this->title')
             ->with([
-                'text'=>$this->text,
+                'name'=>$this->name,
             ]);
     }
 }
