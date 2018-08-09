@@ -3,6 +3,7 @@
 
     use App\Models\Employee;
     use Illuminate\Support\Facades\Hash;
+    use App\Models\Role;
 
     class EmployeeService
     {
@@ -10,9 +11,15 @@
          * @return Employee[]|\Illuminate\Database\Eloquent\Collection
          * 従業員の全件取得
          */
-        public function fetch_all()
+        public function FetchAll()
         {
             return Employee::all();
+        }
+
+        public function FetchRestrict($role_id1, $role_id2)
+        {
+            $employees = Employee::where('role_id', $role_id1)->orWhere('role_id', $role_id2)->get();
+            return $employees;
         }
 
         /**
@@ -64,5 +71,12 @@
             $create->save();
 
             return $create->id;
+        }
+
+        public function FetchRoleid($employee_id)
+        {
+            $employee = $this->fetch($employee_id);
+            $role_id = $employee->role_id;
+            return $role_id;
         }
     }

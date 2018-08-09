@@ -3,9 +3,9 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Support\Facades\Auth;
+use \App\Services\EmployeeService;
 
-class Verification
+class Role
 {
     /**
      * Handle an incoming request.
@@ -16,9 +16,12 @@ class Verification
      */
     public function handle($request, Closure $next)
     {
-        if(empty(session('signin')))
+        $employee_id = session('employee_id');
+        $service = new EmployeeService;
+        $role_id = $service->FetchRoleid($employee_id);
+        if($role_id == 3)
         {
-            return redirect(route('signin'));
+            return redirect()->route('report.home.get');
         }
         return $next($request);
     }

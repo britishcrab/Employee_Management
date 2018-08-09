@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\SigninPost;
+use App\Services\AuthenticationService;
 
 class AuthenticationController extends Controller
 {
@@ -15,7 +16,7 @@ class AuthenticationController extends Controller
      */
     function __construct()
     {
-        $this->auth_service = new \App\Services\AuthenticationService;
+        $this->auth_service = new AuthenticationService;
     }
 
     /**

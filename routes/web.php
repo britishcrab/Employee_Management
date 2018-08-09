@@ -17,9 +17,9 @@ Route::get('laravel', function () {
 
 Route::get('/', function(){
 	return view('top');
-})->name('top');
+})->middleware('signin', 'role')->name('top');
 
-Route::prefix('admin')->group(function () {
+Route::prefix('admin')->middleware('signin', 'role')->group(function () {
     Route::get('home', 'AdminController@get_home')->name('admin.get.home');
     Route::get('list', 'AdminController@get_list')->name('admin.get.list');
     Route::post('delete', 'AdminController@post_delete')->name('admin.delete.post');
@@ -46,7 +46,7 @@ Route::prefix('admin/report')->group(function () {
 });
 
 Route::prefix('report')->group(function () {
-    Route::get('home', 'ReportController@getHome')->name('report.home.get');
+    Route::get('/', 'ReportController@getHome')->name('report.home.get');
     Route::get('create/{status?}', 'ReportController@getCreate')->name('report.create.get');
     Route::post('create', 'ReportController@postCreate')->name('report.create.post');
     Route::get('create.confirm', 'ReportController@getCreateConfirm')->name('report.create.confirm.get');

@@ -4,17 +4,18 @@ namespace App\Http\Controllers;
 
  use Illuminate\Http\Request;
  use App\Http\Requests\EmployeeRegister;
+ use \App\Services\EmployeeService;
 
 class AdminController extends Controller
 {
-    protected $service;
+    protected $employee_service;
 
     /**
      * AdminController constructor.
      */
     function __construct()
     {
-        $this->service = new \App\Services\EmployeeService;
+        $this->employee_service = new EmployeeService;
     }
 
     /**
@@ -29,11 +30,21 @@ class AdminController extends Controller
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-	public function get_list()
-    {
-		$employees = $this->service->fetch_all();
-		return view('admin_employee.list', compact('employees'));
-	}
+     public function get_list()
+     {
+        $role_id = $this->employee_service->FetchRoleid(session('employee_id'));
+        switch ($role_id)
+        {
+            case 1:
+                $employees = $this->employee_service->FetchAll();
+                break;
+            case 2:
+                $employees = $this->employee_service->FetchRestrict(2, 3);
+                break;
+        }
+         return view('admin_employee.list', compact('employees'));
+     }
+
 
     /**
      * @param $id
@@ -41,7 +52,7 @@ class AdminController extends Controller
      */
 	public function get_delete($id)
     {
-		$employee = $this->service->fetch($id);
+		$employee = $this->employee_service->fetch($id);
 	    return view('admin_employee.delete', compact('employee'));
     }
 
@@ -51,7 +62,7 @@ class AdminController extends Controller
      */
     public function post_delete(Request $request)
     {
-		$this->service->delete($request->id);
+		$this->employee_service->delete($request->id);
         return redirect()->route('admin.delete.completion');
     }
 
@@ -66,7 +77,7 @@ class AdminController extends Controller
      */
     public function get_update($id=null)
     {
-		$employee = $this->service->fetch($id);
+		$employee = $this->employee_service->fetch($id);
 		return view('admin_employee.update', compact('employee'));
     }
 
@@ -77,7 +88,7 @@ class AdminController extends Controller
     public function post_update(Request $request)
     {
         $data = $request->all();
-        $this->service->update($data);
+        $this->employee_service->update($data);
         $id = $data['id'];
         return redirect()->route('admin.update.confirm.get', compact('id'));
     }
@@ -87,7 +98,7 @@ class AdminController extends Controller
       */
     public function get_update_confirm($id)
     {
-        $employee = $this->service->fetch($id);
+        $employee = $this->employee_service->fetch($id);
 
         return view('admin_employee.update_comfirm', compact('employee'));
     }
@@ -117,7 +128,7 @@ class AdminController extends Controller
      public function post_register (EmployeeRegister $request)
      {
          $data = $request->all();
-         $create = $this->service->create($data);
+         $create = $this->employee_service->create($data);
          $id = $create;
          return redirect()->route('admin.register.confirm.get', compact('id'));
      }
@@ -128,7 +139,7 @@ class AdminController extends Controller
       * 確認画面の表示
       */
      public function get_register_confirm (){
-        $employee = $this->service->fetch($_GET['id']);
+        $employee = $this->employee_service->fetch($_GET['id']);
          return view('admin_employee.register_confirm', compact('employee'));
      }
 
