@@ -92,12 +92,19 @@
             <div class="form-group{{ $errors->has('role_id') ? ' has-error' : '' }}">
                 <label class="col-sm-3 control-label" for="role_id">役職：</label>
                 <div class="form-group"  id="role_id">
-                    <select name="role_id">
-                        <option value="">選択</option>
-                        <option value="1">管理</option>
-                        <option value="2">役員</option>
-                        <option value="3">社員</option>
-                    </select>
+                    @if(session('my_role_id') == 1)
+                        <select name="role_id">
+                            <option value="">選択</option>
+                            <option value="1">管理</option>
+                            <option value="2">役員</option>
+                            <option value="3">社員</option>
+                        </select>
+                    @else
+                        <select name="role_id">
+                            <option value="">選択</option>
+                            <option value="3">社員</option>
+                        </select>
+                    @endif
                     @if ($errors->has('role_id'))
                         <span class="help-block col-sm-offset-4">
                                         <strong>{{ $errors->first('role_id') }}</strong>

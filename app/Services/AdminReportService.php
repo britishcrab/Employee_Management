@@ -9,10 +9,13 @@ class AdminReportService
     /**
      * @return Report[]|\Illuminate\Database\Eloquent\Collection
      * 日報の全件取得
+     * 登録日の降順にソート
+     *
      */
     public function fetch_all()
     {
-        return Report::all();
+        $reports = Report::orderBy('created_at','ASC')->get();
+        return $reports;
     }
 
     /**

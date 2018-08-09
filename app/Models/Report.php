@@ -10,7 +10,7 @@ class Report extends Model
 
     public function employee()
     {
-        return $this->belongsTo('\App\Models\Employee');
+        return $this->belongsTo('App\Models\Employee');
     }
 
     public function comment()

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Employee;
 use Illuminate\Http\Request;
 use App\Services\AdminReportService;
 use App\Http\Requests\CommentPost;
@@ -10,10 +11,12 @@ use App\Services\EmployeeService;
 class AdminReportController extends Controller
 {
     protected $admin_report_service;
+    protected $employee_service;
 
     function __construct()
     {
         $this->admin_report_service = new AdminReportService;
+        $this->employee_service = new EmployeeService;
     }
 
     /**
@@ -22,17 +25,6 @@ class AdminReportController extends Controller
      */
     public function getList()
     {
-//        $role_id = $this->employee_service->FetchRoleid(session('employee_id'));
-//        switch ($role_id)
-//        {
-//            case 1:
-//                $reports = $this->admin_report_service->fetch_all();
-//                break;
-//            case 2:
-//                $reports = $this->employee_service->FetchRestrict($role_id);
-//                break;
-//        }
-
         $reports = $this->admin_report_service->fetch_all();
         return view('admin_report.list', compact('reports'));
     }

@@ -5,12 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Services\EmployeeService;
 use App\Services\ReportService;
+use App\Services\CommentService;
 use App\Http\Requests\ReportPost;
 
 class ReportController extends Controller
 {
     protected $report_service;
     protected $employee_service;
+    protected $comment_service;
 
     /**
      * ReportController constructor.
@@ -20,6 +22,7 @@ class ReportController extends Controller
     {
         $this->report_service = new ReportService;
         $this->employee_service = new EmployeeService;
+        $this->comment_service = new CommentService;
     }
 
     /**
@@ -126,6 +129,8 @@ class ReportController extends Controller
     public function getCcontent($report_id)
     {
         $content = $this->report_service->fetch($report_id);
+        $is_comment = $this->comment_service->isComment($report_id);
+        $content['is_comment'] = $is_comment;
         return view('report.content', compact('content'));
     }
 

@@ -12,7 +12,7 @@
                 <div class="col-sm-12">
                     <label class="col-sm-2 control-label" for="date">日付</label>
                     <div class="col-sm-10" id="date">
-                        <p class="lead">{{ $content['created_at'] }}</p>
+                        <p class="lead">{{ date('Y-m-d', strtotime($content['created_at'])) }}</p>
                     </div>
                 </div>
 
@@ -33,16 +33,13 @@
                 <div class="col-sm-12">
                     <label class="col-sm-2 control-label" for="textarea">コメント</label>
                     <div class="col-sm-10" id="textarea">
-                        {{var_dump($content)}}
-                        {{--@if(isset($content->comment->comment))--}}
-                            {{--@foreach($content->comment->comment as $comment)--}}
-                            {{--<p class="lead">{{$content->comment->comment}}</p>--}}
-                            {{--@endforeach--}}
-                        {{--@else--}}
-                            {{--@foreach($content->comment->comment as $comment)--}}
-                            {{--<p class="lead">{{$comment}}</p>--}}
-                            {{--@endforeach--}}
-                        {{--@endif--}}
+                        @if($content['is_comment'])
+                            @foreach($content->comment as $a)
+                                <p class="lead">{{$a->comment}}</p>
+                            @endforeach
+                        @else
+                            <p class="lead">コメントはありません</p>
+                        @endif
                     </div>
                 </div>
             </div>

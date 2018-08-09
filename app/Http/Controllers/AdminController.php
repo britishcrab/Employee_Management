@@ -29,6 +29,11 @@ class AdminController extends Controller
 
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * 自身のrole_idを取得
+     * 自身のrole_idをsessionに格納
+     * 自身のrole_idが１(管理者)なら全員の日報を取得
+     * 自身のrole_idが２(役員)なら役員と社員の日報を取得
+     * 一覧画面に渡して表示
      */
      public function get_list()
      {

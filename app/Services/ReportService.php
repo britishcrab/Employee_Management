@@ -39,11 +39,13 @@
 
         /**
          * @return Report[]|\Illuminate\Database\Eloquent\Collection
-         * ログインしている従業員の日報の全件取得
+         * 自身の日報の全件取得
          */
         public function fetch_all($employee_id)
         {
-            $reports = Report::where('employee_id', $employee_id)->get();
+//            $reports = Report::where('employee_id', $employee_id)->get();
+//            return $reports;
+            $reports = Report::where('employee_id', $employee_id)->orderBy('created_at', 'ASC')->get();
             return $reports;
         }
 
