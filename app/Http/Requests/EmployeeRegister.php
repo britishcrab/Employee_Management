@@ -28,8 +28,8 @@ class EmployeeRegister extends FormRequest
             'first_name' => 'required',
             'birthday' => 'required|date',
             'mail' => 'required|email|unique:employees,mail',
-            'password' => 'required|between:6,16',
-            'password_confirmation' => 'required|',
+            'password' => 'required|confirmed|between:6,16',
+            'password_confirmation' => 'required',
             'role_id' => 'required',
         ];
     }
@@ -50,9 +50,9 @@ class EmployeeRegister extends FormRequest
             'mail.email' => '有効なメールアドレスを入力してください',
             'mail.unique' => '入力されたメールアドレスは使用されています',
             'password.required' => 'パスワードを入力してください',
+            'password.confirmed' => 'パスワードが一致しません',
             'password.between' => 'パスワードは６から１６文字で設定してください',
             'password_confirmation.required' => '確認用のパスワードを入力してください',
-            'password_confirmation.confirmed' => 'パスワードが一致しません',
             'role_id.required' => '役職を選択してください',
         ];
     }

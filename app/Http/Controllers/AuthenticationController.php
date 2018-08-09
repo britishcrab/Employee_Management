@@ -42,7 +42,7 @@ class AuthenticationController extends Controller
         {
             session()->regenerate();
             session(['employee_id' => $check, 'signin' => 1]);
-            return view('top');
+            return redirect()->route('top');
         }else
         {
             return view('auth.signin', ['status' => '']);
