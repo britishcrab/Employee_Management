@@ -36,6 +36,8 @@ class AdminReportController extends Controller
      */
     public function getContent($report_id){
         $content = $this->admin_report_service->fetch($report_id);
+        $receiver = $content->employee_id;
+        session(['receiver' => $receiver]);
         return view('admin_report.content', compact('content'));
     }
 
@@ -86,19 +88,24 @@ class AdminReportController extends Controller
 
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * commentsへ格納して完了画面表示
+     * commentsへ格納
+     * -> 自身の名前取得
+     * -> 日報の作成者のメールアドレス取得
+     * -> 日報の作成者にコメントがついた旨のメール送信
+     * -> 完了画面表示
      */
     public function getCompletion()
     {
-        var_dump(session()->all());
-        exit;
         $comment['employee_id'] = session('employee_id');
         $comment['report_id'] = session('report_id');
         $comment['comment'] = session('comment');
         $this->admin_report_service->comment($comment);
-        $name = $this->employee_service->fetch($comment['employee_id']);
+        $sender = $this->employee_service->fetch($comment['employee_id']);
+        $sender_name = $sender->last_name;
+        $receiver = $this->employee_service->fetch(session('receiver'));;
+        $mail_to = $receiver->mail;
         $mail = new \App\Http\Controllers\MailController;
-        $mail->ComentMailSend();
+        $mail->ComentMailSend($sender_name, $mail_to);
         return view('admin_report.comment_completion');
     }
 }

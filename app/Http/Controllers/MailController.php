@@ -8,8 +8,10 @@ use App\Mail\MailTest;
 
 class MailController extends Controller
 {
-    public function ComentMailSend($name, $mail)
+    public function ComentMailSend($sender_name, $mail_to)
     {
-        Mail::to($mail)->send(new MailTest($name));
+        $name = $sender_name;
+        $to = $mail_to;
+        Mail::to($to)->send(new MailTest($name));
     }
 }
