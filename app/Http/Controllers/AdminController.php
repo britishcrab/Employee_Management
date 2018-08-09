@@ -33,6 +33,7 @@ class AdminController extends Controller
      public function get_list()
      {
         $role_id = $this->employee_service->FetchRoleid(session('employee_id'));
+        session(['my_role_id' => $role_id]);
         switch ($role_id)
         {
             case 1:

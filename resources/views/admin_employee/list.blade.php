@@ -22,18 +22,13 @@
        <td>{{ $row['last_name'] }}　{{ $row['first_name'] }}</td>
        <td>{{ $row->role->role_name }}</td>
        <td>
-        @switch(session('employee_id'))
-         @case(1)
+        @if(session('my_role_id') == 1)
          <input class="btn btn-secondary" type="button" onclick="location.href='{{route('admin.get.update', ['id' => $row['id']])}}'" value="更新">
          <input class="btn btn-secondary" type="button" onclick="location.href='{{route('admin.get.delete', ['id' => $row['id']])}}'" value="削除">
-         @break
-
-         @default
-         @if($row['role_id'] == 3)
-          <input class="btn btn-secondary" type="button" onclick="location.href='{{route('admin.get.update', ['id' => $row['id']])}}'" value="更新">
-          <input class="btn btn-secondary" type="button" onclick="location.href='{{route('admin.get.delete', ['id' => $row['id']])}}'" value="削除">
-         @endif
-        @endswitch
+        @elseif($row['role_id'] == 3)
+         <input class="btn btn-secondary" type="button" onclick="location.href='{{route('admin.get.update', ['id' => $row['id']])}}'" value="更新">
+         <input class="btn btn-secondary" type="button" onclick="location.href='{{route('admin.get.delete', ['id' => $row['id']])}}'" value="削除">
+        @endif
        </td>
       </tr>
      @endforeach
