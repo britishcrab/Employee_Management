@@ -91,7 +91,7 @@ class AdminController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function post_update(Request $request)
+    public function post_update(EmployeeRegister $request)
     {
         $data = $request->all();
         $this->employee_service->update($data);

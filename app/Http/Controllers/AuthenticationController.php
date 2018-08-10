@@ -59,8 +59,11 @@ class AuthenticationController extends Controller
 
         if (Auth::guard('original')
             ->attempt(['mail' => $mail, 'password' => $password])) {
-            $msg = 'seikou';
-            return $msg;
+            session()->regenerate();
+            $input_data = $request->all();
+            $check = $this->auth_service->Signin($input_data);
+            session(['employee_id' => $check, 'signin' => 1, 'id' => $check]);
+            return redirect()->route('top');
         } else {
             $msg = 'sippai';
             return $msg;
