@@ -32,8 +32,8 @@ Route::prefix('admin')->middleware('signin', 'role')->group(function () {
     Route::get('register', 'AdminController@getRegister')->name('admin.register.get');
     Route::post('register', 'AdminController@postRegister')->name('admin.register.post');
     Route::get('register/confirm', 'AdminController@getRegisterConfirm')->name('admin.register.confirm.get');
-    Route::post('register/confirm', 'AdminController@postRegisterConfirm')->name('admin.register.confirm.post');
-    Route::get('register.completion', 'AdminController@getRegisterCompletion')->name('admin.register.completion');
+    Route::post('register/confirm/post', 'AdminController@postRegisterConfirm')->name('admin.register.confirm.post');
+    Route::get('register.completion', 'AdminController@getRegisterCompletion')->name('admin.register.completion.get');
 });
 
 Route::prefix('admin/report')->group(function () {

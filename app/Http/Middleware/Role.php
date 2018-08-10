@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use \App\Services\EmployeeService;
+use Illuminate\Support\Facades\Auth;
 
 class Role
 {
@@ -16,9 +17,7 @@ class Role
      */
     public function handle($request, Closure $next)
     {
-        $employee_id = session('employee_id');
-        $service = new EmployeeService;
-        $role_id = $service->FetchRoleid($employee_id);
+        $role_id = Auth::user()->role_id;
         if($role_id == 3)
         {
             return redirect()->route('report.home.get');

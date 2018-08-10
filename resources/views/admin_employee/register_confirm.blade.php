@@ -51,8 +51,10 @@
     {!! Form::close() !!}
     <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
-            <input class="btn btn-primary col-xs-5" type="button" onclick="location.href='{{route('admin.register.confirm.post')}}'" value="実行">
-            <input class="btn btn-default col-xs-5" type="button" onclick="location.href='{{route('admin.get.update')}}'" value="修正">
+            {!! Form::open(['url' => route('admin.register.confirm.post'), 'class' =>"form-horizontal"])!!}
+            <input class="btn btn-primary col-xs-5" type="submit" value="実行">
+            {!! Form::close() !!}
+            <input class="btn btn-default col-xs-5" type="button" onclick="location.href='{{URL::previous()}}'" value="修正">
             {{--<input class="btn btn-default col-xs-5" type="button" onclick="location.href='{{route('admin.get.update', ['id' => $employee['id']])}}'" value="修正">--}}
         </div>
     </div>
