@@ -3,12 +3,10 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Employee extends Authenticatable
+class Employee extends Model
 {
     protected $fillable = ['last_name', 'first_name', 'mail', 'password', 'birthday', 'role_id'];
-    protected $hidden = ['password', 'remember_token',];
 
     public function report()
     {

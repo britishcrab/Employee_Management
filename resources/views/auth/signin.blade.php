@@ -9,6 +9,9 @@
     @if(isset($status))
         <div class="col-md-8 col-md-offset-4"><h2>ログインに失敗しました</h2></div>
     @endif
+    @isset($msg)
+        {{$msg}}
+        @endisset
     <div class="container">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
