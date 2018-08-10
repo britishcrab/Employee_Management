@@ -8,6 +8,7 @@
 @section('content')
     <h1>@yield('page_name')</h1>
     <div class="form-group lead">
+        @yield('form')
         {!! Form::open(['url' => route('admin.register.post'), 'class' =>"form-horizontal"])!!}
         <div class="form-group">
             <div class="form-group{{ $errors->has('last_name') ? ' has-error' : '' }}">
@@ -91,6 +92,7 @@
             <div class="form-group{{ $errors->has('role_id') ? ' has-error' : '' }}">
                 <label class="col-sm-3 control-label" for="role_id">役職：</label>
                 <div class="form-group"  id="role_id">
+                    @yield('role')
                     @if(session('my_role_id') == 1)
                         <select name="role_id">
                             <option value="">選択</option>

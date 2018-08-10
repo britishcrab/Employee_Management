@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
  use Illuminate\Http\Request;
  use App\Http\Requests\EmployeeRegister;
- use \App\Services\EmployeeService;
- use \App\Services\RoleService;
+ use App\Services\EmployeeService;
+ use App\Services\RoleService;
+ use App\Http\Requests\EmployeeUpdate;
 
 class AdminController extends Controller
 {
@@ -96,7 +97,7 @@ class AdminController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function postUpdate(EmployeeRegister $request)
+    public function postUpdate(EmployeeUpdate $request)
     {
         $data = $request->all();
         $this->employee_service->update($data);

@@ -27,6 +27,11 @@ class AuthenticationController extends Controller
      */
     public function getSignin()
     {
+        if (isset($_GET['status']))
+        {
+            $msg = "サインインに失敗しました";
+            return view('auth.signin', compact('msg'));
+        }
         return view('auth.signin');
     }
 
@@ -50,7 +55,7 @@ class AuthenticationController extends Controller
             session(['employee_id' => $check, 'id' => $check]);
             return redirect()->route('top');
         } else {
-            return redirect()->route('signin');
+            return redirect()->route('signin', ['status' => '']);
         }
     }
 

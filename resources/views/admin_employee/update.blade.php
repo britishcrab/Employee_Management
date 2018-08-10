@@ -8,6 +8,11 @@
 
 @section('page_name', '従業員情報更新')
 
+@section('form')
+    {!! Form::open(['url' => route('admin.update.post'), 'class' =>"form-horizontal"])!!}
+    {{Form::hidden('id', $employee['id'])}}
+@endsection
+
 @section('name')
     姓{!! Form::input('text', 'last_name', $employee['last_name'], ['required', 'class' => 'form-control', 'id' => 'name']) !!}
     名{!! Form::input('text', 'first_name', $employee['first_name'], ['required', 'class' => 'form-control', 'id' => 'name']) !!}
@@ -19,4 +24,8 @@
 
 @section('mail')
     {!! Form::input('text', 'mail', $employee['mail'], ['required', 'class' => 'form-control', 'id' => 'mail']) !!}
+@endsection
+
+@section('role')
+    {{$employee->role->role_name}}
 @endsection

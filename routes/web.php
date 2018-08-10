@@ -36,7 +36,7 @@ Route::prefix('admin')->middleware('signin', 'role')->group(function () {
     Route::get('register.completion', 'AdminController@getRegisterCompletion')->name('admin.register.completion.get');
 });
 
-Route::prefix('admin/report')->group(function () {
+Route::prefix('admin/report')->middleware('signin', 'role')->group(function () {
     Route::get('/', 'AdminReportController@getList')->name('admin_report.list.get');
     Route::get('content/{report_id}', 'AdminReportController@getContent')->name('admin_report.content.get');
     Route::post('comment', 'AdminReportController@postComment')->name('admin_report.comment.post');
@@ -46,7 +46,7 @@ Route::prefix('admin/report')->group(function () {
     Route::get('comment.completion', 'AdminReportController@getCompletion')->name('admin_report.comment.completion.get');
 });
 
-Route::prefix('report')->group(function () {
+Route::prefix('report')->middleware('signin')->group(function () {
     Route::get('/', 'ReportController@getHome')->name('report.home.get');
     Route::get('create/{status?}', 'ReportController@getCreate')->name('report.create.get');
     Route::post('create', 'ReportController@postCreate')->name('report.create.post');

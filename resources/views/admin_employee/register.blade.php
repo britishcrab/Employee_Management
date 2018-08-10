@@ -9,8 +9,7 @@
 @section('page_name', '従業員新規登録')
 
 @section('name')
-    姓{!! Form::input('text', 'last_name', '', ['required', 'class' => 'form-control', 'id' => 'name']) !!}
-    名{!! Form::input('text', 'first_name', '', ['required', 'class' => 'form-control', 'id' => 'name']) !!}
+    {!! Form::open(['url' => route('admin.register.post'), 'class' =>"form-horizontal"])!!}
 @endsection
 
 @section('birthday')
