@@ -14,6 +14,7 @@ class AdminController extends Controller
 
     /**
      * AdminController constructor.
+     * サービスクラスのインスタンス化
      */
     function __construct()
     {
@@ -24,6 +25,7 @@ class AdminController extends Controller
     /**
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * 管理画面の表示
      */
 	public function getHome()
     {
@@ -132,29 +134,21 @@ class AdminController extends Controller
      /**
       * @param Request $request
       * @return \Illuminate\Http\RedirectResponse
-      * 新規登録して確認画面へリダイレクト
+      * 入力値をセッションに格納して確認画面へリダイレクト
       */
      public function postRegister (EmployeeRegister $request)
      {
          $request_data = $request->all();
          $this->setSession($request_data);
          return redirect()->route('admin.register.confirm.get');
-
-//         $data = $request->all();
-//         $create = $this->employee_service->create($data);
-//         $id = $create;
-//         return redirect()->route('admin.register.confirm.get', compact('id'));
      }
 
      /**
       * @param $employee
       * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+      * セッションから値を取り出して
       * 確認画面の表示
       */
-//     public function getRegisterConfirm (){
-//        $employee = $this->employee_service->fetch($_GET['id']);
-//         return view('admin_employee.register_confirm', compact('employee'));
-//     }
     public function getRegisterConfirm (){
         $array = ['last_name', 'first_name', 'birthday', 'mail', 'password', 'role_id', 'a'];
         $new_employee = $this->setArray($array);
@@ -162,6 +156,19 @@ class AdminController extends Controller
         return view('admin_employee.register_confirm', compact('new_employee'));
     }
 
+    /**
+     * @return \Illuminate\Http\RedirectResponse
+     * getRegisterCompletionにリダイレクト
+     */
+    public function postRegisterConfirm()
+    {
+        return redirect()->route('admin.register.completion.get');
+    }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * dbに登録して完了画面表示
+     */
     public function getRegisterCompletion()
     {
         $array = ['last_name', 'first_name', 'birthday', 'mail', 'password', 'role_id', 'a'];
