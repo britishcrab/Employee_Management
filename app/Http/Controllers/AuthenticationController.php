@@ -47,7 +47,7 @@ class AuthenticationController extends Controller
             session()->regenerate();
             $input_data = $request->all();
             $check = $this->auth_service->Signin($input_data);
-            session(['employee_id' => $check, 'signin' => 1, 'id' => $check]);
+            session(['employee_id' => $check, 'id' => $check]);
             return redirect()->route('top');
         } else {
             return redirect()->route('signin');

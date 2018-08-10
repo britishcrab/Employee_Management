@@ -40,15 +40,20 @@ return [
     */
 
     'guards' => [
+//        'web' => [
+//            'driver' => 'session',
+//            'provider' => 'users',
+//        ],
         'web' => [
             'driver' => 'session',
-            'provider' => 'users',
+            'provider' => 'original',
         ],
 
         'api' => [
             'driver' => 'token',
             'provider' => 'users',
         ],
+
         'original' => [
             'driver' => 'session',
             'provider' => 'original',
@@ -75,7 +80,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => App\Models\Employee::class,
+            'model' => App\User::class,
         ],
         'original' => [
             'driver' => 'eloquent',

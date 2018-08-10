@@ -24,8 +24,8 @@ class EmployeeRegister extends FormRequest
     public function rules()
     {
         return [
-            'last_name' => 'required',
-            'first_name' => 'required',
+            'last_name' => 'required|between:1,10',
+            'first_name' => 'required|between:1,10',
             'birthday' => 'required|date',
             'mail' => 'required|email|unique:employees,mail',
             'password' => 'required|confirmed|between:6,16',
@@ -43,7 +43,9 @@ class EmployeeRegister extends FormRequest
     {
         return [
             'last_name.required' => '名前を入力してください',
+            'last_name.between' => '最大10文字です',
             'first_name.required' => '名前を入力してください',
+            'first_name.between' => '最大10文字です',
             'birthday.date' => '有効な日付を入力してください',
             'birthday.required' => '誕生日を入力してください',
             'mail.required' => 'メールアドレスを入力してください',

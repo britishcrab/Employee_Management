@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
  use Illuminate\Http\Request;
  use App\Http\Requests\EmployeeRegister;
  use \App\Services\EmployeeService;
+ use \App\Services\RoleService;
 
 class AdminController extends Controller
 {
     protected $employee_service;
+    protected $role_service;
 
     /**
      * AdminController constructor.
@@ -16,13 +18,14 @@ class AdminController extends Controller
     function __construct()
     {
         $this->employee_service = new EmployeeService;
+        $this->role_service = new RoleService;
     }
 
     /**
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-	public function get_home()
+	public function getHome()
     {
 		return view('admin_employee.home');
 	}
@@ -35,7 +38,7 @@ class AdminController extends Controller
      * 自身のrole_idが２(役員)なら役員と社員の日報を取得
      * 一覧画面に渡して表示
      */
-     public function get_list()
+     public function getList()
      {
         $role_id = $this->employee_service->FetchRoleid(session('employee_id'));
         session(['my_role_id' => $role_id]);
@@ -56,7 +59,7 @@ class AdminController extends Controller
      * @param $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-	public function get_delete($id)
+	public function getDelete($id)
     {
 		$employee = $this->employee_service->fetch($id);
 	    return view('admin_employee.delete', compact('employee'));
@@ -66,13 +69,13 @@ class AdminController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function post_delete(Request $request)
+    public function postDelete(Request $request)
     {
 		$this->employee_service->delete($request->id);
         return redirect()->route('admin.delete.completion');
     }
 
-    public function get_delete_completion()
+    public function getDeleteCompletion()
     {
         return view('admin_employee.delete_completion');
     }
@@ -81,7 +84,7 @@ class AdminController extends Controller
      * @param null $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function get_update($id=null)
+    public function getUpdate($id=null)
     {
 		$employee = $this->employee_service->fetch($id);
 		return view('admin_employee.update', compact('employee'));
@@ -91,7 +94,7 @@ class AdminController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function post_update(EmployeeRegister $request)
+    public function postUpdate(EmployeeRegister $request)
     {
         $data = $request->all();
         $this->employee_service->update($data);
@@ -102,7 +105,7 @@ class AdminController extends Controller
      /**
       * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
       */
-    public function get_update_confirm($id)
+    public function getUpdateConfirm($id)
     {
         $employee = $this->employee_service->fetch($id);
 
@@ -113,7 +116,7 @@ class AdminController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * 従業員削除完了画面表示
      */
-    public function get_update_completion()
+    public function getUpdateCompletion()
     {
         return view('admin_employee.update_completion');
     }
@@ -121,7 +124,7 @@ class AdminController extends Controller
       * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
       * 新規登録画面取得
       */
-     public function get_register ()
+     public function getRegister ()
      {
         return view('admin_employee.register');
     }
@@ -131,12 +134,16 @@ class AdminController extends Controller
       * @return \Illuminate\Http\RedirectResponse
       * 新規登録して確認画面へリダイレクト
       */
-     public function post_register (EmployeeRegister $request)
+     public function postRegister (EmployeeRegister $request)
      {
-         $data = $request->all();
-         $create = $this->employee_service->create($data);
-         $id = $create;
-         return redirect()->route('admin.register.confirm.get', compact('id'));
+         $request_data = $request->all();
+         $this->setSession($request_data);
+         return redirect()->route('admin.register.confirm.get');
+
+//         $data = $request->all();
+//         $create = $this->employee_service->create($data);
+//         $id = $create;
+//         return redirect()->route('admin.register.confirm.get', compact('id'));
      }
 
      /**
@@ -144,13 +151,51 @@ class AdminController extends Controller
       * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
       * 確認画面の表示
       */
-     public function get_register_confirm (){
-        $employee = $this->employee_service->fetch($_GET['id']);
-         return view('admin_employee.register_confirm', compact('employee'));
-     }
+//     public function getRegisterConfirm (){
+//        $employee = $this->employee_service->fetch($_GET['id']);
+//         return view('admin_employee.register_confirm', compact('employee'));
+//     }
+    public function getRegisterConfirm (){
+        $array = ['last_name', 'first_name', 'birthday', 'mail', 'password', 'role_id', 'a'];
+        $new_employee = $this->setArray($array);
+        $new_employee['role_name'] = $this->role_service->FetchRoleName($new_employee['role_id']);
+        return view('admin_employee.register_confirm', compact('new_employee'));
+    }
 
-    public function get_register_completion()
+    public function getRegisterCompletion()
     {
+        $array = ['last_name', 'first_name', 'birthday', 'mail', 'password', 'role_id', 'a'];
+        $new_employee = $this->setArray($array);
+        $this->employee_service->create($new_employee);
         return view('admin_employee.register_completion');
     }
+
+     /**
+      * @param $datas
+      * 配列のkeyとvalueを
+      * sessionのkeyとvalueにセットする
+      */
+     public function setSession($datas)
+     {
+         foreach ($datas as $key => $data)
+         {
+             session([$key => $data]);
+         }
+         return;
+     }
+
+     /**
+      * @param $datas
+      * @return mixed
+      * ほしい配列のkey名を配列として渡すと
+      * sessionからそのkey名の配列を返す
+      */
+     public function setArray($keys)
+     {
+         foreach ($keys as $data)
+         {
+             $array[$data] = session($data);
+         }
+         return $array;
+     }
 }
