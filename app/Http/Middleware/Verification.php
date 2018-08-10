@@ -14,18 +14,13 @@ class Verification
      * @param  \Closure  $next
      * @return mixed
      */
-//    public function handle($request, Closure $next)
-//    {
-//        if(empty(session('signin')))
-//        {
-//            return redirect(route('signin'));
-//        }
-//        return $next($request);
-//    }
 
     public function handle($request, Closure $next)
     {
-        if (Auth::check()) {
-            echo "ログイン済みのユーザー！";
-        }    }
+        if(!Auth::user())
+        {
+            return redirect(route('signin'));
+        }
+        return $next($request);
+    }
 }
