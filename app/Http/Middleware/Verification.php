@@ -17,9 +17,7 @@ class Verification
 
     public function handle($request, Closure $next)
     {
-		var_dump(Auth::user());
-		exit;
-        if(!Auth::user())
+        if(!Auth::guard('original')->user())
         {
             return redirect(route('signin'));
         }

@@ -17,7 +17,8 @@ class Role
      */
     public function handle($request, Closure $next)
     {
-        $role_id = Auth::user()->role_id;
+        // $role_id = Auth::user()->role_id;
+        $role_id = Auth::guard('original')->user()->role_id;
         if($role_id == 3)
         {
             return redirect()->route('report.home.get');
