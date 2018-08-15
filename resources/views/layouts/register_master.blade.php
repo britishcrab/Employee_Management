@@ -7,14 +7,14 @@
 
 @section('content')
     <h1>@yield('page_name')</h1>
+	@yield('form')
     <div class="form-group lead">
-        @yield('form')
-        {!! Form::open(['url' => route('admin.register.post'), 'class' =>"form-horizontal"])!!}
         <div class="form-group">
             <div class="form-group{{ $errors->has('last_name') ? ' has-error' : '' }}">
-                <div class="form-group{{ $errors->has('first_name') ? ' has-error' : '' }}">
-                    <label class="col-sm-3 control-label" for="name">氏名：</label>
-                    <div class="form-inline col-sm-9">
+			<div class="form-group{{ $errors->has('first_name') ? ' has-error' : '' }}">
+                <label class="col-sm-3 control-label" for="name">氏名：</label>
+				<div class="form-inline">
+                    <div class="col-sm-9" id="name">
                         @yield('name')
                         @if ($errors->has('last_name'))
                             <span class="help-block">
@@ -26,8 +26,31 @@
                                         <strong>{{ $errors->first('first_name') }}</strong>
                                     </span>
                         @endif
-                    </div>
-                </div>
+					</div>
+				</div>
+			</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="form-group{{ $errors->has('last_name') ? ' has-error' : '' }}">
+			<div class="form-group{{ $errors->has('first_name') ? ' has-error' : '' }}">
+                <label class="col-sm-3 control-label" for="name">氏名：</label>
+				<div class="form-inline">
+                    <div class="col-sm-9" id="name">
+                        @yield('name')
+                        @if ($errors->has('last_name'))
+                            <span class="help-block">
+                                        <strong>{{ $errors->first('last_name') }}</strong>
+                                    </span>
+                        @endif
+                        @if ($errors->has('first_name'))
+                            <span class="help-block">
+                                        <strong>{{ $errors->first('first_name') }}</strong>
+                                    </span>
+                        @endif
+					</div>
+				</div>
+			</div>
             </div>
         </div>
         <div class="form-group">
@@ -117,6 +140,7 @@
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
+				{!! Form::open(['url' => route('admin.register.post'), 'class' =>"form-horizontal"])!!}
                 <button type="submit" class="btn btn-primary col-xs-5">実行</button>
                 {!! Form::close() !!}
                 <button type="button" class="btn btn-default col-xs-5" onclick="location.href='{{URL::previous()}}'">取り消し</button>
