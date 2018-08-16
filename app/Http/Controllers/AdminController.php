@@ -7,9 +7,10 @@ namespace App\Http\Controllers;
  use App\Services\EmployeeService;
  use App\Services\RoleService;
  use App\Http\Requests\EmployeeUpdate;
- use App\Http\Controllers\SessionController;
+ use App\Services\Session;
+ use Illuminate\Support\Facades\Auth;
 
-class AdminController extends Controller
+ class AdminController extends Controller
 {
     protected $employee_service;
     protected $role_service;
@@ -147,7 +148,7 @@ class AdminController extends Controller
      public function postRegister (EmployeeRegister $request)
      {
          $request_data = $request->all();
-         SessionController::setSession($request_data);
+         Session::setSession($request_data);
          return redirect()->route('admin.register.confirm.get');
      }
 
@@ -158,8 +159,8 @@ class AdminController extends Controller
       * 確認画面の表示
       */
     public function getRegisterConfirm (){
-        $array = ['last_name', 'first_name', 'birthday', 'mail', 'password', 'role_id', 'a'];
-        $new_employee = SessionController::setArray($array);
+        $array = ['last_name', 'first_name', 'birthday', 'mail', 'password', 'role_id'];
+        $new_employee = Session::setArray($array);
         $new_employee['role_name'] = $this->role_service->FetchRoleName($new_employee['role_id']);
         return view('admin_employee.register_confirm', compact('new_employee'));
     }
@@ -179,8 +180,9 @@ class AdminController extends Controller
      */
     public function getRegisterCompletion()
     {
-        $array = ['last_name', 'first_name', 'birthday', 'mail', 'password', 'role_id', 'a'];
-        $new_employee = SessionController::setArray($array);
+        $array = ['last_name', 'first_name', 'birthday', 'mail', 'password', 'role_id'];
+        $new_employee = Session::setArray($array);
+        Session::deleteSession($array);
         $this->employee_service->create($new_employee);
         return view('admin_employee.register_completion');
     }

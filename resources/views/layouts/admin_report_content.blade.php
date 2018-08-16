@@ -19,7 +19,7 @@
                 <div class="col-sm-12">
                     <label class="col-sm-2 control-label" for="name">氏名</label>
                     <div class="col-sm-10" id="name">
-                        <p class="lead">{{$content->employee->last_name}} {{$content->employee->first_name}}</p>
+                        <p class="lead">{{ $content['is_employee'] or $content->employee->last_name. $content->employee->first_name }}</p>
                     </div>
                 </div>
 

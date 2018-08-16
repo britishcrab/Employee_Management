@@ -35,6 +35,14 @@ class AdminReportController extends Controller
             $reports = $this->admin_report_service->FetchPart($role_id);
         }
 
+        foreach ($reports as $report)
+        {
+            if(empty($report->employee))
+            {
+                $report['name'] = '削除されました';
+            }
+        }
+
         return view('admin_report.list', compact('reports'));
     }
 
@@ -45,8 +53,12 @@ class AdminReportController extends Controller
      */
     public function getContent($report_id){
         $content = $this->admin_report_service->fetch($report_id);
-        $receiver = $content->employee_id;
-        session(['receiver' => $receiver]);
+        if(empty($content->employee))
+        {
+            $content['is_employee'] = '削除されました';
+        }
+        $report_employee = $content->employee_id;
+        session(['$report_employee' => $report_employee]);
         return view('admin_report.content', compact('content'));
     }
 
@@ -111,8 +123,8 @@ class AdminReportController extends Controller
         $this->admin_report_service->comment($comment);
         $sender = $this->employee_service->fetch($comment['employee_id']);
         $sender_name = $sender->last_name;
-        $receiver = $this->employee_service->fetch(session('receiver'));;
-        $mail_to = $receiver->mail;
+        $report_employee = $this->employee_service->fetch(session('$report_employee'));;
+        $mail_to = $report_employee->mail;
         $mail = new \App\Http\Controllers\MailController;
         $mail->ComentMailSend($sender_name, $mail_to);
         return view('admin_report.comment_completion');

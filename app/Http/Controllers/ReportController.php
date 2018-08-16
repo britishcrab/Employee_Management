@@ -8,7 +8,7 @@ use App\Services\EmployeeService;
 use App\Services\ReportService;
 use App\Services\CommentService;
 use App\Http\Requests\ReportPost;
-use App\Http\Controllers\SessionController;
+use App\Services\Session;
 
 class ReportController extends Controller
 {
@@ -62,7 +62,7 @@ class ReportController extends Controller
      */
     public function postCreate(ReportPost $request){
         $report = $request->all();
-        SessionController::setSession($report);
+        Session::setSession($report);
         return redirect()->route('report.create.confirm.get');
     }
 
@@ -74,7 +74,7 @@ class ReportController extends Controller
     public function getCreateConfirm()
     {
         $array = ['employee_id', 'title', 'content', 'created_at'];
-        $report = SessionController::setArray($array);
+        $report = Session::setArray($array);
         return view('report.create_confirm', compact('report'));
     }
 
@@ -96,7 +96,7 @@ class ReportController extends Controller
     public function getModification()
     {
         $array = ['employee_id', 'title', 'content', 'created_at'];
-        $rerurn_data = SessionController::setArray($array);
+        $rerurn_data = Session::setArray($array);
             return view('report.modification', compact('rerurn_data'));
     }
 
@@ -107,7 +107,7 @@ class ReportController extends Controller
     public function getCreateCompletion()
     {
         $array = ['employee_id', 'title', 'content', 'created_at'];
-        $report = SessionController::setArray($array);
+        $report = Session::setArray($array);
 
         $this->report_service->create($report);
 

@@ -1,10 +1,7 @@
 <?php
+namespace App\Services;
 
-namespace App\Http\Controllers;
-
-use Illuminate\Http\Request;
-
-class SessionController extends Controller
+class Session
 {
     /**
      * @param $datas
@@ -33,5 +30,14 @@ class SessionController extends Controller
             $array[$data] = session($data);
         }
         return $array;
+    }
+
+    public static function deleteSession($delete_datas)
+    {
+        foreach ($delete_datas as $delete_data)
+        {
+            session()->forget($delete_data);
+        }
+        return;
     }
 }
