@@ -32,7 +32,8 @@ class ReportController extends Controller
      */
     public function getHome()
     {
-        return view('report.home');
+        $role_id = Auth::guard('original')->user()->role_id;
+        return view('report.home', compact('role_id'));
     }
 
     /**
