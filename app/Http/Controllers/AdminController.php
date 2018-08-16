@@ -7,6 +7,7 @@ namespace App\Http\Controllers;
  use App\Services\EmployeeService;
  use App\Services\RoleService;
  use App\Http\Requests\EmployeeUpdate;
+ use App\Http\Controllers\SessionController;
 
 class AdminController extends Controller
 {
@@ -137,10 +138,16 @@ class AdminController extends Controller
       * @return \Illuminate\Http\RedirectResponse
       * 入力値をセッションに格納して確認画面へリダイレクト
       */
+//    public function postRegister (EmployeeRegister $request)
+//    {
+//        $request_data = $request->all();
+//        $this->setSession($request_data);
+//        return redirect()->route('admin.register.confirm.get');
+//    }
      public function postRegister (EmployeeRegister $request)
      {
          $request_data = $request->all();
-         $this->setSession($request_data);
+         SessionController::setSession($request_data);
          return redirect()->route('admin.register.confirm.get');
      }
 
@@ -152,7 +159,7 @@ class AdminController extends Controller
       */
     public function getRegisterConfirm (){
         $array = ['last_name', 'first_name', 'birthday', 'mail', 'password', 'role_id', 'a'];
-        $new_employee = $this->setArray($array);
+        $new_employee = SessionController::setArray($array);
         $new_employee['role_name'] = $this->role_service->FetchRoleName($new_employee['role_id']);
         return view('admin_employee.register_confirm', compact('new_employee'));
     }
@@ -173,37 +180,8 @@ class AdminController extends Controller
     public function getRegisterCompletion()
     {
         $array = ['last_name', 'first_name', 'birthday', 'mail', 'password', 'role_id', 'a'];
-        $new_employee = $this->setArray($array);
+        $new_employee = SessionController::setArray($array);
         $this->employee_service->create($new_employee);
         return view('admin_employee.register_completion');
     }
-
-     /**
-      * @param $datas
-      * 配列のkeyとvalueを
-      * sessionのkeyとvalueにセットする
-      */
-     public function setSession($datas)
-     {
-         foreach ($datas as $key => $data)
-         {
-             session([$key => $data]);
-         }
-         return;
-     }
-
-     /**
-      * @param $datas
-      * @return mixed
-      * ほしい配列のkey名を配列として渡すと
-      * sessionからそのkey名の配列を返す
-      */
-     public function setArray($keys)
-     {
-         foreach ($keys as $data)
-         {
-             $array[$data] = session($data);
-         }
-         return $array;
-     }
 }

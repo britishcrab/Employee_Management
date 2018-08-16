@@ -8,6 +8,7 @@ use App\Services\EmployeeService;
 use App\Services\ReportService;
 use App\Services\CommentService;
 use App\Http\Requests\ReportPost;
+use App\Http\Controllers\SessionController;
 
 class ReportController extends Controller
 {
@@ -61,7 +62,7 @@ class ReportController extends Controller
      */
     public function postCreate(ReportPost $request){
         $report = $request->all();
-        session(['title' => $report['title'], 'content' => $report['content'], 'created_at' => $report['created_at']]);
+        SessionController::setSession($report);
         return redirect()->route('report.create.confirm.get');
     }
 
@@ -70,12 +71,10 @@ class ReportController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * 確認画面表示
      */
-    public function getCreateConfirm(){
-        $report['employee_id'] = $value = session('employee_id');
-        $report['title'] = $value = session('title');
-        $report['content'] = $value = session('content');
-        $report['created_at'] = $value = session('created_at');
-
+    public function getCreateConfirm()
+    {
+        $array = ['employee_id', 'title', 'content', 'created_at'];
+        $report = SessionController::setArray($array);
         return view('report.create_confirm', compact('report'));
     }
 
@@ -96,10 +95,8 @@ class ReportController extends Controller
      */
     public function getModification()
     {
-            $rerurn_data['employee_id'] = $value = session('employee_id');
-            $rerurn_data['title'] = $value = session('title');
-            $rerurn_data['content'] = $value = session('content');
-            $rerurn_data['created_at'] = $value = session('created_at');
+        $array = ['employee_id', 'title', 'content', 'created_at'];
+        $rerurn_data = SessionController::setArray($array);
             return view('report.modification', compact('rerurn_data'));
     }
 
@@ -109,10 +106,9 @@ class ReportController extends Controller
      */
     public function getCreateCompletion()
     {
-        $report['employee_id'] = $value = session('employee_id');
-        $report['title'] = $value = session('title');
-        $report['content'] = $value = session('content');
-        $report['created_at'] = $value = session('created_at');
+        $array = ['employee_id', 'title', 'content', 'created_at'];
+        $report = SessionController::setArray($array);
+
         $this->report_service->create($report);
 
         return view('report.create_completion');
