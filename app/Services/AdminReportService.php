@@ -45,7 +45,7 @@ class AdminReportService
      * @param $comment
      * commentの新規登録
      */
-    public function Comment($comment)
+    public function setComment($comment)
     {
         $create = new Comment;
         $create->fill($comment);

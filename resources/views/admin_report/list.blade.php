@@ -18,7 +18,7 @@
                 </tr>
         @foreach($reports as $row)
                 <tr>
-                    <td height="10">{{ $row['name'] or $row->employee->last_name. $row->employee->first_name }}</td>
+                    <td height="10">{{ $row['is_employee'] or $row->employee->last_name. $row->employee->first_name }}</td>
                     <td height="10">{{ $row['created_at'] }}</td>
                     <td height="10">{{ $row['title'] }}</td>
                     <td height="10">

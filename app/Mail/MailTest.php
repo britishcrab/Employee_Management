@@ -34,7 +34,7 @@ class MailTest extends Mailable
     public function build()
     {
         return $this->view('mails.comment_post_plain')
-            ->subject('$this->title')
+            ->subject($this->title)
             ->with([
                 'name'=>$this->name,
             ]);
