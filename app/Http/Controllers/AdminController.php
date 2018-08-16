@@ -139,12 +139,6 @@ namespace App\Http\Controllers;
       * @return \Illuminate\Http\RedirectResponse
       * 入力値をセッションに格納して確認画面へリダイレクト
       */
-//    public function postRegister (EmployeeRegister $request)
-//    {
-//        $request_data = $request->all();
-//        $this->setSession($request_data);
-//        return redirect()->route('admin.register.confirm.get');
-//    }
      public function postRegister (EmployeeRegister $request)
      {
          $request_data = $request->all();

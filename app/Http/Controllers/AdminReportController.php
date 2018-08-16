@@ -115,27 +115,16 @@ class AdminReportController extends Controller
      * -> 日報の作成者にコメントがついた旨のメール送信
      * -> 完了画面表示
      */
-//    public function getCompletion()
-//    {
-//        $comment = Session::setArray(['report_id', 'employee_id', 'comment']);
-//        $this->admin_report_service->setComment($comment);
-//        $sender = $this->employee_service->fetch($comment['employee_id']);
-//        $sender_name = $sender->last_name;
-//        $report_employee = $this->employee_service->fetch(session('$report_employee'));;
-//        $mail_to = $report_employee->mail;
-//        $mail = new \App\Http\Controllers\MailController;
-//        $mail->ComentMailSend($sender_name, $mail_to);
-//        return view('admin_report.comment_completion');
-//    }
     public function getCompletion()
     {
         $comment = Session::setArray(['report_id', 'employee_id', 'comment']);
         $this->admin_report_service->setComment($comment);
-        $sender = $this->employee_service->fetch($comment['employee_id']);
+        $sender = $this->employee_service->fetch(Auth::guard('original')->user()->id);
         $sender_name = $sender->last_name;
-        $report_employee = $this->employee_service->fetch(session('$report_employee'));;
+        $report_employee = $this->employee_service->fetch(session('$report_employee'));
         $mail_to = $report_employee->mail;
         SendReminderEmail::dispatch($sender_name, $mail_to);
+        Session::deleteSession(['report_id','comment', 'report_employee']);
         return view('admin_report.comment_completion');
     }
 }

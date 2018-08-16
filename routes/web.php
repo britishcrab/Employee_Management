@@ -17,35 +17,36 @@ Route::get('laravel', function () {
 
 Route::middleware(['signin'])->group(function () {
 
-    Route::get('/', function () {
-        return view('top');
-    })->middleware('role')->name('top');
+    Route::middleware(['role'])->group(function () {
 
-    Route::prefix('admin')->middleware('role')->group(function () {
-        Route::get('home', 'AdminController@getHome')->name('admin.get.home');
-        Route::get('list', 'AdminController@getList')->name('admin.get.list');
-        Route::post('delete', 'AdminController@postDelete')->name('admin.delete.post');
-        Route::get('delete/{id}', 'AdminController@getDelete')->name('admin.get.delete');
-        Route::get('delete.completion', 'AdminController@getDeleteCompletion')->name('admin.delete.completion');
-        Route::post('update', 'AdminController@postUpdate')->name('admin.update.post');
-        Route::get('update/{id?}', 'AdminController@getUpdate')->name('admin.get.update');
-        Route::get('update.confirm/{id}', 'AdminController@getUpdateConfirm')->name('admin.update.confirm.get');
-        Route::get('update.completion', 'AdminController@getUpdateCompletion')->name('admin.update.completion.get');
-        Route::get('register', 'AdminController@getRegister')->name('admin.register.get');
-        Route::post('register', 'AdminController@postRegister')->name('admin.register.post');
-        Route::get('register/confirm', 'AdminController@getRegisterConfirm')->name('admin.register.confirm.get');
-        Route::post('register/confirm/post', 'AdminController@postRegisterConfirm')->name('admin.register.confirm.post');
-        Route::get('register.completion', 'AdminController@getRegisterCompletion')->name('admin.register.completion.get');
-    });
+        Route::get('/', function () {return view('top');})->name('top');
 
-    Route::prefix('admin/report')->middleware('role')->group(function () {
-        Route::get('/', 'AdminReportController@getList')->name('admin_report.list.get');
-        Route::get('content/{report_id}', 'AdminReportController@getContent')->name('admin_report.content.get');
-        Route::post('comment', 'AdminReportController@postComment')->name('admin_report.comment.post');
-        Route::get('comment.confirm', 'AdminReportController@getConfirm')->name('admin_report.comment.confirm.get');
-        Route::get('comment.modification', 'AdminReportController@getModification')->name('admin_report.comment.modification.get');
-        Route::post('comment.confirm', 'AdminReportController@postConfirm')->name('admin_report.comment.confirm.post');
-        Route::get('comment.completion', 'AdminReportController@getCompletion')->name('admin_report.comment.completion.get');
+        Route::prefix('admin')->group(function () {
+            Route::get('home', 'AdminController@getHome')->name('admin.get.home');
+            Route::get('list', 'AdminController@getList')->name('admin.get.list');
+            Route::post('delete', 'AdminController@postDelete')->name('admin.delete.post');
+            Route::get('delete/{id}', 'AdminController@getDelete')->name('admin.get.delete');
+            Route::get('delete.completion', 'AdminController@getDeleteCompletion')->name('admin.delete.completion');
+            Route::post('update', 'AdminController@postUpdate')->name('admin.update.post');
+            Route::get('update/{id?}', 'AdminController@getUpdate')->name('admin.get.update');
+            Route::get('update.confirm/{id}', 'AdminController@getUpdateConfirm')->name('admin.update.confirm.get');
+            Route::get('update.completion', 'AdminController@getUpdateCompletion')->name('admin.update.completion.get');
+            Route::get('register', 'AdminController@getRegister')->name('admin.register.get');
+            Route::post('register', 'AdminController@postRegister')->name('admin.register.post');
+            Route::get('register/confirm', 'AdminController@getRegisterConfirm')->name('admin.register.confirm.get');
+            Route::post('register/confirm/post', 'AdminController@postRegisterConfirm')->name('admin.register.confirm.post');
+            Route::get('register.completion', 'AdminController@getRegisterCompletion')->name('admin.register.completion.get');
+        });
+
+        Route::prefix('admin/report')->group(function () {
+            Route::get('/', 'AdminReportController@getList')->name('admin_report.list.get');
+            Route::get('content/{report_id}', 'AdminReportController@getContent')->name('admin_report.content.get');
+            Route::post('comment', 'AdminReportController@postComment')->name('admin_report.comment.post');
+            Route::get('comment.confirm', 'AdminReportController@getConfirm')->name('admin_report.comment.confirm.get');
+            Route::get('comment.modification', 'AdminReportController@getModification')->name('admin_report.comment.modification.get');
+            Route::post('comment.confirm', 'AdminReportController@postConfirm')->name('admin_report.comment.confirm.post');
+            Route::get('comment.completion', 'AdminReportController@getCompletion')->name('admin_report.comment.completion.get');
+        });
     });
 
     Route::prefix('report')->group(function () {
