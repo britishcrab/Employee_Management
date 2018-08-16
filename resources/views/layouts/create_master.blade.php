@@ -47,7 +47,7 @@
 
             <div class="col-sm-12">
                 <div class="form-group{{ $errors->has('content') ? ' has-error' : '' }}">
-                    <label class="col-sm-2 control-label" for="textarea">本文</label>
+                    <label class="col-sm-2 control-label" for="textarea">詳細</label>
                     <div class="col-sm-10">
                         @yield('content_form')
 

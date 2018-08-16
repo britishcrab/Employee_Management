@@ -12,7 +12,7 @@
     <table class="table table-striped table-bordered">
      <tr>
       <th class="col-xs-2">id</th>
-      <th class="col-xs-3">名前</th>
+      <th class="col-xs-3">氏名</th>
       <th class="col-xs-3">役職</th>
       <th class="col-xs-2">情報更新・削除</th>
      </tr>

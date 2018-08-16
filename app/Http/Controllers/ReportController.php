@@ -124,9 +124,14 @@ class ReportController extends Controller
      */
     public function getList()
     {
-        $employee_id = session('employee_id');
+        $employee_id = Auth::guard('original')->user()->id;
         $reports = $this->report_service->fetch_all($employee_id);
-
+        $session_errer = session()->pull('error', 'default');
+        if($session_errer == 'iscomment')
+        {
+            $msg = 'コメントが存在するため削除できません';
+            return view('report.list', compact('reports', 'msg'));
+        }
         return view('report.list', compact('reports'));
     }
 
@@ -150,6 +155,12 @@ class ReportController extends Controller
      */
     public function getDelete($report_id)
     {
+        $iscomment = $this->comment_service->isComment($report_id);
+        if ($iscomment)
+        {
+            session(['error' => 'iscomment']);
+            return redirect()->route('report.list.get');
+        }
         $content = $this->report_service->fetch($report_id);
         return view('report.delete', compact('content'));
     }
