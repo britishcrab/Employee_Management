@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Services\AdminReportService;
 use App\Http\Requests\CommentPost;
 use App\Services\EmployeeService;
+use Illuminate\Support\Facades\Auth;
 
 class AdminReportController extends Controller
 {
@@ -25,7 +26,15 @@ class AdminReportController extends Controller
      */
     public function getList()
     {
-        $reports = $this->admin_report_service->fetch_all();
+        $role_id = Auth::guard('original')->user()->role_id;
+        if ($role_id == 1)
+        {
+            $reports = $this->admin_report_service->fetch_all();
+        }elseif ($role_id == 2)
+        {
+            $reports = $this->admin_report_service->FetchPart($role_id);
+        }
+
         return view('admin_report.list', compact('reports'));
     }
 

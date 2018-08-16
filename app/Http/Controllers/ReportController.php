@@ -33,7 +33,14 @@ class ReportController extends Controller
     public function getHome()
     {
         $role_id = Auth::guard('original')->user()->role_id;
-        return view('report.home', compact('role_id'));
+        if ($role_id == 3)
+        {
+            $sidebars = ['サインアウト' => 'signout'];
+        }else
+        {
+            $sidebars = ['トップ' => 'top', 'サインアウト' => 'signout'];
+        }
+        return view('report.home', compact('role_id', 'sidebars'));
     }
 
     /**

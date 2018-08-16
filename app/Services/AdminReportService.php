@@ -19,6 +19,19 @@ class AdminReportService
     }
 
     /**
+     * @param $role_id
+     * @return mixed
+     * 引数の役職以下のレポートを全件取得する
+     */
+    public function FetchPart($role_id)
+    {
+        $reports = Report::wherehas('Employee', function($q) use ($role_id) {
+            $q->where('role_id', '>=', "$role_id");
+        })->orderBy('created_at', 'ASC')->get();
+        return $reports;
+    }
+
+    /**
      * @param $id
      * @return mixed
      * 指定されたreport_idの日報の取得
