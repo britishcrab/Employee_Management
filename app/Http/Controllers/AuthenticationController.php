@@ -102,6 +102,14 @@ class AuthenticationController extends Controller
         return $this->authenticated($request, $this->guard()->user())
             ?: redirect()->intended($this->redirectPath());
     }
+
+    /**
+     * @param Request $request
+     * signinに失敗した場合に例外を投げる
+     *ValidationException::withMessages()は引数のkeyとvalueをforeachでループして
+     * $validator->errors()->add($key, $value)の形で例外を投げる
+     * 受け取る側は$errors->first('key')の方で受け取れる
+     */
     protected function sendFailedLoginResponse(Request $request)
     {
         throw ValidationException::withMessages([
@@ -109,12 +117,9 @@ class AuthenticationController extends Controller
         ]);
     }
 
-
-
-
-
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * signout画面表示
      */
     public function getSignout()
     {
@@ -122,13 +127,42 @@ class AuthenticationController extends Controller
     }
 
     /**
-     * @return \Illuminate\Http\RedirectResponse
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * $this->guard()->logout();でsession,cookieのRememberTokenの削除,dbにRememberTokenが登録されていれば書き換えを行う
+     * $request->session()->invalidate();でsessionの破棄
+     * リダイレクト先へリダイレクト
      */
-    public function postSignout()
+    public function postSignout(Request $request)
     {
-        session()->flush();
+        $this->guard()->logout();
+
+        $request->session()->invalidate();
+
         return redirect()->route('signin');
     }
+
+
+
+
+
+//    /**
+//     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+//     * signout画面表示
+//     */
+//    public function getSignout()
+//    {
+//        return view('auth.signout');
+//    }
+//
+//    /**
+//     * @return \Illuminate\Http\RedirectResponse
+//     */
+//    public function postSignout()
+//    {
+//        session()->flush();
+//        return redirect()->route('signin');
+//    }
 
     protected function guard()
     {
