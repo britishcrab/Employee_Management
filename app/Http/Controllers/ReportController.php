@@ -73,7 +73,7 @@ class ReportController extends Controller
      */
     public function getCreateConfirm()
     {
-        $array = ['employee_id', 'title', 'content', 'created_at'];
+        $array = ['title', 'content', 'created_at'];
         $report = Session::setArray($array);
         return view('report.create_confirm', compact('report'));
     }
@@ -95,7 +95,7 @@ class ReportController extends Controller
      */
     public function getModification()
     {
-        $array = ['employee_id', 'title', 'content', 'created_at'];
+        $array = ['title', 'content', 'created_at'];
         $rerurn_data = Session::setArray($array);
             return view('report.modification', compact('rerurn_data'));
     }
@@ -106,8 +106,9 @@ class ReportController extends Controller
      */
     public function getCreateCompletion()
     {
-        $array = ['employee_id', 'title', 'content', 'created_at'];
+        $array = ['title', 'content', 'created_at'];
         $report = Session::setArray($array);
+        $report['employee_id'] = Auth::guard()->user()->id;
 
         $this->report_service->create($report);
 

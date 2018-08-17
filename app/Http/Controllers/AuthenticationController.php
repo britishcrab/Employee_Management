@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthenticationController extends Controller
 {
+//    use \App\Services\Authentication\Authentication;
     use \Illuminate\Foundation\Auth\AuthenticatesUsers;
 
     protected $auth_service;
@@ -141,28 +142,6 @@ class AuthenticationController extends Controller
 
         return redirect()->route('signin');
     }
-
-
-
-
-
-//    /**
-//     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-//     * signout画面表示
-//     */
-//    public function getSignout()
-//    {
-//        return view('auth.signout');
-//    }
-//
-//    /**
-//     * @return \Illuminate\Http\RedirectResponse
-//     */
-//    public function postSignout()
-//    {
-//        session()->flush();
-//        return redirect()->route('signin');
-//    }
 
     protected function guard()
     {

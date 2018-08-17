@@ -117,7 +117,8 @@ class AdminReportController extends Controller
      */
     public function getCompletion()
     {
-        $comment = Session::setArray(['report_id', 'employee_id', 'comment']);
+        $comment = Session::setArray(['report_id', 'comment']);
+        $comment['employee_id'] = Auth::guard()->user()->id;
         $this->admin_report_service->setComment($comment);
         $sender = $this->employee_service->fetch(Auth::guard('original')->user()->id);
         $sender_name = $sender->last_name;
