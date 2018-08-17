@@ -29,19 +29,16 @@ class AuthenticationController extends Controller
      */
     public function getSignin()
     {
-        if (isset($_GET['status']))
-        {
-            $msg = "サインインに失敗しました";
-            return view('auth.signin', compact('msg'));
-        }
         return view('auth.signin');
     }
 
     /**
      * @param SigninPost $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * ログイン画面の入力値をAuthenticationServiceに投げて
-     * パスワードとメールアドレスが一致すれば社員IDが返ってくる
+     * @return \Illuminate\Http\RedirectResponse|void
+     * @throws ValidationException
+     * attemptLoginでサインイン処理を行う
+     * 成功すればsendLoginResponse成功すれば()でリダイレクトされる
+     * sendFailedLoginResponse失敗すればで例外を投げられる
      */
     public function postSignin(SigninPost $request)
     {
@@ -49,25 +46,52 @@ class AuthenticationController extends Controller
         {
             return $this->sendLoginResponse($request);
         }
-        else
-        {
-            return redirect()->route('signin', ['status' => '']);
-        }
+
+        return $this->sendFailedLoginResponse($request);
     }
+
+    /**
+     * @return string
+     * sendLoginResponse()でログイン後のリダイレクト先の指定
+     */
     protected function redirectPath()
     {
         return route('top');
     }
+
+    /**
+     * @param Request $request
+     * @return mixed
+     * guard()でプロバイダを取得
+     * ->その中でconfig/auth.phpの中で指定したdriverとmodelが適応される
+     * 　()の中を指定しなければdefaultの値が指定される(今回はdefaultを変更している)
+     * attemptが認証　メソッドはSessionGuardに実装されている
+     */
     protected function attemptLogin(Request $request)
     {
         return $this->guard()->attempt(
             $this->credentials($request)
         );
     }
+
+    /**
+     * @param Request $request
+     * @return array
+     * attemptLogin()で認証に用いる値を抽出している
+     * (mailとpassword)
+     */
     protected function credentials(Request $request)
     {
         return $request->only('mail', 'password');
     }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     * regenerateでsessionIDを再発行
+     * clearLoginAttemptsでスロットル処理のクリアを実施
+     * authenticated()に指定がなければredirectPath()にリダイレクト
+     */
     protected function sendLoginResponse(Request $request)
     {
         $request->session()->regenerate();
@@ -76,6 +100,12 @@ class AuthenticationController extends Controller
 
         return $this->authenticated($request, $this->guard()->user())
             ?: redirect()->intended($this->redirectPath());
+    }
+    protected function sendFailedLoginResponse(Request $request)
+    {
+        throw ValidationException::withMessages([
+            'signin_error' => [trans('auth.failed')],
+        ]);
     }
 
 
