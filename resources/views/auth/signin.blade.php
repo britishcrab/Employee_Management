@@ -6,9 +6,9 @@
 @endsection
 
 @section('content')
-    @isset($msg)
-    <h2>{{$msg}}</h2>
-    @endisset
+    @if($errors->has('signin_error'))
+        <h2>{{$errors->first('signin_error')}}</h2>
+    @endif
     <div class="container">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">

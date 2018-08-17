@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\SigninPost;
 use App\Services\AuthenticationService;
+use Illuminate\Validation\ValidationException;
 
 use Illuminate\Support\Facades\Auth;
 
