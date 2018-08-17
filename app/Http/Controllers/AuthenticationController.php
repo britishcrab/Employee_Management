@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthenticationController extends Controller
 {
+    use \Illuminate\Foundation\Auth\AuthenticatesUsers;
+
     protected $auth_service;
 
     /**
@@ -43,21 +45,42 @@ class AuthenticationController extends Controller
      */
     public function postSignin(SigninPost $request)
     {
-        $request_data = $request->all();
-        $mail = $request_data['mail'];
-        $password = $request_data['password'];
-
-        if (Auth::guard('original')
-            ->attempt(['mail' => $mail, 'password' => $password])) {
-            session()->regenerate();
-            $input_data = $request->all();
-            $check = $this->auth_service->Signin($input_data);
-            session(['employee_id' => $check, 'id' => $check]);
-            return redirect()->route('top');
-        } else {
+        if ($this->attemptLogin($request))
+        {
+            return $this->sendLoginResponse($request);
+        }
+        else
+        {
             return redirect()->route('signin', ['status' => '']);
         }
     }
+    protected function redirectPath()
+    {
+        return route('top');
+    }
+    protected function attemptLogin(Request $request)
+    {
+        return $this->guard()->attempt(
+            $this->credentials($request)
+        );
+    }
+    protected function credentials(Request $request)
+    {
+        return $request->only('mail', 'password');
+    }
+    protected function sendLoginResponse(Request $request)
+    {
+        $request->session()->regenerate();
+
+        $this->clearLoginAttempts($request);
+
+        return $this->authenticated($request, $this->guard()->user())
+            ?: redirect()->intended($this->redirectPath());
+    }
+
+
+
+
 
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
