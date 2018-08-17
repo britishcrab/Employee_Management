@@ -9,6 +9,7 @@ namespace App\Http\Controllers;
  use App\Http\Requests\EmployeeUpdate;
  use App\Services\Session;
  use Illuminate\Support\Facades\Auth;
+ use Illuminate\Auth\Events\Registered;
 
  class AdminController extends Controller
 {
@@ -45,7 +46,8 @@ namespace App\Http\Controllers;
      */
      public function getList()
      {
-        $role_id = $this->employee_service->FetchRoleid(session('employee_id'));
+//        $role_id = $this->employee_service->FetchRoleid(session('employee_id'));
+         $role_id = Auth::guard()->user()->role_id;
         session(['my_role_id' => $role_id]);
         switch ($role_id)
         {
@@ -152,9 +154,16 @@ namespace App\Http\Controllers;
       * セッションから値を取り出して
       * 確認画面の表示
       */
-    public function getRegisterConfirm (){
-        $array = ['last_name', 'first_name', 'birthday', 'mail', 'password', 'role_id'];
-        $new_employee = Session::setArray($array);
+    public function getRegisterConfirm ()
+    {
+        $new_employee = Session::setArray([
+            'last_name',
+            'first_name',
+            'birthday',
+            'mail',
+            'password',
+            'role_id',
+        ]);
         $new_employee['role_name'] = $this->role_service->FetchRoleName($new_employee['role_id']);
         return view('admin_employee.register_confirm', compact('new_employee'));
     }
@@ -175,9 +184,13 @@ namespace App\Http\Controllers;
     public function getRegisterCompletion()
     {
         $array = ['last_name', 'first_name', 'birthday', 'mail', 'password', 'role_id'];
-        $new_employee = Session::setArray($array);
+        $create_data = Session::setArray($array);
         Session::deleteSession($array);
-        $this->employee_service->create($new_employee);
+
+        event(new Registered($user = $this->employee_service->create($create_data)));
+
+        Auth::guard()->login($user);
+
         return view('admin_employee.register_completion');
     }
 }

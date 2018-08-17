@@ -142,17 +142,4 @@ class AuthenticationController extends Controller
 
         return redirect()->route('signin');
     }
-
-    protected function guard()
-    {
-        return Auth::guard('original');
-    }
-
-    public function original()
-    {
-        if(Auth::guard('original')->check()){
-            $user = Auth::guard('original')->user();
-        }
-        return redirect()->route('signin');
-    }
 }
