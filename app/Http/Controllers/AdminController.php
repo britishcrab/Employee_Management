@@ -189,8 +189,6 @@ namespace App\Http\Controllers;
 
         event(new Registered($user = $this->employee_service->create($create_data)));
 
-        Auth::guard()->login($user);
-
         return view('admin_employee.register_completion');
     }
 }

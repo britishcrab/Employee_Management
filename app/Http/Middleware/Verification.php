@@ -17,7 +17,7 @@ class Verification
 
     public function handle($request, Closure $next)
     {
-        if(!Auth::guard('original')->check())
+        if(!Auth::guard()->check())
         {
             return redirect(route('signin'));
         }
