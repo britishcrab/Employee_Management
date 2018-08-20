@@ -17,9 +17,10 @@ use Faker\Generator as Faker;
         static $password;
 
         return [
-            'email'          => $faker->unique()->safeEmail, // 複数レコード作成時には重複しないＥメールを生成
-            'password'       => $password ?: $password = bcrypt('test1234'),　// 複数レコード作成時には同じパスワードを生成
-        'name'           => $faker->name,
-        'remember_token' => str_random(100),　//ランダム値
-    ];
-});
+            'mail'          => $faker->unique()->safeEmail, // 複数レコード作成時には重複しないＥメールを生成
+            'password'       => $password ?: $password = bcrypt('password'),　// 複数レコード作成時には同じパスワードを生成
+			'last_name'           => $faker->lastname,
+			'first_name'           => $faker->firstname,
+			'remember_token' => str_random(100),　//ランダム値
+		];
+	});
