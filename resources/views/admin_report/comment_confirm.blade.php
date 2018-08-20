@@ -22,7 +22,7 @@
             {!! Form::close() !!}
         </div>
         <div class="btn-group col-sm-6">
-            <input class="btn btn-default btn-group-lg col-sm-8" type="submit" onclick="location.href='{{URL::previous()}}'" name="status" value="編集に戻る">
+            <input class="btn btn-default btn-group-lg col-sm-8" type="button" onclick="location.href='{{URL::previous()}}'" value="編集に戻る">
         </div>
     </div>
 @endsection

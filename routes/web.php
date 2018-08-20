@@ -55,7 +55,6 @@ Route::middleware(['signin'])->group(function () {
         Route::post('create', 'ReportController@postCreate')->name('report.create.post');
         Route::get('create.confirm', 'ReportController@getCreateConfirm')->name('report.create.confirm.get');
         Route::post('create.confirm', 'ReportController@postCreateConfirm')->name('report.create.confirm.post');
-        Route::get('create.modification', 'ReportController@getModification')->name('report.modification.get');
         Route::get('create.completion', 'ReportController@getCreateCompletion')->name('report.create.completion.get');
         Route::get('list', 'ReportController@getList')->name('report.list.get');
         Route::get('content/{report_id}', 'ReportController@getCcontent')->name('report.content.get');

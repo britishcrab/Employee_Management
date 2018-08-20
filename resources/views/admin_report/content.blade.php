@@ -43,7 +43,7 @@
                 {{Form::open(['url' => route('admin_report.comment.post'), 'class' =>"form-horizontal"])}}
                 {{Form::hidden('report_id', $content['id'])}}
                 <div class="col-sm-10" id="textarea">
-                    <textarea  name="comment" placeholder="コメントを入力" rows="10" class="form-control">@if($content['comment']){{$content['comment']}}@endif</textarea>
+                    <textarea  name="comment" placeholder="コメントを入力" rows="10" class="form-control">@if(session('comment')){{session('comment')}}@endif</textarea>
                 @if ($errors->has('comment'))
                         <span class="help-block">
                                         <strong>{{ $errors->first('comment') }}</strong>
@@ -54,7 +54,7 @@
             <div class="form-inline col-lg-offset-2">
                 <div><input class="btn btn-primary btn-group-lg col-sm-4" type="submit" value="送信"></div>
                 {{Form::close()}}
-                <div><input class="btn btn-default btn-group-lg col-sm-4" onclick="location.href='{{route('admin_report.list.get')}}'" type="submit" value="戻る"></div>
+                <div><input class="btn btn-default btn-group-lg col-sm-4" onclick="location.href='{{route('admin_report.list.get')}}'" type="button" value="戻る"></div>
             </div>
         </div>
 @endsection
