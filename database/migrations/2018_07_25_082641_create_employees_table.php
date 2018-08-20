@@ -21,6 +21,7 @@ class CreateEmployeesTable extends Migration
             $table->string('password');
             $table->date('birthday');
             $table->tinyInteger('role_id');
+			$table->rememberToken();
             $table->timestamps();
         });
     }
