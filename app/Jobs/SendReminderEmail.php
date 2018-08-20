@@ -12,7 +12,6 @@ class SendReminderEmail implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-
     protected $sender_name;
     protected $mail_to;
 
