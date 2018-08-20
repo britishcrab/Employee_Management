@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Employee;
 use Illuminate\Http\Request;
 use App\Services\AdminReportService;
 use App\Http\Requests\CommentPost;
 use App\Services\EmployeeService;
 use Illuminate\Support\Facades\Auth;
-use App\Services\Session;
 use App\Jobs\SendReminderEmail;
 
 class AdminReportController extends Controller
@@ -28,6 +26,7 @@ class AdminReportController extends Controller
      */
     public function getList()
     {
+        session()->forget('comment');
         $role_id = Auth::guard('original')->user()->role_id;
         if ($role_id == 1)
         {
@@ -44,7 +43,6 @@ class AdminReportController extends Controller
                 $report['is_employee'] = '削除されました';
             }
         }
-        session()->forget('comment');
         return view('admin_report.list', compact('reports'));
     }
 
@@ -73,7 +71,10 @@ class AdminReportController extends Controller
      */
     public function postComment(CommentPost $request){
         $comment = $request->all();
-        Session::setSession($comment);
+        session([
+            'report_id'  => $comment['report_id'],
+            'comment'    => $comment['comment'],
+        ]);
         return redirect()->route('admin_report.comment.confirm.get');
     }
 
@@ -83,7 +84,10 @@ class AdminReportController extends Controller
      */
     public function getConfirm()
     {
-        $comment = Session::setArray(['report_id', 'employee_id', 'comment']);
+        $comment = [
+            'report_id'   => session('report_id'),
+            'comment'     => session('comment')
+        ];
         return view('admin_report.comment_confirm', compact('comment'));
     }
 
@@ -118,15 +122,17 @@ class AdminReportController extends Controller
      */
     public function getCompletion()
     {
-        $comment = Session::setArray(['report_id', 'comment']);
-        $comment['employee_id'] = Auth::guard()->user()->id;
+        $comment = [
+            'report_id'   => session()->pull('report_id', 'default'),
+            'comment'     => session()->pull('comment', 'default'),
+            'employee_id' => Auth::guard()->user()->id,
+        ];
         $this->admin_report_service->setComment($comment);
         $sender = $this->employee_service->fetch(Auth::guard('original')->user()->id);
         $sender_name = $sender->last_name;
-        $report_employee = $this->employee_service->fetch(session('$report_employee'));
+        $report_employee = $this->employee_service->fetch(session()->pull('$report_employee'), 'default');
         $mail_to = $report_employee->mail;
         SendReminderEmail::dispatch($sender_name, $mail_to);
-        Session::deleteSession(['report_id','comment', 'report_employee']);
         return view('admin_report.comment_completion');
     }
 }

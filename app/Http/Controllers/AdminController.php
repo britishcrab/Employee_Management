@@ -7,7 +7,6 @@ namespace App\Http\Controllers;
  use App\Services\EmployeeService;
  use App\Services\RoleService;
  use App\Http\Requests\EmployeeUpdate;
- use App\Services\Session;
  use Illuminate\Support\Facades\Auth;
  use Illuminate\Auth\Events\Registered;
 
@@ -143,7 +142,14 @@ namespace App\Http\Controllers;
      public function postRegister (EmployeeRegister $request)
      {
          $request_data = $request->all();
-         Session::setSession($request_data);
+         session([
+             'last_name'  => $request_data['last_name'],
+             'first_name' => $request_data['first_name'],
+             'birthday'   => $request_data['birthday'],
+             'mail'       => $request_data['mail'],
+             'password'   => $request_data['password'],
+             'role_id'    => $request_data['role_id'],
+         ]);
          return redirect()->route('admin.register.confirm.get');
      }
 
@@ -155,14 +161,14 @@ namespace App\Http\Controllers;
       */
     public function getRegisterConfirm ()
     {
-        $new_employee = Session::setArray([
-            'last_name',
-            'first_name',
-            'birthday',
-            'mail',
-            'password',
-            'role_id',
-        ]);
+        $new_employee = [
+            'last_name'  => session('last_name'),
+            'first_name' => session('first_name'),
+            'birthday'   => session('birthday'),
+            'mail'       => session('mail'),
+            'password'   => session('password'),
+            'role_id'    => session('role_id'),
+        ];
         $new_employee['role_name'] = $this->role_service->FetchRoleName($new_employee['role_id']);
         return view('admin_employee.register_confirm', compact('new_employee'));
     }
@@ -182,12 +188,15 @@ namespace App\Http\Controllers;
      */
     public function getRegisterCompletion()
     {
-        $array = ['last_name', 'first_name', 'birthday', 'mail', 'password', 'role_id'];
-        $create_data = Session::setArray($array);
-        Session::deleteSession($array);
-
+        $create_data = [
+            'last_name'  => session()->pull('last_name', 'default'),
+            'first_name' => session()->pull('first_name', 'default'),
+            'birthday'   => session()->pull('birthday', 'default'),
+            'mail'       => session()->pull('mail', 'default'),
+            'password'   => session()->pull('password', 'default'),
+            'role_id'    => session()->pull('role_id', 'default'),
+        ];
         event(new Registered($user = $this->employee_service->create($create_data)));
-
         return view('admin_employee.register_completion');
     }
 }

@@ -62,7 +62,11 @@ class ReportController extends Controller
      */
     public function postCreate(ReportPost $request){
         $report = $request->all();
-        Session::setSession($report);
+        session([
+            'title' => $report['title'],
+            'content' => $report['content'],
+            'created_at' => $report['created_at'],
+        ]);
         return redirect()->route('report.create.confirm.get');
     }
 
@@ -73,8 +77,11 @@ class ReportController extends Controller
      */
     public function getCreateConfirm()
     {
-        $array = ['title', 'content', 'created_at'];
-        $report = Session::setArray($array);
+        $report = [
+            'title' => session('title'),
+            'content' => session('content'),
+            'created_at' => session('created_at'),
+        ];
         return view('report.create_confirm', compact('report'));
     }
 
@@ -91,27 +98,17 @@ class ReportController extends Controller
 
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * 日報の修正画面へ遷移
-     */
-    public function getModification()
-    {
-        $array = ['title', 'content', 'created_at'];
-        $rerurn_data = Session::setArray($array);
-            return view('report.modification', compact('rerurn_data'));
-    }
-
-    /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * 日報作成完了画面表示
      */
     public function getCreateCompletion()
     {
-        $array = ['title', 'content', 'created_at'];
-        $report = Session::setArray($array);
-        $report['employee_id'] = Auth::guard()->user()->id;
-
+        $report = [
+            'title' => session()->pull('title', 'default'),
+            'content' => session()->pull('content', 'default'),
+            'created_at' => session()->pull('created_at', 'default'),
+            'employee_id' => Auth::guard()->user()->id,
+        ];
         $this->report_service->create($report);
-
         return view('report.create_completion');
     }
 
