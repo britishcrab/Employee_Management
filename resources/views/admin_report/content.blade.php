@@ -5,3 +5,4 @@
 @section('comment_form')
     <textarea  name="comment" placeholder="コメントを入力" rows="10" class="form-control"></textarea>
 @endsection
+l
