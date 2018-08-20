@@ -46,7 +46,6 @@ namespace App\Http\Controllers;
      */
      public function getList()
      {
-//        $role_id = $this->employee_service->FetchRoleid(session('employee_id'));
          $role_id = Auth::guard()->user()->role_id;
         session(['my_role_id' => $role_id]);
         switch ($role_id)

@@ -44,7 +44,7 @@ class AdminReportController extends Controller
                 $report['is_employee'] = '削除されました';
             }
         }
-
+        session()->forget('comment');
         return view('admin_report.list', compact('reports'));
     }
 
@@ -55,6 +55,7 @@ class AdminReportController extends Controller
      */
     public function getContent($report_id){
         $content = $this->admin_report_service->fetch($report_id);
+        $content['comment'] = null;
         if(empty($content->employee))
         {
             $content['is_employee'] = '削除されました';
