@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+ use App\Events\TestEvent;
  use Illuminate\Http\Request;
  use App\Http\Requests\EmployeeRegister;
  use App\Services\EmployeeService;
@@ -32,6 +33,14 @@ namespace App\Http\Controllers;
      */
 	public function getHome()
     {
+//        event(new TestEvent());
+//
+//        echo 'Controller';
+//        exit;
+
+
+
+
 		return view('admin_employee.home');
 	}
 
