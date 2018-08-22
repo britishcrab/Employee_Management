@@ -6,6 +6,7 @@ use Tests\TestCase;
 use Faker\Generator as Faker;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Auth;
 
 class SignInTest extends TestCase
 {
@@ -19,4 +20,28 @@ class SignInTest extends TestCase
 
         $response->assertStatus(200);
     }
+
+	/** @test */
+	public function valid_user_can_login()
+	{
+		// ユーザーを１つ作成
+		$user = factory(Employee::class)->create([
+			'password'  => Auth::make('password')
+		]);
+	
+		// // まだ、認証されていない
+		// $this->assertFalse(Auth::check());
+	
+		// // ログインを実行
+		// $response = $this->post('login', [
+		// 	'email'    => $user->email,
+		// 	'password' => 'password'
+		// ]);
+		//
+		// // 認証されている
+		// $this->assertTrue(Auth::check());
+		//
+		// // ログイン後にホームページにリダイレクトされるのを確認
+		// $response->assertRedirect('home');
+	}
 }
