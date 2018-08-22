@@ -7,6 +7,8 @@ use Faker\Generator as Faker;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use App\Models\Employee;
 
 class SignInTest extends TestCase
 {
@@ -26,7 +28,7 @@ class SignInTest extends TestCase
 	{
 		// ユーザーを１つ作成
 		$user = factory(Employee::class)->create([
-			'password'  => Auth::make('password')
+			'password'  => Hash::make('password')
 		]);
 	
 		// // まだ、認証されていない
