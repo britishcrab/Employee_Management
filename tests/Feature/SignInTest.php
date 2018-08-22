@@ -31,19 +31,19 @@ class SignInTest extends TestCase
 			'password'  => Hash::make('password')
 		]);
 	
-		// // まだ、認証されていない
-		// $this->assertFalse(Auth::check());
+		// まだ、認証されていない
+		$this->assertFalse(Auth::guard()->check());
 	
-		// // ログインを実行
-		// $response = $this->post('login', [
-		// 	'email'    => $user->email,
-		// 	'password' => 'password'
-		// ]);
-		//
-		// // 認証されている
-		// $this->assertTrue(Auth::check());
-		//
-		// // ログイン後にホームページにリダイレクトされるのを確認
-		// $response->assertRedirect('home');
+		// ログインを実行
+		$response = $this->post('signin', [
+			'mail'    => $user->mail,
+			'password' => 'password'
+		]);
+		
+		// 認証されている
+		$this->assertTrue(Auth::guard()->check());
+		
+		// ログイン後にホームページにリダイレクトされるのを確認
+		$response->assertRedirect('home');
 	}
 }
