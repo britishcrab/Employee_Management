@@ -63,9 +63,9 @@ class AuthenticationController extends Controller
     /**
      * @param Request $request
      * signinに失敗した場合に例外を投げる
-     *ValidationException::withMessages()は引数のkeyとvalueをforeachでループして
+     * ValidationException::withMessages()は引数のkeyとvalueをforeachでループして
      * $validator->errors()->add($key, $value)の形で例外を投げる
-     * 受け取る側は$errors->first('key')の方で受け取れる
+     * 受け取る側は$errors->first('key')で受け取れる
      */
     protected function sendFailedLoginResponse(Request $request)
     {

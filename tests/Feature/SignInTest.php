@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use Exception;
 use Tests\TestCase;
 use Faker\Generator as Faker;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -12,6 +13,7 @@ use App\Models\Employee;
 
 class SignInTest extends TestCase
 {
+
     /**
      * @test
      * サインイン画面の表示
@@ -42,11 +44,6 @@ class SignInTest extends TestCase
 			'password' => 'password'
 		]);
 
-
-
-		var_dump(Auth::guard()->user());
-		exit;
-		
 		// 認証されている
 		$this->assertTrue(Auth::guard()->check());
 		
@@ -72,8 +69,8 @@ class SignInTest extends TestCase
 
         // 認証されていない
         $this->assertFalse(Auth::guard()->check());
-
-        // ログイン後にホームページにリダイレクトされるのを確認
-        $response->assertRedirect('/');
+        
+        // ログイン失敗でサインイン画面にリダイレクト
+        $response->assertRedirect('auth/signin');
     }
 }
