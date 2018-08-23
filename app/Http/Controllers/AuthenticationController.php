@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthenticationController extends Controller
 {
-//    use \App\Services\Authentication\Authentication;
     use \Illuminate\Foundation\Auth\AuthenticatesUsers;
 
     protected $auth_service;
@@ -39,7 +38,7 @@ class AuthenticationController extends Controller
      * @return \Illuminate\Http\RedirectResponse|void
      * @throws ValidationException
      * attemptLoginでサインイン処理を行う
-     * 成功すればsendLoginResponse成功すれば()でリダイレクトされる
+     * 成功すればsendLoginResponse()でリダイレクトされる
      * sendFailedLoginResponse失敗すればで例外を投げられる
      */
 //    public function postSignin(SigninPost $request)
@@ -53,11 +52,7 @@ class AuthenticationController extends Controller
 //    }
     public function postSignin(SigninPost $request)
     {
-        if (Auth::guard()->attempt($request->only('mail', 'password')))
-        {
-            return $this->sendLoginResponse($request);
-        }
-        return $this->sendFailedLoginResponse($request);
+        $this->login($request);
     }
 
     /**
@@ -84,33 +79,33 @@ class AuthenticationController extends Controller
 //        );
 //    }
 
-//    /**
-//     * @param Request $request
-//     * @return array
-//     * attemptLogin()で認証に用いる値を抽出している
-//     * (mailとpassword)
-//     */
-//    protected function credentials(Request $request)
-//    {
-//        return $request->only('mail', 'password');
-//    }
+    /**
+     * @param Request $request
+     * @return array
+     * attemptLogin()で認証に用いる値を抽出している
+     * (mailとpassword)
+     */
+    protected function credentials(Request $request)
+    {
+        return $request->only('mail', 'password');
+    }
 
-//    /**
-//     * @param Request $request
-//     * @return \Illuminate\Http\RedirectResponse
-//     * regenerateでsessionIDを再発行
-//     * clearLoginAttemptsでスロットル処理のクリアを実施
-//     * authenticated()に指定がなければredirectPath()にリダイレクト
-//     */
-//    protected function sendLoginResponse(Request $request)
-//    {
-//        $request->session()->regenerate();
-//
-//        $this->clearLoginAttempts($request);
-//
-//        return $this->authenticated($request, $this->guard()->user())
-//            ?: redirect()->intended($this->redirectPath());
-//    }
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     * regenerateでsessionIDを再発行
+     * clearLoginAttemptsでスロットル処理のクリアを実施
+     * authenticated()に指定がなければredirectPath()にリダイレクト
+     */
+    protected function sendLoginResponse(Request $request)
+    {
+        $request->session()->regenerate();
+
+        $this->clearLoginAttempts($request);
+
+        return $this->authenticated($request, $this->guard()->user())
+            ?: redirect()->intended($this->redirectPath());
+    }
 
     /**
      * @param Request $request
@@ -144,7 +139,7 @@ class AuthenticationController extends Controller
      */
     public function postSignout(Request $request)
     {
-        $this->guard()->logout();
+        Auth::guard()->logout();
 
         $request->session()->invalidate();
 
