@@ -35,7 +35,7 @@ class SignInTest extends TestCase
 		$this->assertFalse(Auth::guard()->check());
 	
 		// ログインを実行
-		$response = $this->post('signin', [
+		$response = $this->post('auth/signin', [
 			'mail'    => $user->mail,
 			'password' => 'password'
 		]);
@@ -44,6 +44,6 @@ class SignInTest extends TestCase
 		$this->assertTrue(Auth::guard()->check());
 		
 		// ログイン後にホームページにリダイレクトされるのを確認
-		$response->assertRedirect('home');
+		$response->assertRedirect('/');
 	}
 }

@@ -55,6 +55,11 @@ class AuthenticationController extends Controller
         return $request->only('mail', 'password');
     }
 
+    public function username()
+    {
+        return 'mail';
+    }
+
     /**
      * @param Request $request
      * signinに失敗した場合に例外を投げる
