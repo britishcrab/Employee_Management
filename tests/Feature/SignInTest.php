@@ -41,6 +41,11 @@ class SignInTest extends TestCase
 			'mail'    => $user->mail,
 			'password' => 'password'
 		]);
+
+
+
+		var_dump(Auth::guard()->user());
+		exit;
 		
 		// 認証されている
 		$this->assertTrue(Auth::guard()->check());
