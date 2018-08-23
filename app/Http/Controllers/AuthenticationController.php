@@ -42,13 +42,21 @@ class AuthenticationController extends Controller
      * 成功すればsendLoginResponse成功すれば()でリダイレクトされる
      * sendFailedLoginResponse失敗すればで例外を投げられる
      */
+//    public function postSignin(SigninPost $request)
+//    {
+//        if ($this->attemptLogin($request))
+//        {
+//            return $this->sendLoginResponse($request);
+//        }
+//
+//        return $this->sendFailedLoginResponse($request);
+//    }
     public function postSignin(SigninPost $request)
     {
-        if ($this->attemptLogin($request))
+        if (Auth::guard()->attempt($request->only('mail', 'password')))
         {
             return $this->sendLoginResponse($request);
         }
-
         return $this->sendFailedLoginResponse($request);
     }
 
@@ -61,48 +69,48 @@ class AuthenticationController extends Controller
         return route('top');
     }
 
-    /**
-     * @param Request $request
-     * @return mixed
-     * guard()でプロバイダを取得
-     * ->その中でconfig/auth.phpの中で指定したdriverとmodelが適応される
-     * 　()の中を指定しなければdefaultの値が指定される(今回はdefaultを変更している)
-     * attemptが認証　メソッドはSessionGuardに実装されている
-     */
-    protected function attemptLogin(Request $request)
-    {
-        return $this->guard()->attempt(
-            $this->credentials($request)
-        );
-    }
+//    /**
+//     * @param Request $request
+//     * @return mixed
+//     * guard()でプロバイダを取得
+//     * ->その中でconfig/auth.phpの中で指定したdriverとmodelが適応される
+//     * 　()の中を指定しなければdefaultの値が指定される(今回はdefaultを変更している)
+//     * attemptが認証　メソッドはSessionGuardに実装されている
+//     */
+//    protected function attemptLogin(Request $request)
+//    {
+//        return $this->guard()->attempt(
+//            $this->credentials($request)
+//        );
+//    }
 
-    /**
-     * @param Request $request
-     * @return array
-     * attemptLogin()で認証に用いる値を抽出している
-     * (mailとpassword)
-     */
-    protected function credentials(Request $request)
-    {
-        return $request->only('mail', 'password');
-    }
+//    /**
+//     * @param Request $request
+//     * @return array
+//     * attemptLogin()で認証に用いる値を抽出している
+//     * (mailとpassword)
+//     */
+//    protected function credentials(Request $request)
+//    {
+//        return $request->only('mail', 'password');
+//    }
 
-    /**
-     * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse
-     * regenerateでsessionIDを再発行
-     * clearLoginAttemptsでスロットル処理のクリアを実施
-     * authenticated()に指定がなければredirectPath()にリダイレクト
-     */
-    protected function sendLoginResponse(Request $request)
-    {
-        $request->session()->regenerate();
-
-        $this->clearLoginAttempts($request);
-
-        return $this->authenticated($request, $this->guard()->user())
-            ?: redirect()->intended($this->redirectPath());
-    }
+//    /**
+//     * @param Request $request
+//     * @return \Illuminate\Http\RedirectResponse
+//     * regenerateでsessionIDを再発行
+//     * clearLoginAttemptsでスロットル処理のクリアを実施
+//     * authenticated()に指定がなければredirectPath()にリダイレクト
+//     */
+//    protected function sendLoginResponse(Request $request)
+//    {
+//        $request->session()->regenerate();
+//
+//        $this->clearLoginAttempts($request);
+//
+//        return $this->authenticated($request, $this->guard()->user())
+//            ?: redirect()->intended($this->redirectPath());
+//    }
 
     /**
      * @param Request $request
