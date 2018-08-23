@@ -23,7 +23,9 @@ class SignInTest extends TestCase
         $response->assertStatus(200);
     }
 
-	/** @test */
+    /**
+     * @test
+     */
 	public function valid_user_can_login()
 	{
 		// ユーザーを１つ作成
@@ -46,4 +48,27 @@ class SignInTest extends TestCase
 		// ログイン後にホームページにリダイレクトされるのを確認
 		$response->assertRedirect('/');
 	}
+
+    /**
+     * @test
+     */
+    public function unvalid_user_can_login()
+    {
+        // ユーザーを１つ作成
+        $user = factory(Employee::class)->create([
+            'password'  => Hash::make('password')
+        ]);
+
+        // パスワード間違いでログインを実行
+        $response = $this->post('auth/signin', [
+            'mail'    => $user->mail,
+            'password' => 'miss'
+        ]);
+
+        // 認証されていない
+        $this->assertFalse(Auth::guard()->check());
+
+        // ログイン後にホームページにリダイレクトされるのを確認
+        $response->assertRedirect('/');
+    }
 }
