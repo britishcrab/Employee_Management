@@ -34,7 +34,7 @@ class SigninTest extends TestCase
         $user = factory(Employee::class)->create([
             'password'  => Hash::make('password')
         ]);
-        $response = $this->post('auth/signin', [
+        $response = $this->post('signin', [
             'mail' => 'miss@gmail.com',
             'password' => 'password'
         ]);
@@ -54,7 +54,7 @@ class SigninTest extends TestCase
         $user = factory(Employee::class)->create([
             'password'  => Hash::make('password')
         ]);
-        $response = $this->post('auth/signin', [
+        $response = $this->post('signin', [
             'mail' => 'miss@gmail.com',
             'password' => 'miss'
         ]);
@@ -74,7 +74,7 @@ class SigninTest extends TestCase
         ]);
         $this->assertFalse(Auth::guard()->check(), '認証処理前に認証されています');
 
-        $response = $this->post('auth/signin', [
+        $response = $this->post('signin', [
             'mail'    => $user->mail,
             'password' => 'password'
         ]);

@@ -94,7 +94,7 @@ class AuthenticationController extends Controller
     {
         Auth::guard()->logout();
 
-        $request->session()->invalidate();
+        session()->invalidate();
 
         return redirect()->route('signin');
     }

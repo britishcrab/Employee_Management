@@ -21,7 +21,7 @@ Route::get('laravel', function () {
 
 Route::middleware(['signin'])->group(function () {
     Route::get('signout', 'AuthenticationController@getSignout')->name('signout');
-    Route::get('signout.send', 'AuthenticationController@postSignout')->name('signout.post');
+    Route::post('signout', 'AuthenticationController@postSignout')->name('signout.post');
 
     Route::middleware(['role'])->group(function () {
 
