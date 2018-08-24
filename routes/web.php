@@ -29,7 +29,7 @@ Route::middleware(['signin'])->group(function () {
 
         Route::prefix('admin')->group(function () {
             Route::get('home', 'AdminController@getHome')->name('admin.get.home');
-            Route::get('list', 'AdminController@getList')->name('admin.get.list');
+            Route::get('list', 'AdminController@getList')->name('employee.list');
             Route::post('delete', 'AdminController@postDelete')->name('admin.delete.post');
             Route::get('delete/{id}', 'AdminController@getDelete')->name('admin.get.delete');
             Route::get('delete.completion', 'AdminController@getDeleteCompletion')->name('admin.delete.completion');
