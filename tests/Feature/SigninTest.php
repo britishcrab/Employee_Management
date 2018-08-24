@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Employee;
 
-class SignInTest extends TestCase
+class SigninTest extends TestCase
 {
     /**
      * @test

@@ -15,7 +15,13 @@ Route::get('laravel', function () {
     return view('welcome');
 });
 
+    Route::get('signin', 'AuthenticationController@getSignin')->name('signin');
+    Route::post('signin', 'AuthenticationController@postSignin')->name('signin.post');
+
+
 Route::middleware(['signin'])->group(function () {
+    Route::get('signout', 'AuthenticationController@getSignout')->name('signout');
+    Route::get('signout.send', 'AuthenticationController@postSignout')->name('signout.post');
 
     Route::middleware(['role'])->group(function () {
 
@@ -62,14 +68,6 @@ Route::middleware(['signin'])->group(function () {
         Route::post('delete', 'ReportController@postDelete')->name('report.delete.post');
         Route::get('delete.confirm', 'ReportController@getDeleteCompletion')->name('report.delete.completion.get');
     });
-
-});
-
-Route::prefix('auth')->group(function () {
-    Route::get('signin', 'AuthenticationController@getSignin')->name('signin');
-    Route::post('signin', 'AuthenticationController@postSignin')->name('signin.post');
-    Route::get('signout', 'AuthenticationController@getSignout')->name('signout');
-    Route::get('signout.send', 'AuthenticationController@postSignout')->name('signout.post');
 });
 
 Route::get('mail/preview', function () {

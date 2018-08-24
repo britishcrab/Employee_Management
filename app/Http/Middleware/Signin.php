@@ -7,6 +7,10 @@ use Illuminate\Support\Facades\Auth;
 
 class Signin
 {
+    public function except()
+    {
+
+    }
     /**
      * Handle an incoming request.
      *
@@ -14,7 +18,6 @@ class Signin
      * @param  \Closure  $next
      * @return mixed
      */
-
     public function handle($request, Closure $next)
     {
         if(!Auth::guard()->check())
