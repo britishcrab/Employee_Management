@@ -21,40 +21,56 @@ class SignInTest extends TestCase
     public function user_can_view_signin()
     {
         $response = $this->get(route('signin'));
-
         $response->assertStatus(200);
     }
 
     /**
      * @test
      */
-	public function valid_user_can_login()
-	{
-		// ユーザーを１つ作成
-		$user = factory(Employee::class)->create([
-			'password'  => Hash::make('password')
-		]);
-	
-		// まだ、認証されていない
-		$this->assertFalse(Auth::guard()->check());
-	
-		// ログインを実行
-		$response = $this->post('auth/signin', [
-			'mail'    => $user->mail,
-			'password' => 'password'
-		]);
+    public function unvalid_password_can_login()
+    {
+        /**
+         * サインイン失敗
+         * メール     正
+         * パスワード 不正
+         */
+        // ユーザーを１つ作成
+        $user = factory(Employee::class)->create(['password'  => Hash::make('password')]);
+        // パスワード間違いでログインを実行
+        $response = $this->post('auth/signin', [
+            'mail' => $user->mail,
+            'password' => 'miss'
+        ]);
+        // 認証されていない
+        $this->assertFalse(Auth::guard()->check(), 'password間違いですが認証されています');
+        // セッションにサインイン失敗のエラーが入っているか
+        $response->assertSessionHas('errors');
+        $response->assertSessionHasErrors(['signin_error' => 'サインインに失敗しました.']);
 
-		// 認証されている
-		$this->assertTrue(Auth::guard()->check());
-		
-		// ログイン後にホームページにリダイレクトされるのを確認
-		$response->assertRedirect('/');
-	}
+        /**
+         * サインイン失敗
+         * メール     不正
+         * パスワード 正
+         */
+        // パスワード間違いでログインを実行
+        $response = $this->post('auth/signin', [
+            'mail' => 'miss@gmail.com',
+            'password' => 'password'
+        ]);
+        // 認証されていない
+        $this->assertFalse(Auth::guard()->check(), 'password間違いですが認証されています');
+        // セッションにサインイン失敗のエラーが入っているか
+        $response->assertSessionHas('errors');
+        $response->assertSessionHasErrors(['signin_error' => 'サインインに失敗しました.']);
+    }
 
     /**
      * @test
+     * サインイン失敗
+     * メール     不正
+     * パスワード 正
      */
-    public function unvalid_user_can_login()
+    public function unvalid_mail_can_login()
     {
         // ユーザーを１つ作成
         $user = factory(Employee::class)->create([
@@ -63,14 +79,69 @@ class SignInTest extends TestCase
 
         // パスワード間違いでログインを実行
         $response = $this->post('auth/signin', [
-            'mail'    => $user->mail,
+            'mail' => 'miss@gmail.com',
+            'password' => 'password'
+        ]);
+
+        // 認証されていない
+        $this->assertFalse(Auth::guard()->check(), 'password間違いですが認証されています');
+
+        // セッションにサインイン失敗のエラーが入っているか
+        $response->assertSessionHas('errors');
+        $response->assertSessionHasErrors(['signin_error' => 'サインインに失敗しました.']);
+    }
+
+    /**
+     * @test
+     * サインイン失敗
+     * メール     不正
+     * パスワード 不正
+     */
+    public function unvalid_mail_password_can_login()
+    {
+        // ユーザーを１つ作成
+        $user = factory(Employee::class)->create([
+            'password'  => Hash::make('password')
+        ]);
+
+        // パスワード間違いでログインを実行
+        $response = $this->post('auth/signin', [
+            'mail' => 'miss@gmail.com',
             'password' => 'miss'
         ]);
 
         // 認証されていない
-        $this->assertFalse(Auth::guard()->check());
-        
-        // ログイン失敗でサインイン画面にリダイレクト
-        $response->assertRedirect('auth/signin');
+        $this->assertFalse(Auth::guard()->check(), 'password間違いですが認証されています');
+
+        // セッションにサインイン失敗のエラーが入っているか
+        $response->assertSessionHas('errors');
+        $response->assertSessionHasErrors(['signin_error' => 'サインインに失敗しました.']);
+    }
+
+    /**
+     * @test
+     * サインイン成功
+     */
+    public function valid_user_can_login()
+    {
+        // ユーザーを１つ作成
+        $user = factory(Employee::class)->create([
+            'password'  => Hash::make('password')
+        ]);
+
+        // まだ、認証されていない
+        $this->assertFalse(Auth::guard()->check(), '認証処理前に認証されています');
+
+        // ログインを実行
+        $response = $this->post('auth/signin', [
+            'mail'    => $user->mail,
+            'password' => 'password'
+        ]);
+
+        // 認証されている
+        $this->assertTrue(Auth::guard()->check(), '認証処理後に認証されていません');
+
+        // ログイン後にホームページにリダイレクトされるのを確認
+        $response->assertRedirect('/');
     }
 }
